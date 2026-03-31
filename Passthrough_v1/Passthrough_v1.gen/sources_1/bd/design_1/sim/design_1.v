@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Sun Mar 29 14:38:15 2026
+//Date        : Sun Mar 29 22:25:24 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -253,10 +253,6 @@ module design_1
   wire [63:32]axis_broadcaster_0_M01_AXIS_TDATA;
   wire axis_broadcaster_0_M01_AXIS_TREADY;
   wire [1:1]axis_broadcaster_0_M01_AXIS_TVALID;
-  wire [31:0]axis_data_fifo_0_M_AXIS_TDATA;
-  wire axis_data_fifo_0_M_AXIS_TLAST;
-  wire axis_data_fifo_0_M_AXIS_TREADY;
-  wire axis_data_fifo_0_M_AXIS_TVALID;
   wire [31:0]axis_data_fifo_1_M_AXIS_TDATA;
   wire axis_data_fifo_1_M_AXIS_TLAST;
   wire axis_data_fifo_1_M_AXIS_TREADY;
@@ -625,10 +621,9 @@ module design_1
         .s0_axis_tlast(1'b0),
         .s0_axis_tready(i2s_receiver_0_m_axis_aud_TREADY),
         .s0_axis_tvalid(i2s_receiver_0_m_axis_aud_TVALID),
-        .s1_axis_tdata(axis_data_fifo_0_M_AXIS_TDATA),
-        .s1_axis_tlast(axis_data_fifo_0_M_AXIS_TLAST),
-        .s1_axis_tready(axis_data_fifo_0_M_AXIS_TREADY),
-        .s1_axis_tvalid(axis_data_fifo_0_M_AXIS_TVALID));
+        .s1_axis_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .s1_axis_tlast(1'b0),
+        .s1_axis_tvalid(1'b0));
   design_1_axis_broadcaster_0_0 axis_broadcaster_0
        (.aclk(mclk_out_adc),
         .aresetn(proc_sys_reset_0_peripheral_aresetn),
@@ -641,10 +636,7 @@ module design_1
         .s_axis_tvalid(axi_stream_looper_mi_0_m_axis_TVALID));
   design_1_axis_data_fifo_0_2 axis_data_fifo_0
        (.m_axis_aclk(mclk_out_adc),
-        .m_axis_tdata(axis_data_fifo_0_M_AXIS_TDATA),
-        .m_axis_tlast(axis_data_fifo_0_M_AXIS_TLAST),
-        .m_axis_tready(axis_data_fifo_0_M_AXIS_TREADY),
-        .m_axis_tvalid(axis_data_fifo_0_M_AXIS_TVALID),
+        .m_axis_tready(1'b1),
         .s_axis_aclk(processing_system7_0_FCLK_CLK0),
         .s_axis_aresetn(rst_ps7_0_100M_peripheral_aresetn),
         .s_axis_tdata(axi_dma_0_M_AXIS_MM2S_TDATA),
