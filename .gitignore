@@ -18,13 +18,11 @@ webtalk*.jou
 webtalk*.log
 
 **/.Xil/
-**/*.gen/
 **/*.cache/
 **/*.runs/
 **/*.sim/
 **/*.hw/
 **/*.ioplan/
-**/*.ip_user_files/
 
 # Bitstream, checkpoint, informes grandes
 *.bit
@@ -43,6 +41,7 @@ xvlog.pb
 xvhdl.pb
 
 **/ip_cache/
+**/ip_user_files/mem_init_files/
 
 # Vitis / Eclipse
 .metadata/
@@ -70,7 +69,6 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
-# IDE / Cursor (opcional: quitá .vscode/ si querés versionar ajustes del equipo)
+# IDE (opcional: quitá .vscode/ si querés versionar ajustes del equipo)
 .idea/
 .vscode/
-.cursor/
