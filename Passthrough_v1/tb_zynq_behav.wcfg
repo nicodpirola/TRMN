@@ -18,15 +18,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="55.798210 us"></ZoomStartTime>
-      <ZoomEndTime time="124.098211 us"></ZoomEndTime>
-      <Cursor1Time time="112.714877 us"></Cursor1Time>
+      <ZoomStartTime time="349.120000 us"></ZoomStartTime>
+      <ZoomEndTime time="692.620001 us"></ZoomEndTime>
+      <Cursor1Time time="635.370000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+      <ValueColumnWidth column_width="68"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="48" />
+   <WVObjectSize size="49" />
    <wvobject fp_name="/tb_zynq/DDR_addr" type="array">
       <obj_property name="ElementShortName">DDR_addr[14:0]</obj_property>
       <obj_property name="ObjectShortName">DDR_addr[14:0]</obj_property>
@@ -167,10 +167,6 @@
       <obj_property name="ElementShortName">read_data[31:0]</obj_property>
       <obj_property name="ObjectShortName">read_data[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_zynq/sample_data" type="array">
-      <obj_property name="ElementShortName">sample_data[31:0]</obj_property>
-      <obj_property name="ObjectShortName">sample_data[31:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/tb_zynq/shift_reg" type="array">
       <obj_property name="ElementShortName">shift_reg[31:0]</obj_property>
       <obj_property name="ObjectShortName">shift_reg[31:0]</obj_property>
@@ -183,6 +179,14 @@
       <obj_property name="ElementShortName">s_axi_ctrl_wdata[31:0]</obj_property>
       <obj_property name="ObjectShortName">s_axi_ctrl_wdata[31:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/tb_zynq/left_sample" type="array">
+      <obj_property name="ElementShortName">left_sample[23:0]</obj_property>
+      <obj_property name="ObjectShortName">left_sample[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_zynq/right_sample" type="array">
+      <obj_property name="ElementShortName">right_sample[23:0]</obj_property>
+      <obj_property name="ObjectShortName">right_sample[23:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/tb_zynq/sdata_0_in_0" type="logic">
       <obj_property name="ElementShortName">sdata_0_in_0</obj_property>
       <obj_property name="ObjectShortName">sdata_0_in_0</obj_property>
@@ -190,6 +194,7 @@
    <wvobject fp_name="/tb_zynq/dut/design_1_i/i2s_receiver_0/m_axis_aud_tdata" type="array">
       <obj_property name="ElementShortName">m_axis_aud_tdata[31:0]</obj_property>
       <obj_property name="ObjectShortName">m_axis_aud_tdata[31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/tb_zynq/dut/design_1_i/i2s_receiver_0/m_axis_aud_tid" type="array">
       <obj_property name="ElementShortName">m_axis_aud_tid[2:0]</obj_property>

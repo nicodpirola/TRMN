@@ -58,6 +58,7 @@ module tb_zynq();
     wire mclk_out_adc;
     wire mclk_out_dac;
     logic sdata_0_in_0; // Datos hacia el FPGA (generados por el emulador del TB)
+    logic sdata_0_in_reg; // Registro en posedge BCLK (evita carrera con el muestreo del IP)
     wire sdata_0_out_0; // Datos desde el FPGA hacia el exterior
 
     // Instancia del wrapper de tu Block Design
@@ -100,42 +101,41 @@ module tb_zynq();
     bit [31:0] read_data; // Para leer la memoria RAM al final
 
     // =========================================================================
-    // Emulador de Fuente de Audio I2S (ADC)
+    // Emulador de Fuente de Audio I2S (ADC) — master en el DUT (BCLK/LRCLK)
     // =========================================================================
-    // Asumimos que el FPGA es Master I2S (genera bclk y lrclk)
-    logic [31:0] sample_data = 32'hA1B2C3D4; // Primer dato patrón a inyectar
+    // IP C_DWIDTH=24, C_32BIT_LR=1: slot de 32 BCLK = 24 bits PCM MSB-first + 8 ciclos pad 0.
+    // El RX no reproduce un literal 32'hA1B2C3D4: arma 24 bits y extiende signo a 32 en m_axis.
+    // Cambiá left_sample/right_sample para probar; cada medio marco LR lleva un canal.
+    logic [23:0] left_sample  = 24'hA1B2C3;
+    logic [23:0] right_sample = 24'hB5C6D7;
     logic [31:0] shift_reg = 0;
-    logic lrclk_sampled = 0;
-    logic load_pending = 0;
+    logic        lrclk_prev = 1'b0;
+    int unsigned bit_count = 32; // >31 = idle hasta primer marco
 
-    // 1. Muestrear LRCLK en el flanco de SUBIDA (posedge) para evitar condiciones
-    // de carrera, ya que el IP de Xilinx actualiza LRCLK en el flanco de bajada.
-    always @(posedge sclk_out_0) begin
-        lrclk_sampled <= lrclk_out_0;
-        
-        // Detectamos el cambio de canal en el flanco de SUBIDA (cuando es 100% estable)
-        if (lrclk_out_0 != lrclk_sampled) begin
-            load_pending <= 1; // Bandera para cargar el MSB en el proximo flanco de bajada
-        end
-    end
+    always_ff @(posedge sclk_out_0)
+        lrclk_prev <= lrclk_out_0;
 
-    // 2. Gestionar la salida de datos en el flanco de BAJADA (negedge)
-    always @(negedge sclk_out_0) begin
-        if (load_pending) begin
-            // Se ha cumplido exactamente 1 ciclo de BCLK desde el cambio de LRCLK.
-            // Inyectamos el nuevo dato; el MSB aparecera en sdata_0_in_0 de inmediato.
-            shift_reg <= sample_data;
-            // Incrementamos el patrón para el siguiente canal (izquierdo/derecho)
-            sample_data <= sample_data + 32'h00000001;
-            load_pending <= 0;
+    // Desplazamiento y carga en negedge BCLK (estándar I2S: 1 BCLK tras flanco LR, luego MSB…)
+    always_ff @(negedge sclk_out_0) begin
+        if (lrclk_out_0 != lrclk_prev) begin
+            bit_count <= 0;
         end else begin
-            // Desplazamiento hacia la izquierda (MSB primero)
-            shift_reg <= {shift_reg[30:0], 1'b0};
+            if (bit_count == 0) begin
+                shift_reg <= (lrclk_out_0 == 1'b0) ? {left_sample, 8'b0} : {right_sample, 8'b0};
+                bit_count <= 1;
+            end else if (bit_count < 32) begin
+                shift_reg <= {shift_reg[30:0], 1'b0};
+                bit_count <= bit_count + 1;
+            end
         end
     end
-    
-    // Asignamos el bit más significativo (MSB) a la entrada del FPGA
-    assign sdata_0_in_0 = shift_reg[31];
+
+    wire sdata_bit = (bit_count > 0 && bit_count <= 32) ? shift_reg[31] : 1'b0;
+
+    always_ff @(posedge sclk_out_0)
+        sdata_0_in_reg <= sdata_bit;
+
+    assign sdata_0_in_0 = sdata_0_in_reg;
 
     // Conectamos el generador de reloj al cable que va al puerto inout del Zynq
     assign FIXED_IO_ps_clk = ps_clk_generator;
@@ -145,9 +145,9 @@ module tb_zynq();
     // =========================================================================
     // Generacion del Reloj Externo
     // =========================================================================
-    // Reloj de sistema a 50 MHz (periodo de 20ns).
+    // Reloj de sistema 50 MHz (periodo 20 ns) — debe coincidir con FCLK/clk_wiz en el BD
     initial sys_clock = 0;
-    always #4 sys_clock = ~sys_clock; // 10ns high, 10ns low -> 20ns periodo -> 50 MHz
+    always #10 sys_clock = ~sys_clock;
 
     // =========================================================================
     // Generacion de Reloj y Resets del PS (Zynq)
@@ -214,12 +214,14 @@ module tb_zynq();
         if (resp != 0) $display("[ERROR] Escritura fallida en TX Timing. Resp: %b", resp);
         #1000;
 
-        // PG308 - Offset 0x30: I2S Channel 0 Control. Bit 0 = CH_EN
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h43C00030, 4, 32'h00000001, resp); // RX Channel 0
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h43C10030, 4, 32'h00000001, resp); // TX Channel 0
+        // Offset 0x0C: configuración adicional de control (según tu flujo actual)
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h43C0000C, 4, 32'h00000001, resp); // RX Ctrl @0x0C
+        if (resp != 0) $display("[ERROR] Escritura fallida en RX Ctrl (0x0C). Resp: %b", resp);
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h43C1000C, 4, 32'h00000001, resp); // TX Ctrl @0x0C
+        if (resp != 0) $display("[ERROR] Escritura fallida en TX Ctrl (0x0C). Resp: %b", resp);
         #1000;
 
-        $display("[TB %t] Modulos Xilinx I2S preparados (Timing y Canales).", $time);
+        $display("[TB %t] Modulos Xilinx I2S preparados (0x20, 0x0C).", $time);
 
         // =========================================================================
         // 3. Configurar el AXI DMA para S2MM (Traducción de XAxiDma_SimpleTransfer)
@@ -252,22 +254,13 @@ module tb_zynq();
         dut.design_1_i.processing_system7_0.inst.write_data(32'h40400058, 4, 32'h00000040, resp); // Transferir 64 bytes
         #1000;
 
-        // =========================================================================
-        // 3.5. Configurar el AXI DMA para MM2S (Transmitir RAM -> Sumador)
-        // =========================================================================
-        // Aplicar Soft Reset al MM2S
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000004, resp); // MM2S Reset
+        // MM2S desactivado en este banco: si el looper suma RAM, el dato deja de seguir al I2S RX.
+        // Para probar solo audio en vivo + S2MM, dejá MM2S en reset o sin LENGTH.
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000004, resp); // MM2S reset
         #5000;
+        $display("[TB %t] MM2S en reset (no suma RAM al eje de audio).", $time);
 
-        // Arrancar el canal MM2S (Escribir 1 en MM2S_DMACR, offset 0x00)
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000001, resp);
-        // Escribir la dirección origen en RAM (MM2S_SA, offset 0x18) - Usamos otra dir (ej. 2MB)
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400018, 4, 32'h00200000, resp);
-        // Escribir la longitud a transferir (MM2S_LENGTH, offset 0x28). Esto inicia el envío.
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400028, 4, 32'h00000040, resp); // Transferir 64 bytes
-        #1000;
-
-        $display("[TB %t] DMA Configurado (S2MM). Esperando muestras de Audio...", $time);
+        $display("[TB %t] DMA S2MM listo. Esperando muestras de Audio...", $time);
 
         // =========================================================================
         // 4. Encender los módulos I2S (El "Gatillo")
@@ -311,9 +304,11 @@ module tb_zynq();
             32'h00100000, 4, read_data
         );
         $display("[TB %t] Primeros 4 bytes en RAM (0x00100000): 0x%08h", $time, read_data);
-        // Verificamos si el dato es el esperado (A1B2C3D4)
-        if (read_data == 32'hA1B2C3D4) $display("[SUCCESS] El primer dato en memoria es correcto!");
-        else $display("[FAILURE] El primer dato en memoria NO es el esperado!");
+        // Canal L = 24'hA1B2C3 → suele verse como 0xFFA1B2C3 (ext. signo) o [23:0]=A1B2C3
+        if (read_data[23:0] == 24'hA1B2C3)
+            $display("[SUCCESS] Los 24 bits bajos coinciden con canal L.");
+        else
+            $display("[FAILURE] Dato en RAM no coincide con muestra L (revisá mezcla/DMA).");
 
         $display("[TB %t] Fin de la simulacion.", $time);
         $finish;
