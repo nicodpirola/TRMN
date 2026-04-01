@@ -115,21 +115,19 @@ module tb_zynq();
     always_ff @(posedge sclk_out_0)
         lrclk_prev <= lrclk_out_0;
 
-    // Desplazamiento y carga en negedge BCLK (estándar I2S: 1 BCLK tras flanco LR, luego MSB…)
     always_ff @(negedge sclk_out_0) begin
         if (lrclk_out_0 != lrclk_prev) begin
             bit_count <= 0;
             
-            // Al iniciar un nuevo marco (LRCLK baja a 0 para el canal Izquierdo), incrementamos los datos
             if (lrclk_out_0 == 1'b0) begin
-                left_sample <= left_sample + 1;
+                left_sample  <= left_sample + 1;
                 right_sample <= right_sample + 1;
             end
         end else begin
             if (bit_count == 0) begin
                 shift_reg <= (lrclk_out_0 == 1'b0) ? {left_sample, 8'b0} : {right_sample, 8'b0};
                 bit_count <= 1;
-            end else if (bit_count < 32) begin
+            end else if (bit_count < 32) begin 
                 shift_reg <= {shift_reg[30:0], 1'b0};
                 bit_count <= bit_count + 1;
             end
