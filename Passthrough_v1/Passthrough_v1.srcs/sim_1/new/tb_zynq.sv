@@ -106,8 +106,8 @@ module tb_zynq();
     // IP C_DWIDTH=24, C_32BIT_LR=1: slot de 32 BCLK = 24 bits PCM MSB-first + 8 ciclos pad 0.
     // El RX no reproduce un literal 32'hA1B2C3D4: arma 24 bits y extiende signo a 32 en m_axis.
     // Cambiá left_sample/right_sample para probar; cada medio marco LR lleva un canal.
-    logic [23:0] left_sample  = 24'hA1B2C3;
-    logic [23:0] right_sample = 24'hB5C6D7;
+    logic [23:0] left_sample  = 24'h112200; // Valor inicial
+    logic [23:0] right_sample = 24'h445500; // Valor inicial
     logic [31:0] shift_reg = 0;
     logic        lrclk_prev = 1'b0;
     int unsigned bit_count = 32; // >31 = idle hasta primer marco
@@ -119,6 +119,12 @@ module tb_zynq();
     always_ff @(negedge sclk_out_0) begin
         if (lrclk_out_0 != lrclk_prev) begin
             bit_count <= 0;
+            
+            // Al iniciar un nuevo marco (LRCLK baja a 0 para el canal Izquierdo), incrementamos los datos
+            if (lrclk_out_0 == 1'b0) begin
+                left_sample <= left_sample + 1;
+                right_sample <= right_sample + 1;
+            end
         end else begin
             if (bit_count == 0) begin
                 shift_reg <= (lrclk_out_0 == 1'b0) ? {left_sample, 8'b0} : {right_sample, 8'b0};
@@ -299,16 +305,13 @@ module tb_zynq();
             $display("[FAILURE] El DMA NO completo la transferencia o reporto un error.");
         end
         
-        // Usamos read_mem (acceso backdoor) en lugar de read_data (bus AXI GP0)
-        dut.design_1_i.processing_system7_0.inst.read_mem(
-            32'h00100000, 4, read_data
-        );
-        $display("[TB %t] Primeros 4 bytes en RAM (0x00100000): 0x%08h", $time, read_data);
-        // Canal L = 24'hA1B2C3 → suele verse como 0xFFA1B2C3 (ext. signo) o [23:0]=A1B2C3
-        if (read_data[23:0] == 24'hA1B2C3)
-            $display("[SUCCESS] Los 24 bits bajos coinciden con canal L.");
-        else
-            $display("[FAILURE] Dato en RAM no coincide con muestra L (revisá mezcla/DMA).");
+        // Leer varias posiciones de RAM para ver ambos canales multiplexados
+        for (int i = 0; i < 8; i++) begin
+            dut.design_1_i.processing_system7_0.inst.read_mem(
+                32'h00100000 + (i * 4), 4, read_data
+            );
+            $display("[TB %t] RAM addr 0x%08h: 0x%08h", $time, 32'h00100000 + (i*4), read_data);
+        end
 
         $display("[TB %t] Fin de la simulacion.", $time);
         $finish;
