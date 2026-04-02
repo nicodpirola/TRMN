@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="test_tb_top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_tb_top" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="65.699442 us"></ZoomStartTime>
+      <ZoomEndTime time="100.849443 us"></ZoomEndTime>
+      <Cursor1Time time="80.699442 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="270"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="120" />
+   <wvobject fp_name="/test_tb_top/axi_clk" type="logic">
+      <obj_property name="ElementShortName">axi_clk</obj_property>
+      <obj_property name="ObjectShortName">axi_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/axi_rstn" type="logic">
+      <obj_property name="ElementShortName">axi_rstn</obj_property>
+      <obj_property name="ObjectShortName">axi_rstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/mclk" type="logic">
+      <obj_property name="ElementShortName">mclk</obj_property>
+      <obj_property name="ObjectShortName">mclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/mreset" type="logic">
+      <obj_property name="ElementShortName">mreset</obj_property>
+      <obj_property name="ObjectShortName">mreset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_AWReady_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_AWReady_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_AWReady_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_AWValid_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_AWValid_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_AWValid_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_AWAddr_0" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_AWAddr_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_AWAddr_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_WReady_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_WReady_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_WReady_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_WValid_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_WValid_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_WValid_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_WData_0" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_WData_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_WData_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_BReady_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_BReady_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_BReady_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_BValid_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_BValid_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_BValid_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_BResp_0" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_BResp_0[1:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_BResp_0[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_ARReady_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_ARReady_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_ARReady_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_ARValid_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_ARValid_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_ARValid_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_ARAddr_0" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_ARAddr_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_ARAddr_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RReady_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RReady_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RReady_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RValid_0" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RValid_0</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RValid_0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RData_0" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RData_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RData_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RResp_0" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RResp_0[1:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RResp_0[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_AWReady_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_AWReady_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_AWReady_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_AWValid_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_AWValid_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_AWValid_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_AWAddr_1" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_AWAddr_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_AWAddr_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_WReady_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_WReady_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_WReady_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_WValid_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_WValid_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_WValid_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_WData_1" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_WData_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_WData_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_BReady_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_BReady_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_BReady_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_BValid_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_BValid_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_BValid_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_BResp_1" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_BResp_1[1:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_BResp_1[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_ARReady_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_ARReady_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_ARReady_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_ARValid_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_ARValid_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_ARValid_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_ARAddr_1" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_ARAddr_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_ARAddr_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RReady_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RReady_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RReady_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RValid_1" type="logic">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RValid_1</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RValid_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RData_1" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RData_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RData_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxi_Ctrl_RResp_1" type="array">
+      <obj_property name="ElementShortName">nAxi_Ctrl_RResp_1[1:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxi_Ctrl_RResp_1[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TValid_ToTransmitter" type="logic">
+      <obj_property name="ElementShortName">nAxis_TValid_ToTransmitter</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TValid_ToTransmitter</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TReady_FromTransmitter" type="logic">
+      <obj_property name="ElementShortName">nAxis_TReady_FromTransmitter</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TReady_FromTransmitter</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TID_ToTransmitter" type="array">
+      <obj_property name="ElementShortName">nAxis_TID_ToTransmitter[2:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TID_ToTransmitter[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TData_ToTransmitter" type="array">
+      <obj_property name="ElementShortName">nAxis_TData_ToTransmitter[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TData_ToTransmitter[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TValid_FromReceiver" type="logic">
+      <obj_property name="ElementShortName">nAxis_TValid_FromReceiver</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TValid_FromReceiver</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TReady_ToReceiver" type="logic">
+      <obj_property name="ElementShortName">nAxis_TReady_ToReceiver</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TReady_ToReceiver</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TID_FromReceiver" type="array">
+      <obj_property name="ElementShortName">nAxis_TID_FromReceiver[2:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TID_FromReceiver[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/nAxis_TData_FromReceiver" type="array">
+      <obj_property name="ElementShortName">nAxis_TData_FromReceiver[31:0]</obj_property>
+      <obj_property name="ObjectShortName">nAxis_TData_FromReceiver[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/axi_pclk" type="logic">
+      <obj_property name="ElementShortName">axi_pclk</obj_property>
+      <obj_property name="ObjectShortName">axi_pclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/axi_nclk" type="logic">
+      <obj_property name="ElementShortName">axi_nclk</obj_property>
+      <obj_property name="ObjectShortName">axi_nclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/axi_reset" type="logic">
+      <obj_property name="ElementShortName">axi_reset</obj_property>
+      <obj_property name="ObjectShortName">axi_reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/mclk_p" type="logic">
+      <obj_property name="ElementShortName">mclk_p</obj_property>
+      <obj_property name="ObjectShortName">mclk_p</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/mclk_n" type="logic">
+      <obj_property name="ElementShortName">mclk_n</obj_property>
+      <obj_property name="ObjectShortName">mclk_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/mreset_r" type="logic">
+      <obj_property name="ElementShortName">mreset_r</obj_property>
+      <obj_property name="ObjectShortName">mreset_r</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataGen_Enable" type="logic">
+      <obj_property name="ElementShortName">DataGen_Enable</obj_property>
+      <obj_property name="ObjectShortName">DataGen_Enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataChk_Enable" type="logic">
+      <obj_property name="ElementShortName">DataChk_Enable</obj_property>
+      <obj_property name="ObjectShortName">DataChk_Enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataChk_InSync" type="logic">
+      <obj_property name="ElementShortName">DataChk_InSync</obj_property>
+      <obj_property name="ObjectShortName">DataChk_InSync</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataChk_Error" type="logic">
+      <obj_property name="ElementShortName">DataChk_Error</obj_property>
+      <obj_property name="ObjectShortName">DataChk_Error</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/sclk" type="logic">
+      <obj_property name="ElementShortName">sclk</obj_property>
+      <obj_property name="ObjectShortName">sclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/lrclk" type="logic">
+      <obj_property name="ElementShortName">lrclk</obj_property>
+      <obj_property name="ObjectShortName">lrclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/sclks" type="logic">
+      <obj_property name="ElementShortName">sclks</obj_property>
+      <obj_property name="ObjectShortName">sclks</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/lrclks" type="logic">
+      <obj_property name="ElementShortName">lrclks</obj_property>
+      <obj_property name="ObjectShortName">lrclks</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_transmitter_0_sdata_0_out" type="logic">
+      <obj_property name="ElementShortName">i2s_transmitter_0_sdata_0_out</obj_property>
+      <obj_property name="ObjectShortName">i2s_transmitter_0_sdata_0_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_transmitter_0_sdata_1_out" type="logic">
+      <obj_property name="ElementShortName">i2s_transmitter_0_sdata_1_out</obj_property>
+      <obj_property name="ObjectShortName">i2s_transmitter_0_sdata_1_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_transmitter_0_sdata_2_out" type="logic">
+      <obj_property name="ElementShortName">i2s_transmitter_0_sdata_2_out</obj_property>
+      <obj_property name="ObjectShortName">i2s_transmitter_0_sdata_2_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_transmitter_0_sdata_3_out" type="logic">
+      <obj_property name="ElementShortName">i2s_transmitter_0_sdata_3_out</obj_property>
+      <obj_property name="ObjectShortName">i2s_transmitter_0_sdata_3_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_receiver_0_sdata_0_in" type="logic">
+      <obj_property name="ElementShortName">i2s_receiver_0_sdata_0_in</obj_property>
+      <obj_property name="ObjectShortName">i2s_receiver_0_sdata_0_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_receiver_0_sdata_1_in" type="logic">
+      <obj_property name="ElementShortName">i2s_receiver_0_sdata_1_in</obj_property>
+      <obj_property name="ObjectShortName">i2s_receiver_0_sdata_1_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_receiver_0_sdata_2_in" type="logic">
+      <obj_property name="ElementShortName">i2s_receiver_0_sdata_2_in</obj_property>
+      <obj_property name="ObjectShortName">i2s_receiver_0_sdata_2_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_receiver_0_sdata_3_in" type="logic">
+      <obj_property name="ElementShortName">i2s_receiver_0_sdata_3_in</obj_property>
+      <obj_property name="ObjectShortName">i2s_receiver_0_sdata_3_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/wr_ptr" type="array">
+      <obj_property name="ElementShortName">wr_ptr[1:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_ptr[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/wr_ptr1" type="array">
+      <obj_property name="ElementShortName">wr_ptr1[1:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_ptr1[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/rd_ptr" type="array">
+      <obj_property name="ElementShortName">rd_ptr[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_ptr[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/rd_ptr1" type="array">
+      <obj_property name="ElementShortName">rd_ptr1[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_ptr1[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/meml" type="array">
+      <obj_property name="ElementShortName">meml[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">meml[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/memr" type="array">
+      <obj_property name="ElementShortName">memr[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">memr[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/meml1" type="array">
+      <obj_property name="ElementShortName">meml1[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">meml1[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/memr1" type="array">
+      <obj_property name="ElementShortName">memr1[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">memr1[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/meml2" type="array">
+      <obj_property name="ElementShortName">meml2[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">meml2[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/memr2" type="array">
+      <obj_property name="ElementShortName">memr2[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">memr2[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/meml3" type="array">
+      <obj_property name="ElementShortName">meml3[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">meml3[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/memr3" type="array">
+      <obj_property name="ElementShortName">memr3[0:3][23:0]</obj_property>
+      <obj_property name="ObjectShortName">memr3[0:3][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/init" type="array">
+      <obj_property name="ElementShortName">init[31:0]</obj_property>
+      <obj_property name="ObjectShortName">init[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/rd_ptr_init" type="array">
+      <obj_property name="ElementShortName">rd_ptr_init[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_ptr_init[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_transmitter_0_lrclk_0_in" type="logic">
+      <obj_property name="ElementShortName">i2s_transmitter_0_lrclk_0_in</obj_property>
+      <obj_property name="ObjectShortName">i2s_transmitter_0_lrclk_0_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/i2s_transmitter_0_sdata_0_in1" type="logic">
+      <obj_property name="ElementShortName">i2s_transmitter_0_sdata_0_in1</obj_property>
+      <obj_property name="ObjectShortName">i2s_transmitter_0_sdata_0_in1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/sclk_del" type="logic">
+      <obj_property name="ElementShortName">sclk_del</obj_property>
+      <obj_property name="ObjectShortName">sclk_del</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/sclks_del" type="logic">
+      <obj_property name="ElementShortName">sclks_del</obj_property>
+      <obj_property name="ObjectShortName">sclks_del</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/sclks_del1" type="logic">
+      <obj_property name="ElementShortName">sclks_del1</obj_property>
+      <obj_property name="ObjectShortName">sclks_del1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/lrclks_del" type="logic">
+      <obj_property name="ElementShortName">lrclks_del</obj_property>
+      <obj_property name="ObjectShortName">lrclks_del</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/lrclk_del" type="logic">
+      <obj_property name="ElementShortName">lrclk_del</obj_property>
+      <obj_property name="ObjectShortName">lrclk_del</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/count" type="array">
+      <obj_property name="ElementShortName">count[2:0]</obj_property>
+      <obj_property name="ObjectShortName">count[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_l" type="array">
+      <obj_property name="ElementShortName">acc_l[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_l[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_r" type="array">
+      <obj_property name="ElementShortName">acc_r[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_r[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_l1" type="array">
+      <obj_property name="ElementShortName">acc_l1[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_l1[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_r1" type="array">
+      <obj_property name="ElementShortName">acc_r1[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_r1[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_l2" type="array">
+      <obj_property name="ElementShortName">acc_l2[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_l2[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_r2" type="array">
+      <obj_property name="ElementShortName">acc_r2[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_r2[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_l3" type="array">
+      <obj_property name="ElementShortName">acc_l3[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_l3[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/acc_r3" type="array">
+      <obj_property name="ElementShortName">acc_r3[23:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_r3[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/load" type="array">
+      <obj_property name="ElementShortName">load[23:0]</obj_property>
+      <obj_property name="ObjectShortName">load[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/load1" type="array">
+      <obj_property name="ElementShortName">load1[23:0]</obj_property>
+      <obj_property name="ObjectShortName">load1[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/load2" type="array">
+      <obj_property name="ElementShortName">load2[23:0]</obj_property>
+      <obj_property name="ObjectShortName">load2[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/load3" type="array">
+      <obj_property name="ElementShortName">load3[23:0]</obj_property>
+      <obj_property name="ObjectShortName">load3[23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataGen_SampleValues" type="array">
+      <obj_property name="ElementShortName">DataGen_SampleValues[0:1][23:0]</obj_property>
+      <obj_property name="ObjectShortName">DataGen_SampleValues[0:1][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataGen_ChannelStatus" type="array">
+      <obj_property name="ElementShortName">DataGen_ChannelStatus[191:0]</obj_property>
+      <obj_property name="ObjectShortName">DataGen_ChannelStatus[191:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataGen_ChannelCounter" type="array">
+      <obj_property name="ElementShortName">DataGen_ChannelCounter[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DataGen_ChannelCounter[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataGen_FrameCounter" type="array">
+      <obj_property name="ElementShortName">DataGen_FrameCounter[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DataGen_FrameCounter[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataGen_AesOut" type="array">
+      <obj_property name="ElementShortName">DataGen_AesOut[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DataGen_AesOut[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/cAES_BSYNC" type="array">
+      <obj_property name="ElementShortName">cAES_BSYNC[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cAES_BSYNC[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/cAES_SF1SYNC" type="array">
+      <obj_property name="ElementShortName">cAES_SF1SYNC[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cAES_SF1SYNC[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/cAES_SF2SYNC" type="array">
+      <obj_property name="ElementShortName">cAES_SF2SYNC[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cAES_SF2SYNC[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataChk_ExpSampleValues" type="array">
+      <obj_property name="ElementShortName">DataChk_ExpSampleValues[0:7][23:0]</obj_property>
+      <obj_property name="ObjectShortName">DataChk_ExpSampleValues[0:7][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataChk_RcvdSampleValues" type="array">
+      <obj_property name="ElementShortName">DataChk_RcvdSampleValues[0:7][23:0]</obj_property>
+      <obj_property name="ObjectShortName">DataChk_RcvdSampleValues[0:7][23:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DataChk_ChannelCounter" type="array">
+      <obj_property name="ElementShortName">DataChk_ChannelCounter[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DataChk_ChannelCounter[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/AxiReadData" type="array">
+      <obj_property name="ElementShortName">AxiReadData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">AxiReadData[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/cAXI_BASEADDR_I2S_RX" type="array">
+      <obj_property name="ElementShortName">cAXI_BASEADDR_I2S_RX[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cAXI_BASEADDR_I2S_RX[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/cAXI_BASEADDR_I2S_TX" type="array">
+      <obj_property name="ElementShortName">cAXI_BASEADDR_I2S_TX[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cAXI_BASEADDR_I2S_TX[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/pMCLK_PERIOD" type="other">
+      <obj_property name="ElementShortName">pMCLK_PERIOD</obj_property>
+      <obj_property name="ObjectShortName">pMCLK_PERIOD</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/PTR_WIDTH" type="array">
+      <obj_property name="ElementShortName">PTR_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PTR_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/DWIDTH" type="array">
+      <obj_property name="ElementShortName">DWIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DWIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/IPI_INST/i2s_receiver_0/m_axis_aud_tdata" type="array">
+      <obj_property name="ElementShortName">m_axis_aud_tdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">m_axis_aud_tdata[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_tb_top/IPI_INST/i2s_receiver_0/sdata_0_in" type="logic">
+      <obj_property name="ElementShortName">sdata_0_in</obj_property>
+      <obj_property name="ObjectShortName">sdata_0_in</obj_property>
+   </wvobject>
+</wave_config>

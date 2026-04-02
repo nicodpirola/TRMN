@@ -1,0 +1,5 @@
+vhdl xil_defaultlib  \
+"../../../../dma_test_ex.gen/sources_1/ip/dma_test/sim/dma_test.vhd" \
+
+# Do not sort compile order
+nosort

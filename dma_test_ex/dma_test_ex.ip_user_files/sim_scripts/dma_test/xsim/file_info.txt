@@ -1,0 +1,2 @@
+dma_test.vhd,vhdl,xil_defaultlib,../../../../dma_test_ex.gen/sources_1/ip/dma_test/sim/dma_test.vhd,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+glbl.v,Verilog,xil_defaultlib,glbl.v

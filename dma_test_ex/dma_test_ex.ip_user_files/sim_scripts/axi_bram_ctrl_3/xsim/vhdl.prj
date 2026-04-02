@@ -1,0 +1,5 @@
+vhdl xil_defaultlib  \
+"../../../../dma_test_ex.gen/sources_1/ip/axi_bram_ctrl_3/sim/axi_bram_ctrl_3.vhd" \
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,9 @@
+xpm_cdc.sv,systemverilog,xpm,../ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+xpm_fifo.sv,systemverilog,xpm,../ip/xpm/xpm_fifo/hdl/xpm_fifo.sv,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+xpm_memory.sv,systemverilog,xpm,../ip/xpm/xpm_memory/hdl/xpm_memory.sv,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+xpm_VCOMP.vhd,vhdl,xpm,../ip/xpm/xpm_VCOMP.vhd,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+axi_datamover_v5_1_vh_rfs.vhd,vhdl,axi_datamover_v5_1_37,../../../ipstatic/ipshared/d44a/hdl/axi_datamover_v5_1_vh_rfs.vhd,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+axi_sg_v4_1_rfs.vhd,vhdl,axi_sg_v4_1_21,../../../ipstatic/ipshared/b193/hdl/axi_sg_v4_1_rfs.vhd,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+axi_dma_v7_1_vh_rfs.vhd,vhdl,axi_dma_v7_1_36,../../../ipstatic/ipshared/cb19/hdl/axi_dma_v7_1_vh_rfs.vhd,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+dma_test.vhd,vhdl,xil_defaultlib,../../../../dma_test_ex.gen/sources_1/ip/dma_test/sim/dma_test.vhd,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+glbl.v,Verilog,xil_defaultlib,glbl.v
