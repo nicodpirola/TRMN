@@ -1,0 +1,2 @@
+test.sv,systemverilog,xil_defaultlib,../../../../test_ex.gen/sources_1/ip/test/sim/test.sv,incdir="../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef"
+glbl.v,Verilog,xil_defaultlib,glbl.v

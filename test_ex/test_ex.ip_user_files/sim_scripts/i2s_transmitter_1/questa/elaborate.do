@@ -1,0 +1,1 @@
+vopt -l elaborate.log +acc=npr -suppress 10016  -L xil_defaultlib -L xilinx_vip -L xpm -L i2s_transmitter_v1_0_10 -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.i2s_transmitter_1 xil_defaultlib.glbl -o i2s_transmitter_1_opt

@@ -18,13 +18,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="26.863985 us"></ZoomStartTime>
-      <ZoomEndTime time="374.363986 us"></ZoomEndTime>
-      <Cursor1Time time="176.863985 us"></Cursor1Time>
+      <ZoomStartTime time="129.615254 us"></ZoomStartTime>
+      <ZoomEndTime time="269.415255 us"></ZoomEndTime>
+      <Cursor1Time time="256.410000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="60"></ValueColumnWidth>
+      <NameColumnWidth column_width="274"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="50" />
    <wvobject fp_name="/tb_zynq/DDR_addr" type="array">
