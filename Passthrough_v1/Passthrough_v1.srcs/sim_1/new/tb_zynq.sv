@@ -249,8 +249,37 @@ module tb_zynq();
         // NOTA: Usamos write_mem (backdoor) en lugar de write_burst o write_data
         // para inicializar la memoria de forma instantánea.
         for (int j = 0; j < 64; j++) begin
+            // Generamos datos "falsos" respetando el formato de 32 bits:
+            // [31] P (Parity), [30] C (Channel Status), [29] U (User bit), [28] V (Validity bit)
+            // [27:4] Audio Sample word
+            // [3:0] Preamble code (4'b0001 start block, 4'b0010 subframe 1/2)
+            
+            bit [31:0] dummy_audio;
+            bit [23:0] audio_val;
+            bit [3:0]  preamble;
+            bit [3:0]  control_bits; // {P, C, U, V}
+            bit parity;
+            
+            if (j % 2 == 0) begin
+                // Canal Izquierdo (Subframe 1)
+                audio_val = 24'h0A0000 + j; 
+                preamble = (j == 0) ? 4'b0001 : 4'b0010; // Inicio de bloque o subframe normal
+            end else begin
+                // Canal Derecho (Subframe 2)
+                audio_val = 24'h0B0000 + j; 
+                preamble = 4'b0010; // El subframe 2 usa el mismo preambulo en este protocolo simplificado
+            end
+            
+            // Asignamos C, U, V a 0 para esta prueba
+            // Calculamos bit de paridad (paridad par de bits [30:4])
+            parity = ^({1'b0, 1'b0, 1'b0, audio_val}); 
+            control_bits = {parity, 1'b0, 1'b0, 1'b0};
+            
+            // Empaquetamos
+            dummy_audio = { control_bits, audio_val, preamble };
+            
             // La firma de write_mem es (data, addr, size_in_bytes)
-            dut.design_1_i.processing_system7_0.inst.write_mem(32'hA0000000 + j, 32'h00200000 + (j*4), 4);
+            dut.design_1_i.processing_system7_0.inst.write_mem(dummy_audio, 32'h00200000 + (j*4), 4);
         end
         
         // Paso 0: Aplicar Soft Reset al canal MM2S

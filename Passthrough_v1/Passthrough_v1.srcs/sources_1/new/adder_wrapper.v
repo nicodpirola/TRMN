@@ -61,20 +61,21 @@ module axi_stream_looper_mixer (
     assign m_axis_tlast   = s0_axis_tlast;
 
     // Si s1 tiene datos listos, los tomamos. Si no, inyectamos silencio (0) para no congelar s0.
-    // wire signed [31:0] s1_data_safe = s1_axis_tvalid ? s1_axis_tdata : 32'd0;
+    wire signed [31:0] s1_data_safe = s1_axis_tvalid ? s1_axis_tdata : 32'd0;
 
     // Suma con saturación simple (asumiendo audio con signo de 32 bits)
-    // wire signed [32:0] full_sum = $signed(s0_axis_tdata) + $signed(s1_data_safe);
+    // Para ponderar los canales en el futuro, se multiplicarían s0_axis_tdata y s1_data_safe
+    // por coeficientes (por ejemplo, en formato de coma fija Q1.15) antes de sumarlos.
+    wire signed [33:0] full_sum = $signed(s0_axis_tdata) + $signed(s1_data_safe);
 
     // Comparamos contra literales signed de 33 bits, pero asignamos literales hexadecimales puros
-    // assign m_axis_tdata = (full_sum > 33'sd2147483647)  ? 32'h7FFFFFFF : // Límite Máximo Positivo
-    //                       (full_sum < -33'sd2147483648) ? 32'h80000000 : // Límite Máximo Negativo
-    //                       full_sum[31:0];
+    assign m_axis_tdata = (full_sum > 33'sd2147483647)  ? 32'h7FFFFFFF : // Límite Máximo Positivo
+                          (full_sum < -33'sd2147483648) ? 32'h80000000 : // Límite Máximo Negativo
+                          full_sum[31:0];
 
     // =========================================================================
-    // MODO DEBUG: BYPASS PURO
-    // Pasa el audio de s0 directamente a la salida. Anula la suma.
+    // MODO DEBUG: BYPASS PURO (Comentado)
     // =========================================================================
-    assign m_axis_tdata = s0_axis_tdata;
+    // assign m_axis_tdata = s0_axis_tdata;
 
 endmodule
