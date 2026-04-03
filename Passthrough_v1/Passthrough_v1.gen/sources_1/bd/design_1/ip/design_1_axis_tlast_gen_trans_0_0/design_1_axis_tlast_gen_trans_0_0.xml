@@ -437,7 +437,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:daae177a</spirit:value>
+            <spirit:value>9:0e8cdeca</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -460,7 +460,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:104302cd</spirit:value>
+            <spirit:value>9:147eacfc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -505,11 +505,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Mar 14 03:50:43 UTC 2026</spirit:value>
+            <spirit:value>Thu Apr 02 18:24:51 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:daae177a</spirit:value>
+            <spirit:value>9:0e8cdeca</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -671,7 +671,7 @@
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>PKT_SIZE</spirit:name>
         <spirit:displayName>Pkt Size</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PKT_SIZE">4096</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PKT_SIZE">256</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -741,7 +741,7 @@
     <spirit:parameter>
       <spirit:name>PKT_SIZE</spirit:name>
       <spirit:displayName>Pkt Size</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.PKT_SIZE">4096</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.PKT_SIZE">256</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>

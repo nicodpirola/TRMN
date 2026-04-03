@@ -825,7 +825,7 @@ void design_1_axi_mem_intercon_imp_xbar_0::before_end_of_elaboration()
     M00_AXI_transactor_param_props.addLong("HAS_WSTRB", "1");
     M00_AXI_transactor_param_props.addLong("HAS_BRESP", "1");
     M00_AXI_transactor_param_props.addLong("HAS_RRESP", "1");
-    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "0");
+    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "1");
     M00_AXI_transactor_param_props.addLong("NUM_READ_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("NUM_WRITE_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("MAX_BURST_LENGTH", "16");
@@ -2123,7 +2123,7 @@ void design_1_axi_mem_intercon_imp_xbar_0::before_end_of_elaboration()
     M00_AXI_transactor_param_props.addLong("HAS_WSTRB", "1");
     M00_AXI_transactor_param_props.addLong("HAS_BRESP", "1");
     M00_AXI_transactor_param_props.addLong("HAS_RRESP", "1");
-    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "0");
+    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "1");
     M00_AXI_transactor_param_props.addLong("NUM_READ_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("NUM_WRITE_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("MAX_BURST_LENGTH", "16");
@@ -3421,7 +3421,7 @@ void design_1_axi_mem_intercon_imp_xbar_0::before_end_of_elaboration()
     M00_AXI_transactor_param_props.addLong("HAS_WSTRB", "1");
     M00_AXI_transactor_param_props.addLong("HAS_BRESP", "1");
     M00_AXI_transactor_param_props.addLong("HAS_RRESP", "1");
-    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "0");
+    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "1");
     M00_AXI_transactor_param_props.addLong("NUM_READ_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("NUM_WRITE_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("MAX_BURST_LENGTH", "16");
@@ -4489,7 +4489,7 @@ design_1_axi_mem_intercon_imp_xbar_0::design_1_axi_mem_intercon_imp_xbar_0(const
     M00_AXI_transactor_param_props.addLong("HAS_WSTRB", "1");
     M00_AXI_transactor_param_props.addLong("HAS_BRESP", "1");
     M00_AXI_transactor_param_props.addLong("HAS_RRESP", "1");
-    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "0");
+    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "1");
     M00_AXI_transactor_param_props.addLong("NUM_READ_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("NUM_WRITE_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("MAX_BURST_LENGTH", "16");
@@ -5785,7 +5785,7 @@ design_1_axi_mem_intercon_imp_xbar_0::design_1_axi_mem_intercon_imp_xbar_0(const
     M00_AXI_transactor_param_props.addLong("HAS_WSTRB", "1");
     M00_AXI_transactor_param_props.addLong("HAS_BRESP", "1");
     M00_AXI_transactor_param_props.addLong("HAS_RRESP", "1");
-    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "0");
+    M00_AXI_transactor_param_props.addLong("SUPPORTS_NARROW_BURST", "1");
     M00_AXI_transactor_param_props.addLong("NUM_READ_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("NUM_WRITE_OUTSTANDING", "8");
     M00_AXI_transactor_param_props.addLong("MAX_BURST_LENGTH", "16");

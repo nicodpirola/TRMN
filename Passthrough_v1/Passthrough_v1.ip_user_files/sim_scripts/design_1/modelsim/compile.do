@@ -270,7 +270,6 @@ vlog -work axi_protocol_converter_v2_1_36  -incr -mfcu  "+incdir+../../../../Pas
 vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_auto_pc_0/sim/design_1_axi_mem_intercon_imp_auto_pc_0.v" \
 "../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_auto_pc_1/sim/design_1_axi_mem_intercon_imp_auto_pc_1.v" \
-"../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_auto_pc_2/sim/design_1_axi_mem_intercon_imp_auto_pc_2.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"

@@ -230,43 +230,48 @@ module tb_zynq();
         $display("[TB %t] Modulos Xilinx I2S preparados (0x20, 0x0C).", $time);
 
         // =========================================================================
-        // 3. Configurar el AXI DMA para S2MM (Traducción de XAxiDma_SimpleTransfer)
-        // 3. Configurar y arrancar el AXI DMA para S2MM (Listo para recibir)
+        // 3. Configurar el AXI DMA en Modo Simple (S2MM y MM2S)
         // =========================================================================
-        // IMPORTANTE: Asegúrate de que la dirección base del DMA en Vivado sea 0x40400000.
-        // Si es distinta (mira en la pestaña "Address Editor"), cámbiala aquí.
-
-        // Paso 0: Aplicar Soft Reset al DMA antes de configurarlo
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400030, 4, 32'h00000004, resp); // S2MM Reset
+        
+        // --- S2MM (Recepción de Audio desde I2S RX a RAM) ---
+        // Paso 0: Aplicar Soft Reset al canal S2MM
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400030, 4, 32'h00000004, resp); 
         #5000;
-
-        // Paso A: Arrancar el canal S2MM (Escribir 1 en S2MM_DMACR, offset 0x30)
+        // Paso A: Arrancar el canal S2MM (S2MM_DMACR, offset 0x30)
         dut.design_1_i.processing_system7_0.inst.write_data(32'h40400030, 4, 32'h00000001, resp);
+        // Paso B: Dirección destino en RAM (S2MM_DA, offset 0x48) -> 1MB (0x00100000)
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400048, 4, 32'h00100000, resp);
 
-        // Paso B: Escribir la dirección destino en RAM (S2MM_DA, offset 0x48)
-        // En tu C esto es (u32)RxBuffer. Aquí inventamos una dir válida en RAM (ej. 1MB)
-        dut.design_1_i.processing_system7_0.inst.write_data(
-            32'h40400048,
-            4,
-            32'h00100000,
-            resp
-        );
+        // --- MM2S (Transmisión de Audio desde RAM a I2S TX) ---
+        // Pre-cargamos TODA la memoria RAM que el DMA va a leer (256 bytes = 64 words)
+        // para evitar que el VIP de Zynq devuelva 'X' (valores indefinidos) y dispare 
+        // el error AXI4_ERRS_RDATA_X del Protocol Checker.
+        // NOTA: Usamos write_mem (backdoor) en lugar de write_burst o write_data
+        // para inicializar la memoria de forma instantánea.
+        for (int j = 0; j < 64; j++) begin
+            // La firma de write_mem es (data, addr, size_in_bytes)
+            dut.design_1_i.processing_system7_0.inst.write_mem(32'hA0000000 + j, 32'h00200000 + (j*4), 4);
+        end
+        
+        // Paso 0: Aplicar Soft Reset al canal MM2S
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000004, resp); 
+        #5000;
+        // Paso A: Arrancar el canal MM2S (MM2S_DMACR, offset 0x00)
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000001, resp);
+        // Paso B: Dirección origen en RAM (MM2S_SA, offset 0x18) -> 2MB (0x00200000)
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400018, 4, 32'h00200000, resp);
 
-        // Paso C: Escribir la longitud a transferir (S2MM_LENGTH, offset 0x58)
-        // En tu C esto es MAX_PKT_LEN (16 bytes).
-        // PROBLEMA: Transferir 16KB (0x4000) requiere ~42ms de simulación.
-        // SOLUCION: Transferimos una cantidad pequeña, como 64 bytes (0x40), que es rápido de simular.
-        $display("[TB %t] Configurando DMA S2MM para recibir 64 bytes.", $time);
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400058, 4, 32'h00000040, resp); // Transferir 64 bytes
+        // --- Iniciar Transferencias ---
+        // Transferiremos 256 bytes (0x100) = 64 muestras de 32 bits.
+        // Esto permite ver un flujo continuo en el simulador sin demorar excesivamente.
+        $display("[TB %t] Configurando DMA S2MM (RX) y MM2S (TX) para transferir 256 bytes.", $time);
+        
+        // Escribir longitud inicia las transferencias (LENGTH offsets 0x28 y 0x58)
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400028, 4, 32'h00000100, resp); // MM2S
+        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400058, 4, 32'h00000100, resp); // S2MM
         #1000;
 
-        // MM2S desactivado en este banco: si el looper suma RAM, el dato deja de seguir al I2S RX.
-        // Para probar solo audio en vivo + S2MM, dejá MM2S en reset o sin LENGTH.
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000004, resp); // MM2S reset
-        #5000;
-        $display("[TB %t] MM2S en reset (no suma RAM al eje de audio).", $time);
-
-        $display("[TB %t] DMA S2MM listo. Esperando muestras de Audio...", $time);
+        $display("[TB %t] DMA listo en ambos sentidos. Esperando muestras...", $time);
 
         // =========================================================================
         // 4. Encender los módulos I2S (El "Gatillo")
@@ -281,28 +286,31 @@ module tb_zynq();
         $display("[TB %t] Modulos I2S encendidos (Relojes generandose, datos fluyendo).", $time);
 
         // Dejamos correr la simulación un tiempo prudencial.
-        // Para 64 bytes, se necesitan 16 transferencias de 4 bytes.
-        // Tiempo necesario: 16 * 10.24us ~= 164us.
-        // Le damos 200us para que termine con margen.
-        #200000;
+        // Para 256 bytes (64 muestras) a ~52kHz LRCLK, necesitamos ~615 us.
+        // Le damos 800us (800000 ns) para asegurar que ambas transferencias terminen con margen.
+        #800000;
         
         // =========================================================================
         // 5. Verificar el estado del DMA y los datos en memoria
         // =========================================================================
         $display("[TB %t] Verificando estado del DMA y memoria RAM...", $time);
 
-        // Leemos el registro de estado S2MM (offset 0x34)
+        // --- Estado de S2MM (Recepción) ---
         dut.design_1_i.processing_system7_0.inst.read_data(32'h40400034, 4, read_data, resp);
-        $display("[TB %t] Registro de estado S2MM_DMASR: 0x%08h", $time, read_data);
-
-        // Verificamos los bits clave:
-        // Bit 12 (IOC_Irq): '1' indica que la transferencia se completó.
-        // Bit 14 (DMAIntErr): '1' indica un error interno del DMA.
-        // Bit 0 (Halted): '0' indica que el DMA está corriendo o inactivo (no parado por error).
+        $display("[TB %t] Registro de estado S2MM_DMASR (Recepción): 0x%08h", $time, read_data);
         if (read_data[12] == 1 && read_data[14] == 0) begin
-            $display("[SUCCESS] El DMA completo la transferencia S2MM sin errores.");
+            $display("[SUCCESS] El DMA completo la transferencia S2MM (Audio -> RAM) sin errores.");
         end else begin
-            $display("[FAILURE] El DMA NO completo la transferencia o reporto un error.");
+            $display("[FAILURE] S2MM NO completo la transferencia o reporto un error.");
+        end
+
+        // --- Estado de MM2S (Transmisión) ---
+        dut.design_1_i.processing_system7_0.inst.read_data(32'h40400004, 4, read_data, resp);
+        $display("[TB %t] Registro de estado MM2S_DMASR (Transmisión): 0x%08h", $time, read_data);
+        if (read_data[12] == 1 && read_data[14] == 0) begin
+            $display("[SUCCESS] El DMA completo la transferencia MM2S (RAM -> Audio) sin errores.");
+        end else begin
+            $display("[FAILURE] MM2S NO completo la transferencia o reporto un error.");
         end
         
         // Leer varias posiciones de RAM para ver ambos canales multiplexados
