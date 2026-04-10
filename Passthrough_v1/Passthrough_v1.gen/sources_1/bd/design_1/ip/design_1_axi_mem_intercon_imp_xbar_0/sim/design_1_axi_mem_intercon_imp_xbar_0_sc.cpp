@@ -66,7 +66,7 @@ design_1_axi_mem_intercon_imp_xbar_0_sc::design_1_axi_mem_intercon_imp_xbar_0_sc
     model_param_props.addLong("C_AXI_ID_WIDTH", "2");
     model_param_props.addLong("C_AXI_ADDR_WIDTH", "32");
     model_param_props.addLong("C_AXI_DATA_WIDTH", "32");
-    model_param_props.addLong("C_AXI_PROTOCOL", "1");
+    model_param_props.addLong("C_AXI_PROTOCOL", "0");
     model_param_props.addLong("C_NUM_ADDR_RANGES", "1");
     model_param_props.addLong("C_AXI_SUPPORTS_USER_SIGNALS", "0");
     model_param_props.addLong("C_AXI_AWUSER_WIDTH", "1");
@@ -84,7 +84,7 @@ design_1_axi_mem_intercon_imp_xbar_0_sc::design_1_axi_mem_intercon_imp_xbar_0_sc
     model_param_props.addBitString("C_M_AXI_WRITE_CONNECTIVITY", "00000000000000000000000000000110", 32);
     model_param_props.addBitString("C_M_AXI_READ_CONNECTIVITY", "00000000000000000000000000000101", 32);
     model_param_props.addBitString("C_S_AXI_SINGLE_THREAD", "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", 96);
-    model_param_props.addBitString("C_S_AXI_WRITE_ACCEPTANCE", "000000000000000000000000000000100000000000000000000000000001000000000000000000000000000000001000", 96);
+    model_param_props.addBitString("C_S_AXI_WRITE_ACCEPTANCE", "000000000000000000000000000000100000000000000000000000000001000000000000000000000000000000000010", 96);
     model_param_props.addBitString("C_S_AXI_READ_ACCEPTANCE", "000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000010000", 96);
     model_param_props.addBitString("C_M_AXI_WRITE_ISSUING", "00000000000000000000000000001000", 32);
     model_param_props.addBitString("C_M_AXI_READ_ISSUING", "00000000000000000000000000001000", 32);

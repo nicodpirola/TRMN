@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Thu Apr  2 15:24:50 2026
+//Date        : Thu Apr  9 23:02:20 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -36,6 +36,7 @@ module design_1_wrapper
     lrclk_out_1,
     mclk_out_adc,
     mclk_out_dac,
+    pedal_in_0,
     sclk_out_0,
     sclk_out_1,
     sdata_0_in_0,
@@ -66,6 +67,7 @@ module design_1_wrapper
   output lrclk_out_1;
   output mclk_out_adc;
   output mclk_out_dac;
+  input pedal_in_0;
   output sclk_out_0;
   output sclk_out_1;
   input sdata_0_in_0;
@@ -97,6 +99,7 @@ module design_1_wrapper
   wire lrclk_out_1;
   wire mclk_out_adc;
   wire mclk_out_dac;
+  wire pedal_in_0;
   wire sclk_out_0;
   wire sclk_out_1;
   wire sdata_0_in_0;
@@ -129,6 +132,7 @@ module design_1_wrapper
         .lrclk_out_1(lrclk_out_1),
         .mclk_out_adc(mclk_out_adc),
         .mclk_out_dac(mclk_out_dac),
+        .pedal_in_0(pedal_in_0),
         .sclk_out_0(sclk_out_0),
         .sclk_out_1(sclk_out_1),
         .sdata_0_in_0(sdata_0_in_0),

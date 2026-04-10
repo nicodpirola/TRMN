@@ -57,6 +57,7 @@
 module design_1_axi_stream_looper_mi_0_0 (
   clk,
   resetn,
+  mode,
   s0_axis_tdata,
   s0_axis_tvalid,
   s0_axis_tlast,
@@ -65,20 +66,25 @@ module design_1_axi_stream_looper_mi_0_0 (
   s1_axis_tvalid,
   s1_axis_tlast,
   s1_axis_tready,
-  m_axis_tdata,
-  m_axis_tvalid,
-  m_axis_tlast,
-  m_axis_tready
+  m_i2s_axis_tdata,
+  m_i2s_axis_tvalid,
+  m_i2s_axis_tlast,
+  m_i2s_axis_tready,
+  m_dma_axis_tdata,
+  m_dma_axis_tvalid,
+  m_dma_axis_tlast,
+  m_dma_axis_tready
 );
 
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
 (* X_INTERFACE_MODE = "slave" *)
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, ASSOCIATED_BUSIF m_axis:s0_axis:s1_axis, ASSOCIATED_RESET resetn, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, ASSOCIATED_BUSIF m_dma_axis:m_i2s_axis:s0_axis:s1_axis, ASSOCIATED_RESET resetn, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0" *)
 input wire clk;
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 resetn RST" *)
 (* X_INTERFACE_MODE = "slave" *)
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME resetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 input wire resetn;
+input wire [1 : 0] mode;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s0_axis TDATA" *)
 (* X_INTERFACE_MODE = "slave" *)
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s0_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
@@ -99,20 +105,31 @@ input wire s1_axis_tvalid;
 input wire s1_axis_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s1_axis TREADY" *)
 output wire s1_axis_tready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis TDATA" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_i2s_axis TDATA" *)
 (* X_INTERFACE_MODE = "master" *)
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
-output wire [31 : 0] m_axis_tdata;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis TVALID" *)
-output wire m_axis_tvalid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis TLAST" *)
-output wire m_axis_tlast;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis TREADY" *)
-input wire m_axis_tready;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_i2s_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
+output wire [31 : 0] m_i2s_axis_tdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_i2s_axis TVALID" *)
+output wire m_i2s_axis_tvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_i2s_axis TLAST" *)
+output wire m_i2s_axis_tlast;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_i2s_axis TREADY" *)
+input wire m_i2s_axis_tready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_dma_axis TDATA" *)
+(* X_INTERFACE_MODE = "master" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_dma_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
+output wire [31 : 0] m_dma_axis_tdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_dma_axis TVALID" *)
+output wire m_dma_axis_tvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_dma_axis TLAST" *)
+output wire m_dma_axis_tlast;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_dma_axis TREADY" *)
+input wire m_dma_axis_tready;
 
   axi_stream_looper_mixer inst (
     .clk(clk),
     .resetn(resetn),
+    .mode(mode),
     .s0_axis_tdata(s0_axis_tdata),
     .s0_axis_tvalid(s0_axis_tvalid),
     .s0_axis_tlast(s0_axis_tlast),
@@ -121,9 +138,13 @@ input wire m_axis_tready;
     .s1_axis_tvalid(s1_axis_tvalid),
     .s1_axis_tlast(s1_axis_tlast),
     .s1_axis_tready(s1_axis_tready),
-    .m_axis_tdata(m_axis_tdata),
-    .m_axis_tvalid(m_axis_tvalid),
-    .m_axis_tlast(m_axis_tlast),
-    .m_axis_tready(m_axis_tready)
+    .m_i2s_axis_tdata(m_i2s_axis_tdata),
+    .m_i2s_axis_tvalid(m_i2s_axis_tvalid),
+    .m_i2s_axis_tlast(m_i2s_axis_tlast),
+    .m_i2s_axis_tready(m_i2s_axis_tready),
+    .m_dma_axis_tdata(m_dma_axis_tdata),
+    .m_dma_axis_tvalid(m_dma_axis_tvalid),
+    .m_dma_axis_tlast(m_dma_axis_tlast),
+    .m_dma_axis_tready(m_dma_axis_tready)
   );
 endmodule

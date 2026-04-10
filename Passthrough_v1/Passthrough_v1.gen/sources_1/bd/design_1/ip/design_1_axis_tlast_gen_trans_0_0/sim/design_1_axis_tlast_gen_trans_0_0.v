@@ -94,7 +94,7 @@ output wire m_axis_tlast;
 input wire m_axis_tready;
 
   axis_tlast_gen_transparent #(
-    .PKT_SIZE(256)
+    .PKT_SIZE(64)
   ) inst (
     .clk(clk),
     .resetn(resetn),

@@ -167,7 +167,7 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">3</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -203,7 +203,7 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">0</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -455,7 +455,7 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">3</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -491,7 +491,7 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">0</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -665,7 +665,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>PROTOCOL</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S00_AXI.PROTOCOL">AXI3</spirit:value>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S00_AXI.PROTOCOL">AXI4</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -863,7 +863,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>MAX_BURST_LENGTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S00_AXI.MAX_BURST_LENGTH">16</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S00_AXI.MAX_BURST_LENGTH">256</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -980,7 +980,7 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">3</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -1016,7 +1016,7 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">0</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -1280,7 +1280,7 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">3</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -1316,7 +1316,7 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">0</spirit:left>
               <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((0 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">0</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
@@ -1502,7 +1502,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>PROTOCOL</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXI.PROTOCOL">AXI3</spirit:value>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXI.PROTOCOL">AXI4</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -1700,7 +1700,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>MAX_BURST_LENGTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXI.MAX_BURST_LENGTH">16</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.M00_AXI.MAX_BURST_LENGTH">256</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -1817,8 +1817,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -1853,8 +1853,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">1</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -2105,8 +2105,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -2141,8 +2141,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">1</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -2315,7 +2315,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>PROTOCOL</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S01_AXI.PROTOCOL">AXI3</spirit:value>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S01_AXI.PROTOCOL">AXI4</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -2513,7 +2513,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>MAX_BURST_LENGTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S01_AXI.MAX_BURST_LENGTH">16</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S01_AXI.MAX_BURST_LENGTH">256</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -2630,8 +2630,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -2666,8 +2666,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">1</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -2930,8 +2930,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -2966,8 +2966,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((1 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">1</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -3467,8 +3467,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -3503,8 +3503,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">2</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -3755,8 +3755,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -3791,8 +3791,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">2</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -3965,7 +3965,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>PROTOCOL</spirit:name>
-          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S02_AXI.PROTOCOL">AXI3</spirit:value>
+          <spirit:value spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S02_AXI.PROTOCOL">AXI4</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -4163,7 +4163,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>MAX_BURST_LENGTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S02_AXI.MAX_BURST_LENGTH">16</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S02_AXI.MAX_BURST_LENGTH">256</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>simulation.tlm</xilinx:parameterUsage>
@@ -4280,8 +4280,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -4316,8 +4316,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">2</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -4580,8 +4580,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -4616,8 +4616,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">2</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((2 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">2</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -5117,8 +5117,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -5153,8 +5153,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">3</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -5405,8 +5405,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -5441,8 +5441,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">3</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -5930,8 +5930,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -5966,8 +5966,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">3</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -6230,8 +6230,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -6266,8 +6266,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">3</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((3 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">3</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -6767,8 +6767,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -6803,8 +6803,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">4</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -7055,8 +7055,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -7091,8 +7091,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">4</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -7580,8 +7580,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -7616,8 +7616,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">4</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -7880,8 +7880,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -7916,8 +7916,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">4</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((4 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">4</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -8417,8 +8417,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -8453,8 +8453,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">5</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -8705,8 +8705,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -8741,8 +8741,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">5</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -9230,8 +9230,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -9266,8 +9266,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">5</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -9530,8 +9530,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -9566,8 +9566,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((5 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">5</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -10067,8 +10067,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -10103,8 +10103,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">6</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -10355,8 +10355,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -10391,8 +10391,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">6</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -10880,8 +10880,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -10916,8 +10916,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">6</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -11180,8 +11180,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -11216,8 +11216,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">6</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((6 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">6</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -11717,8 +11717,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -11753,8 +11753,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">7</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -12005,8 +12005,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -12041,8 +12041,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">7</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -12530,8 +12530,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -12566,8 +12566,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">7</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -12830,8 +12830,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -12866,8 +12866,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">7</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((7 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">7</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -13367,8 +13367,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">35</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">71</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">64</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -13403,8 +13403,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">17</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">8</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -13655,8 +13655,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">35</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">71</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">64</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -13691,8 +13691,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">17</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">8</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -14180,8 +14180,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">35</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">71</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">64</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -14216,8 +14216,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">17</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">8</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -14480,8 +14480,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">35</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">32</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">71</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">64</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -14516,8 +14516,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">17</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">16</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">8</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((8 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">8</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -15017,8 +15017,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">36</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">79</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">72</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -15053,8 +15053,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">18</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">9</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -15305,8 +15305,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">36</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">79</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">72</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -15341,8 +15341,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">18</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">9</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -15830,8 +15830,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">36</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">79</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">72</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -15866,8 +15866,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">18</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">9</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -16130,8 +16130,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">39</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">36</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">79</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">72</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -16166,8 +16166,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">19</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">18</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">9</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((9 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">9</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -16667,8 +16667,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">43</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">87</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">80</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -16703,8 +16703,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">21</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">10</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -16955,8 +16955,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">43</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">87</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">80</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -16991,8 +16991,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">21</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">10</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -17480,8 +17480,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">43</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">87</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">80</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -17516,8 +17516,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">21</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">10</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -17780,8 +17780,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">43</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">40</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">87</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">80</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -17816,8 +17816,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">21</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">20</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">10</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((10 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">10</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -18317,8 +18317,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">44</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">95</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">88</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -18353,8 +18353,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">22</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">11</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -18605,8 +18605,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">44</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">95</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">88</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -18641,8 +18641,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">22</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">11</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -19130,8 +19130,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">44</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">95</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">88</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -19166,8 +19166,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">22</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">11</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -19430,8 +19430,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">47</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">44</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">95</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">88</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -19466,8 +19466,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">23</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">22</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">11</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((11 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">11</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -19967,8 +19967,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">51</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">103</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">96</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -20003,8 +20003,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">25</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">12</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -20255,8 +20255,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">51</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">103</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">96</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -20291,8 +20291,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">25</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">12</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -20780,8 +20780,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">51</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">103</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">96</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -20816,8 +20816,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">25</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">12</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -21080,8 +21080,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">51</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">48</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">103</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">96</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -21116,8 +21116,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">25</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">24</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">12</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((12 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">12</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -21617,8 +21617,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">52</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">111</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">104</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -21653,8 +21653,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">26</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">13</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -21905,8 +21905,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">52</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">111</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">104</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -21941,8 +21941,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">26</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">13</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -22430,8 +22430,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">52</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">111</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">104</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -22466,8 +22466,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">26</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">13</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -22730,8 +22730,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">55</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">52</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">111</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">104</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -22766,8 +22766,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">27</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">26</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">13</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((13 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">13</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -23267,8 +23267,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">59</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">119</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">112</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -23303,8 +23303,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">29</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">14</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -23555,8 +23555,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">59</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">119</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">112</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -23591,8 +23591,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">29</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">14</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -24080,8 +24080,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">59</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">119</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">112</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -24116,8 +24116,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">29</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">14</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -24380,8 +24380,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">59</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">56</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">119</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">112</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -24416,8 +24416,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">29</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">28</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">14</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((14 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">14</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -24917,8 +24917,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">60</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">127</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">120</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -24953,8 +24953,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">30</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">15</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -25205,8 +25205,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">60</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">127</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">120</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -25241,8 +25241,8 @@
           <spirit:physicalPort>
             <spirit:name>s_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">30</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">15</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -25730,8 +25730,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">60</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">127</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">120</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -25766,8 +25766,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_awlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">30</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">15</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -26030,8 +26030,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlen</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">63</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">60</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">127</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1) + 1)">120</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -26066,8 +26066,8 @@
           <spirit:physicalPort>
             <spirit:name>m_axi_arlock</spirit:name>
             <spirit:vector>
-              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">31</spirit:left>
-              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">30</spirit:right>
+              <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((16 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">15</spirit:left>
+              <spirit:right spirit:format="long" spirit:resolve="dependent" spirit:dependency="(((15 * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1) + 1)">15</spirit:right>
             </spirit:vector>
           </spirit:physicalPort>
         </spirit:portMap>
@@ -27307,7 +27307,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bf30e460</spirit:value>
+            <spirit:value>9:c6af4811</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27321,11 +27321,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Mar 29 15:55:13 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 10 00:25:41 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bf30e460</spirit:value>
+            <spirit:value>9:c6af4811</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27339,11 +27339,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Mar 29 15:53:47 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 10 00:23:48 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bf30e460</spirit:value>
+            <spirit:value>9:c6af4811</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27359,11 +27359,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Apr 02 18:11:20 UTC 2026</spirit:value>
+            <spirit:value>Thu Apr 09 17:49:26 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:f276e948</spirit:value>
+            <spirit:value>9:c3794ef0</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>sim_type</spirit:name>
@@ -27387,11 +27387,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Apr 02 18:11:20 UTC 2026</spirit:value>
+            <spirit:value>Thu Apr 09 17:49:26 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:f276e948</spirit:value>
+            <spirit:value>9:c3794ef0</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>sim_type</spirit:name>
@@ -27430,7 +27430,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:71806bfe</spirit:value>
+            <spirit:value>9:caa2f233</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27446,11 +27446,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Apr 02 18:11:20 UTC 2026</spirit:value>
+            <spirit:value>Thu Apr 09 17:49:26 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:71806bfe</spirit:value>
+            <spirit:value>9:caa2f233</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27488,7 +27488,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bf30e460</spirit:value>
+            <spirit:value>9:c6af4811</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27504,11 +27504,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Mar 29 15:53:47 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 10 00:23:48 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bf30e460</spirit:value>
+            <spirit:value>9:c6af4811</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -27592,7 +27592,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">11</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -27603,7 +27603,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8))){0}}" spirit:bitStringLength="8">0x000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8))){0}}" spirit:bitStringLength="8">0x000000</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -27673,7 +27673,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">2</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -27684,7 +27684,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1))){0}}" spirit:bitStringLength="1">0x00</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1))){0}}" spirit:bitStringLength="1">0x0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -27862,7 +27862,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_wid" xilinx:dependency="( (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) and (spirit:decode(id(&apos;PARAM_VALUE.ID_WIDTH&apos;)) != 0) )">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_wid" xilinx:dependency="( (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) and (spirit:decode(id(&apos;PARAM_VALUE.ID_WIDTH&apos;)) != 0) )">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -28166,7 +28166,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">11</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">23</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -28177,7 +28177,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8))){0}}" spirit:bitStringLength="8">0x000</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8))){0}}" spirit:bitStringLength="8">0x000000</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -28247,7 +28247,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">5</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">2</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -28258,7 +28258,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1))){0}}" spirit:bitStringLength="1">0x00</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_SLAVE_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1))){0}}" spirit:bitStringLength="1">0x0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -28610,7 +28610,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">3</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -28682,7 +28682,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">0</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -28761,7 +28761,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_awregion" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 0)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_awregion" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 0)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -28877,7 +28877,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_wid" xilinx:dependency="( ( (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) and (spirit:decode(id(&apos;PARAM_VALUE.ID_WIDTH&apos;)) != 0) ) and (spirit:decode(id(&apos;PARAM_VALUE.CONNECTIVITY_MODE&apos;)) != &quot;SASD&quot;) )">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_wid" xilinx:dependency="( ( (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) and (spirit:decode(id(&apos;PARAM_VALUE.ID_WIDTH&apos;)) != 0) ) and (spirit:decode(id(&apos;PARAM_VALUE.CONNECTIVITY_MODE&apos;)) != &quot;SASD&quot;) )">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -29172,7 +29172,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">3</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 4 : 8)) - 1)">7</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -29244,7 +29244,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">1</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_MASTER_SLOTS&apos;)) * ((spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 1) ? 2 : 1)) - 1)">0</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -29323,7 +29323,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_arregion" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 0)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_arregion" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_PROTOCOL&apos;)) = 0)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -31661,7 +31661,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_AXI_PROTOCOL</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_AXI_PROTOCOL">1</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_AXI_PROTOCOL">0</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_NUM_ADDR_RANGES</spirit:name>
@@ -31725,7 +31725,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_S_AXI_WRITE_ACCEPTANCE</spirit:name>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_WRITE_ACCEPTANCE" spirit:bitStringLength="96">0x000000020000001000000008</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_WRITE_ACCEPTANCE" spirit:bitStringLength="96">0x000000020000001000000002</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_S_AXI_READ_ACCEPTANCE</spirit:name>
@@ -32203,7 +32203,7 @@
     <spirit:parameter>
       <spirit:name>PROTOCOL</spirit:name>
       <spirit:displayName>Protocol</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PROTOCOL" spirit:choiceRef="choice_list_7235ff92" spirit:order="7">AXI3</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PROTOCOL" spirit:choiceRef="choice_list_7235ff92" spirit:order="7">AXI4</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -38659,7 +38659,7 @@
     <spirit:parameter>
       <spirit:name>S00_WRITE_ACCEPTANCE</spirit:name>
       <spirit:displayName>My S00_WRITE_ACCEPTANCE</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.S00_WRITE_ACCEPTANCE" spirit:order="549" spirit:minimum="1" spirit:maximum="32" spirit:rangeType="long">8</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.S00_WRITE_ACCEPTANCE" spirit:order="549" spirit:minimum="1" spirit:maximum="32" spirit:rangeType="long">2</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -46553,7 +46553,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLKIF.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLKIF.FREQ_TOLERANCE_HZ" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLKIF.PHASE" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.ADDR_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.ADDR_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.ARUSER_WIDTH" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.AWUSER_WIDTH" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.BUSER_WIDTH" xilinx:valuePermission="bd"/>
@@ -46566,10 +46566,10 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_LOCK" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_PROT" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_QOS" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_REGION" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_REGION" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_RRESP" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.HAS_WSTRB" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.ID_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.ID_WIDTH" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.MAX_BURST_LENGTH" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.NUM_READ_OUTSTANDING" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M00_AXI.NUM_READ_THREADS" xilinx:valuePermission="bd"/>
@@ -46615,12 +46615,12 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M01_AXI.WUSER_WIDTH" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RSTIF.POLARITY" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RSTIF.TYPE" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.ADDR_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.ARUSER_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.ADDR_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.ARUSER_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.AWUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.BUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.DATA_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.DATA_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.HAS_BRESP" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.HAS_BURST" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
@@ -46635,22 +46635,22 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.MAX_BURST_LENGTH" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.NUM_READ_OUTSTANDING" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.NUM_READ_THREADS" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.NUM_WRITE_OUTSTANDING" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.NUM_WRITE_OUTSTANDING" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.NUM_WRITE_THREADS" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.PHASE" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.PROTOCOL" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.PROTOCOL" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.READ_WRITE_MODE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.RUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.RUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.SUPPORTS_NARROW_BURST" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.WUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.WUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.ADDR_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.ADDR_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.ARUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.AWUSER_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.AWUSER_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.BUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.DATA_WIDTH" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.DATA_WIDTH" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.HAS_BRESP" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.HAS_BURST" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
@@ -46668,7 +46668,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.NUM_WRITE_OUTSTANDING" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.NUM_WRITE_THREADS" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.PHASE" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.PROTOCOL" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.PROTOCOL" xilinx:valueSource="auto_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.READ_WRITE_MODE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.RUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S01_AXI.RUSER_WIDTH" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
@@ -46698,7 +46698,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.NUM_WRITE_OUTSTANDING" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.NUM_WRITE_THREADS" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.PHASE" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.PROTOCOL" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.PROTOCOL" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.READ_WRITE_MODE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.RUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S02_AXI.RUSER_WIDTH" xilinx:valuePermission="bd"/>

@@ -60,6 +60,7 @@ module tb_zynq();
     logic sdata_0_in_0; // Datos hacia el FPGA (generados por el emulador del TB)
     logic sdata_0_in_reg; // Registro en posedge BCLK (evita carrera con el muestreo del IP)
     wire sdata_0_out_0; // Datos desde el FPGA hacia el exterior
+    logic pedal_in_0 = 1'b1; // (DEPRECADO) Se mantiene para no romper el port map del wrapper
 
     // Instancia del wrapper de tu Block Design
     // NOTA: Cambia "design_1_wrapper" por el nombre real de tu wrapper
@@ -93,7 +94,8 @@ module tb_zynq();
         .mclk_out_adc(mclk_out_adc),
         .mclk_out_dac(mclk_out_dac),
         .sdata_0_in_0(sdata_0_in_0),
-        .sdata_0_out_0(sdata_0_out_0)
+        .sdata_0_out_0(sdata_0_out_0),
+        .pedal_in_0(pedal_in_0)
     );
 
     // Variable para capturar la respuesta del bus AXI (0 = OK)
@@ -230,6 +232,23 @@ module tb_zynq();
         $display("[TB %t] Modulos Xilinx I2S preparados (0x20, 0x0C).", $time);
 
         // =========================================================================
+        // 2.5. Configurar el AXI GPIO (Control del Looper Mixer)
+        // =========================================================================
+        // Asumimos que la base del AXI GPIO quedo mapeada en 0x41200000.
+        // Si en Vivado ("Address Editor") quedo con otra base, cambiar este valor:
+        begin
+            automatic bit [31:0] GPIO_BASE_ADDR = 32'h41200000;
+            
+            $display("[TB %t] Inicializando Looper Mixer en MODO IDLE (00)...", $time);
+            // Escribir 0 en el GPIO (Canal 1, Offset 0x00)
+            dut.design_1_i.processing_system7_0.inst.write_data(GPIO_BASE_ADDR, 4, 32'h00000000, resp);
+            if (resp != 0) $display("[ERROR] Escritura fallida en el AXI GPIO. Resp: %b", resp);
+            
+            #1000;
+            $display("[TB %t] Looper Mixer configurado.", $time);
+        end
+
+        // =========================================================================
         // 3. Configurar el AXI DMA en Modo Simple (S2MM y MM2S)
         // =========================================================================
         
@@ -239,47 +258,31 @@ module tb_zynq();
         #5000;
         // Paso A: Arrancar el canal S2MM (S2MM_DMACR, offset 0x30)
         dut.design_1_i.processing_system7_0.inst.write_data(32'h40400030, 4, 32'h00000001, resp);
-        // Paso B: Dirección destino en RAM (S2MM_DA, offset 0x48) -> 1MB (0x00100000)
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400048, 4, 32'h00100000, resp);
 
         // --- MM2S (Transmisión de Audio desde RAM a I2S TX) ---
-        // Pre-cargamos TODA la memoria RAM que el DMA va a leer (256 bytes = 64 words)
-        // para evitar que el VIP de Zynq devuelva 'X' (valores indefinidos) y dispare 
-        // el error AXI4_ERRS_RDATA_X del Protocol Checker.
-        // NOTA: Usamos write_mem (backdoor) en lugar de write_burst o write_data
-        // para inicializar la memoria de forma instantánea.
-        for (int j = 0; j < 64; j++) begin
-            // Generamos datos "falsos" respetando el formato de 32 bits:
-            // [31] P (Parity), [30] C (Channel Status), [29] U (User bit), [28] V (Validity bit)
-            // [27:4] Audio Sample word
-            // [3:0] Preamble code (4'b0001 start block, 4'b0010 subframe 1/2)
-            
+        // Pre-cargamos la memoria RAM que el DMA va a utilizar como buffer circular (4KB = 1024 words)
+        // para evitar que el VIP de Zynq devuelva 'X' (valores indefinidos) al arrancar MM2S
+        // y para probar lectura/escritura en la misma region (0x00100000).
+        for (int j = 0; j < 1024; j++) begin
             bit [31:0] dummy_audio;
             bit [23:0] audio_val;
             bit [3:0]  preamble;
-            bit [3:0]  control_bits; // {P, C, U, V}
+            bit [3:0]  control_bits;
             bit parity;
             
             if (j % 2 == 0) begin
-                // Canal Izquierdo (Subframe 1)
-                audio_val = 24'h0A0000 + j; 
-                preamble = (j == 0) ? 4'b0001 : 4'b0010; // Inicio de bloque o subframe normal
+                audio_val = 24'h0A0000 + j; // Canal Izquierdo
+                preamble = (j == 0) ? 4'b0001 : 4'b0010; 
             end else begin
-                // Canal Derecho (Subframe 2)
-                audio_val = 24'h0B0000 + j; 
-                preamble = 4'b0010; // El subframe 2 usa el mismo preambulo en este protocolo simplificado
+                audio_val = 24'h0B0000 + j; // Canal Derecho
+                preamble = 4'b0010; 
             end
             
-            // Asignamos C, U, V a 0 para esta prueba
-            // Calculamos bit de paridad (paridad par de bits [30:4])
             parity = ^({1'b0, 1'b0, 1'b0, audio_val}); 
             control_bits = {parity, 1'b0, 1'b0, 1'b0};
-            
-            // Empaquetamos
             dummy_audio = { control_bits, audio_val, preamble };
             
-            // La firma de write_mem es (data, addr, size_in_bytes)
-            dut.design_1_i.processing_system7_0.inst.write_mem(dummy_audio, 32'h00200000 + (j*4), 4);
+            dut.design_1_i.processing_system7_0.inst.write_mem(dummy_audio, 32'h00100000 + (j*4), 4);
         end
         
         // Paso 0: Aplicar Soft Reset al canal MM2S
@@ -287,20 +290,82 @@ module tb_zynq();
         #5000;
         // Paso A: Arrancar el canal MM2S (MM2S_DMACR, offset 0x00)
         dut.design_1_i.processing_system7_0.inst.write_data(32'h40400000, 4, 32'h00000001, resp);
-        // Paso B: Dirección origen en RAM (MM2S_SA, offset 0x18) -> 2MB (0x00200000)
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400018, 4, 32'h00200000, resp);
 
-        // --- Iniciar Transferencias ---
-        // Transferiremos 256 bytes (0x100) = 64 muestras de 32 bits.
-        // Esto permite ver un flujo continuo en el simulador sin demorar excesivamente.
-        $display("[TB %t] Configurando DMA S2MM (RX) y MM2S (TX) para transferir 256 bytes.", $time);
+        // --- Iniciar Transferencias Continuas ---
+        // Usamos hilos en segundo plano (fork) para re-armar el DMA cada vez que termina
+        $display("[TB %t] Configurando DMA S2MM (RX) y MM2S (TX) para buffer circular en 0x00100000.", $time);
         
-        // Escribir longitud inicia las transferencias (LENGTH offsets 0x28 y 0x58)
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400028, 4, 32'h00000100, resp); // MM2S
-        dut.design_1_i.processing_system7_0.inst.write_data(32'h40400058, 4, 32'h00000100, resp); // S2MM
-        #1000;
+        fork
+            // Hilo S2MM (Recepción hacia memoria) continuo
+            begin
+                automatic bit [31:0] s2mm_status;
+                automatic bit [1:0]  s2mm_resp;
+                automatic bit [31:0] mem_data;
+                automatic int s2mm_pkt_count = 0;
+                automatic bit [31:0] s2mm_addr = 32'h00100000; // Base del buffer
+                
+                forever begin
+                    // 1. Escribir direccion de destino (S2MM_DA)
+                    dut.design_1_i.processing_system7_0.inst.write_data(32'h40400048, 4, s2mm_addr, s2mm_resp);
+                    // 2. Iniciar S2MM (256 bytes)
+                    dut.design_1_i.processing_system7_0.inst.write_data(32'h40400058, 4, 32'h00000100, s2mm_resp);
+                    
+                    do begin
+                        #1000;
+                        dut.design_1_i.processing_system7_0.inst.read_data(32'h40400034, 4, s2mm_status, s2mm_resp);
+                    end while ((s2mm_status[1] == 0) && (s2mm_status[12] == 0)); // Esperar a Idle o Interrupción (IOC)
+                    
+                    s2mm_pkt_count++;
+                    
+                    $display("\n======================================================================");
+                    $display("[S2MM MONITOR %t] Paquete S2MM #%0d recibido con exito!", $time, s2mm_pkt_count);
+                    $display("======================================================================");
+                    $display("Verificando los primeros 16 valores (64 bytes) del buffer en RAM (Base: 0x%08h):", s2mm_addr);
+                    
+                    // Leer las primeras 16 posiciones de memoria recién escritas por el DMA
+                    for (int i = 0; i < 16; i++) begin
+                        dut.design_1_i.processing_system7_0.inst.read_mem(s2mm_addr + (i * 4), 4, mem_data);
+                        $display("  -> RAM[0x%08h] = 0x%08h", s2mm_addr + (i * 4), mem_data);
+                    end
+                    $display("======================================================================\n");
 
-        $display("[TB %t] DMA listo en ambos sentidos. Esperando muestras...", $time);
+                    // Limpiar bandera IOC (escribiendo 1 en el bit 12)
+                    dut.design_1_i.processing_system7_0.inst.write_data(32'h40400034, 4, 32'h00001000, s2mm_resp);
+
+                    // Avanzar buffer circular de 4KB (0x1000 bytes)
+                    s2mm_addr = s2mm_addr + 32'h00000100;
+                    if (s2mm_addr >= 32'h00101000) s2mm_addr = 32'h00100000;
+                end
+            end
+
+            // Hilo MM2S (Transmisión desde memoria) continuo
+            begin
+                automatic bit [31:0] mm2s_status;
+                automatic bit [1:0]  mm2s_resp;
+                automatic bit [31:0] mm2s_addr = 32'h00100000; // Leer desde el mismo buffer
+                
+                forever begin
+                    // 1. Escribir direccion de origen (MM2S_SA)
+                    dut.design_1_i.processing_system7_0.inst.write_data(32'h40400018, 4, mm2s_addr, mm2s_resp);
+                    // 2. Iniciar MM2S (256 bytes)
+                    dut.design_1_i.processing_system7_0.inst.write_data(32'h40400028, 4, 32'h00000100, mm2s_resp);
+                    
+                    do begin
+                        #1000;
+                        dut.design_1_i.processing_system7_0.inst.read_data(32'h40400004, 4, mm2s_status, mm2s_resp);
+                    end while ((mm2s_status[1] == 0) && (mm2s_status[12] == 0)); // Esperar a Idle o Interrupción (IOC)
+                    
+                    // Limpiar bandera IOC (escribiendo 1 en el bit 12)
+                    dut.design_1_i.processing_system7_0.inst.write_data(32'h40400004, 4, 32'h00001000, mm2s_resp);
+
+                    // Avanzar buffer circular (sigue a S2MM)
+                    mm2s_addr = mm2s_addr + 32'h00000100;
+                    if (mm2s_addr >= 32'h00101000) mm2s_addr = 32'h00100000;
+                end
+            end
+        join_none
+
+        $display("[TB %t] DMA listo y corriendo en background. Esperando muestras...", $time);
 
         // =========================================================================
         // 4. Encender los módulos I2S (El "Gatillo")
@@ -314,10 +379,32 @@ module tb_zynq();
 
         $display("[TB %t] Modulos I2S encendidos (Relojes generandose, datos fluyendo).", $time);
 
-        // Dejamos correr la simulación un tiempo prudencial.
-        // Para 256 bytes (64 muestras) a ~52kHz LRCLK, necesitamos ~615 us.
-        // Le damos 800us (800000 ns) para asegurar que ambas transferencias terminen con margen.
-        #800000;
+        // =========================================================================
+        // 4.5. SECUENCIA DE ESTADOS DEL LOOPER (SIMULANDO PEDAL / CÓDIGO C)
+        // =========================================================================
+        // Nota: Asegurate de que esta sea la dirección base de tu AXI GPIO
+        begin
+            automatic bit [31:0] GPIO_BASE = 32'h41200000;
+            
+            // ESTADO 1: IDLE (Ya establecido arriba, dejamos correr audio libre un rato)
+            $display("[TB %t] >>> TEST: MODO IDLE (00) - Audio en vivo al parlante. DMA de grabacion no recibe validos.", $time);
+            #2000000; // Dejamos pasar 2 milisegundos de simulacion
+
+            // ESTADO 2: RECORD
+            $display("[TB %t] >>> TEST: MODO RECORD (01) - Grabando primera capa en RAM.", $time);
+            dut.design_1_i.processing_system7_0.inst.write_data(GPIO_BASE, 4, 32'h00000001, resp);
+            #2000000;
+
+            // ESTADO 3: PLAY
+            $display("[TB %t] >>> TEST: MODO PLAY (10) - Loop reproduciendose y retroalimentandose a la RAM.", $time);
+            dut.design_1_i.processing_system7_0.inst.write_data(GPIO_BASE, 4, 32'h00000002, resp);
+            #2000000;
+
+            // ESTADO 4: OVERDUB
+            $display("[TB %t] >>> TEST: MODO OVERDUB (11) - Mezclando entrada + loop en el parlante y guardando suma en RAM.", $time);
+            dut.design_1_i.processing_system7_0.inst.write_data(GPIO_BASE, 4, 32'h00000003, resp);
+            #2000000;
+        end
         
         // =========================================================================
         // 5. Verificar el estado del DMA y los datos en memoria

@@ -2,7 +2,7 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
--- Date        : Tue Mar 17 18:19:58 2026
+-- Date        : Wed Apr  8 16:20:53 2026
 -- Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_axis_tlast_gen_trans_0_0/design_1_axis_tlast_gen_trans_0_0_sim_netlist.vhdl
@@ -306,7 +306,7 @@ m_axis_tlast_INST_0: unisim.vcomponents.LUT4
     );
 m_axis_tlast_INST_0_i_1: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"7FFF"
+      INIT => X"FFFE"
     )
         port map (
       I0 => count_reg_reg(9),
@@ -328,13 +328,13 @@ m_axis_tlast_INST_0_i_2: unisim.vcomponents.LUT4
     );
 m_axis_tlast_INST_0_i_3: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"8000"
+      INIT => X"1000"
     )
         port map (
-      I0 => count_reg_reg(5),
-      I1 => count_reg_reg(4),
-      I2 => count_reg_reg(7),
-      I3 => count_reg_reg(6),
+      I0 => count_reg_reg(7),
+      I1 => count_reg_reg(6),
+      I2 => count_reg_reg(5),
+      I3 => count_reg_reg(4),
       O => m_axis_tlast_INST_0_i_3_n_0
     );
 m_axis_tlast_INST_0_i_4: unisim.vcomponents.LUT4
@@ -386,7 +386,7 @@ architecture STRUCTURE of design_1_axis_tlast_gen_trans_0_0 is
   attribute X_INTERFACE_MODE : string;
   attribute X_INTERFACE_MODE of clk : signal is "slave";
   attribute X_INTERFACE_PARAMETER : string;
-  attribute X_INTERFACE_PARAMETER of clk : signal is "XIL_INTERFACENAME clk, ASSOCIATED_BUSIF m_axis:s_axis, ASSOCIATED_RESET resetn, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of clk : signal is "XIL_INTERFACENAME clk, ASSOCIATED_BUSIF m_axis:s_axis, ASSOCIATED_RESET resetn, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of m_axis_tlast : signal is "xilinx.com:interface:axis:1.0 m_axis TLAST";
   attribute X_INTERFACE_INFO of m_axis_tready : signal is "xilinx.com:interface:axis:1.0 m_axis TREADY";
   attribute X_INTERFACE_INFO of m_axis_tvalid : signal is "xilinx.com:interface:axis:1.0 m_axis TVALID";
@@ -397,10 +397,10 @@ architecture STRUCTURE of design_1_axis_tlast_gen_trans_0_0 is
   attribute X_INTERFACE_INFO of s_axis_tvalid : signal is "xilinx.com:interface:axis:1.0 s_axis TVALID";
   attribute X_INTERFACE_INFO of m_axis_tdata : signal is "xilinx.com:interface:axis:1.0 m_axis TDATA";
   attribute X_INTERFACE_MODE of m_axis_tdata : signal is "master";
-  attribute X_INTERFACE_PARAMETER of m_axis_tdata : signal is "XIL_INTERFACENAME m_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of m_axis_tdata : signal is "XIL_INTERFACENAME m_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axis_tdata : signal is "xilinx.com:interface:axis:1.0 s_axis TDATA";
   attribute X_INTERFACE_MODE of s_axis_tdata : signal is "slave";
-  attribute X_INTERFACE_PARAMETER of s_axis_tdata : signal is "XIL_INTERFACENAME s_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of s_axis_tdata : signal is "XIL_INTERFACENAME s_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0";
 begin
   \^m_axis_tready\ <= m_axis_tready;
   \^s_axis_tdata\(31 downto 0) <= s_axis_tdata(31 downto 0);

@@ -13,16 +13,19 @@ vlib questa_lib/msim/xlconstant_v1_1_10
 vlib questa_lib/msim/proc_sys_reset_v5_0_17
 vlib questa_lib/msim/smartconnect_v1_0
 vlib questa_lib/msim/axi_register_slice_v2_1_35
-vlib questa_lib/msim/axis_infrastructure_v1_1_1
-vlib questa_lib/msim/axis_broadcaster_v1_1_34
 vlib questa_lib/msim/axi_datamover_v5_1_37
 vlib questa_lib/msim/axi_sg_v4_1_21
 vlib questa_lib/msim/axi_dma_v7_1_36
+vlib questa_lib/msim/axis_infrastructure_v1_1_1
 vlib questa_lib/msim/axis_data_fifo_v2_0_17
 vlib questa_lib/msim/generic_baseblocks_v2_1_2
 vlib questa_lib/msim/fifo_generator_v13_2_13
 vlib questa_lib/msim/axi_data_fifo_v2_1_35
 vlib questa_lib/msim/axi_crossbar_v2_1_37
+vlib questa_lib/msim/axi_lite_ipif_v3_0_4
+vlib questa_lib/msim/interrupt_control_v3_1_5
+vlib questa_lib/msim/axi_gpio_v2_0_37
+vlib questa_lib/msim/axi_clock_converter_v2_1_34
 vlib questa_lib/msim/axi_protocol_converter_v2_1_36
 
 vmap xilinx_vip questa_lib/msim/xilinx_vip
@@ -37,16 +40,19 @@ vmap xlconstant_v1_1_10 questa_lib/msim/xlconstant_v1_1_10
 vmap proc_sys_reset_v5_0_17 questa_lib/msim/proc_sys_reset_v5_0_17
 vmap smartconnect_v1_0 questa_lib/msim/smartconnect_v1_0
 vmap axi_register_slice_v2_1_35 questa_lib/msim/axi_register_slice_v2_1_35
-vmap axis_infrastructure_v1_1_1 questa_lib/msim/axis_infrastructure_v1_1_1
-vmap axis_broadcaster_v1_1_34 questa_lib/msim/axis_broadcaster_v1_1_34
 vmap axi_datamover_v5_1_37 questa_lib/msim/axi_datamover_v5_1_37
 vmap axi_sg_v4_1_21 questa_lib/msim/axi_sg_v4_1_21
 vmap axi_dma_v7_1_36 questa_lib/msim/axi_dma_v7_1_36
+vmap axis_infrastructure_v1_1_1 questa_lib/msim/axis_infrastructure_v1_1_1
 vmap axis_data_fifo_v2_0_17 questa_lib/msim/axis_data_fifo_v2_0_17
 vmap generic_baseblocks_v2_1_2 questa_lib/msim/generic_baseblocks_v2_1_2
 vmap fifo_generator_v13_2_13 questa_lib/msim/fifo_generator_v13_2_13
 vmap axi_data_fifo_v2_1_35 questa_lib/msim/axi_data_fifo_v2_1_35
 vmap axi_crossbar_v2_1_37 questa_lib/msim/axi_crossbar_v2_1_37
+vmap axi_lite_ipif_v3_0_4 questa_lib/msim/axi_lite_ipif_v3_0_4
+vmap interrupt_control_v3_1_5 questa_lib/msim/interrupt_control_v3_1_5
+vmap axi_gpio_v2_0_37 questa_lib/msim/axi_gpio_v2_0_37
+vmap axi_clock_converter_v2_1_34 questa_lib/msim/axi_clock_converter_v2_1_34
 vmap axi_protocol_converter_v2_1_36 questa_lib/msim/axi_protocol_converter_v2_1_36
 
 vlog -work xilinx_vip  -incr -mfcu  -sv -L axi_vip_v1_1_21 -L smartconnect_v1_0 -L i2s_receiver_v1_0_10 -L i2s_transmitter_v1_0_10 -L processing_system7_vip_v1_0_23 -L xilinx_vip "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
@@ -194,6 +200,13 @@ vlog -work xil_defaultlib  -incr -mfcu  -sv -L axi_vip_v1_1_21 -L smartconnect_v
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_44/sim/bd_6e42_m02wn_0.sv" \
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_45/sim/bd_6e42_m02bn_0.sv" \
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_46/sim/bd_6e42_m02e_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_47/sim/bd_6e42_m03s2a_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_48/sim/bd_6e42_m03arn_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_49/sim/bd_6e42_m03rn_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_50/sim/bd_6e42_m03awn_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_51/sim/bd_6e42_m03wn_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_52/sim/bd_6e42_m03bn_0.sv" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_53/sim/bd_6e42_m03e_0.sv" \
 
 vlog -work axi_register_slice_v2_1_35  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/c5b7/hdl/axi_register_slice_v2_1_vl_rfs.v" \
@@ -208,20 +221,6 @@ vcom -work xil_defaultlib  -93  \
 vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../bd/design_1/ip/design_1_axi_stream_looper_mi_0_0/sim/design_1_axi_stream_looper_mi_0_0.v" \
 
-vlog -work axis_infrastructure_v1_1_1  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
-"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl/axis_infrastructure_v1_1_vl_rfs.v" \
-
-vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
-"../../../bd/design_1/ip/design_1_axis_broadcaster_0_0/hdl/tdata_design_1_axis_broadcaster_0_0.v" \
-"../../../bd/design_1/ip/design_1_axis_broadcaster_0_0/hdl/tuser_design_1_axis_broadcaster_0_0.v" \
-
-vlog -work axis_broadcaster_v1_1_34  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
-"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/07e4/hdl/axis_broadcaster_v1_1_vl_rfs.v" \
-
-vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
-"../../../bd/design_1/ip/design_1_axis_broadcaster_0_0/hdl/top_design_1_axis_broadcaster_0_0.v" \
-"../../../bd/design_1/ip/design_1_axis_broadcaster_0_0/sim/design_1_axis_broadcaster_0_0.v" \
-
 vcom -work axi_datamover_v5_1_37  -93  \
 "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/d44a/hdl/axi_datamover_v5_1_vh_rfs.vhd" \
 
@@ -233,6 +232,9 @@ vcom -work axi_dma_v7_1_36  -93  \
 
 vcom -work xil_defaultlib  -93  \
 "../../../bd/design_1/ip/design_1_axi_dma_0_0/sim/design_1_axi_dma_0_0.vhd" \
+
+vlog -work axis_infrastructure_v1_1_1  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
+"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl/axis_infrastructure_v1_1_vl_rfs.v" \
 
 vlog -work axis_data_fifo_v2_0_17  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/e1e3/hdl/axis_data_fifo_v2_0_vl_rfs.v" \
@@ -262,14 +264,33 @@ vlog -work axi_crossbar_v2_1_37  -incr -mfcu  "+incdir+../../../../Passthrough_v
 
 vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_xbar_0/sim/design_1_axi_mem_intercon_imp_xbar_0.v" \
+
+vcom -work axi_lite_ipif_v3_0_4  -93  \
+"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd" \
+
+vcom -work interrupt_control_v3_1_5  -93  \
+"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/d8cc/hdl/interrupt_control_v3_1_vh_rfs.vhd" \
+
+vcom -work axi_gpio_v2_0_37  -93  \
+"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/0271/hdl/axi_gpio_v2_0_vh_rfs.vhd" \
+
+vcom -work xil_defaultlib  -93  \
+"../../../bd/design_1/ip/design_1_axi_gpio_0_0/sim/design_1_axi_gpio_0_0.vhd" \
+
+vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../bd/design_1/sim/design_1.v" \
+
+vlog -work axi_clock_converter_v2_1_34  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
+"../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/9a28/hdl/axi_clock_converter_v2_1_vl_rfs.v" \
+
+vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
+"../../../bd/design_1/ip/design_1_axi_clock_converter_0_0/sim/design_1_axi_clock_converter_0_0.v" \
 
 vlog -work axi_protocol_converter_v2_1_36  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
 
 vlog -work xil_defaultlib  -incr -mfcu  "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" "+incdir+../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" "+incdir+../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" "+incdir+E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" \
 "../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_auto_pc_0/sim/design_1_axi_mem_intercon_imp_auto_pc_0.v" \
-"../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_auto_pc_1/sim/design_1_axi_mem_intercon_imp_auto_pc_1.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"
