@@ -1,10 +1,11 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xE098B41DA041A1B7",
+      "boundary_crc": "0xE098B41DB15A1426",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../Passthrough_v1.gen/sources_1/bd/design_1",
       "name": "design_1",
+      "pfm_name": "xilinx.com:custom_board:passthrough:1.0",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
       "tool_version": "2025.1",
@@ -234,7 +235,7 @@
             "value_src": "ip_prop"
           },
           "FREQ_HZ": {
-            "value": "12288013",
+            "value": "12286002",
             "value_src": "ip_prop"
           },
           "FREQ_TOLERANCE_HZ": {
@@ -260,7 +261,7 @@
             "value_src": "ip_prop"
           },
           "FREQ_HZ": {
-            "value": "12288013",
+            "value": "12286002",
             "value_src": "ip_prop"
           },
           "FREQ_TOLERANCE_HZ": {
@@ -2075,6 +2076,9 @@
               }
             }
           }
+        },
+        "pfm_attributes": {
+          "CLOCK": "  FCLK_CLK0 {id \"0\" is_default \"true\" proc_sys_reset \"rst_ps7_0_100M\" status \"fixed\"}  "
         }
       },
       "i2s_receiver_0": {
@@ -2112,16 +2116,16 @@
         "has_run_ip_tcl": "true",
         "parameters": {
           "CLKIN1_JITTER_PS": {
-            "value": "80.0"
+            "value": "200.0"
           },
           "CLKIN2_JITTER_PS": {
-            "value": "101.78000000000002"
+            "value": "100.0"
           },
           "CLKOUT1_JITTER": {
-            "value": "473.813"
+            "value": "373.299"
           },
           "CLKOUT1_PHASE_ERROR": {
-            "value": "351.816"
+            "value": "409.976"
           },
           "CLKOUT1_REQUESTED_OUT_FREQ": {
             "value": "12.288"
@@ -2151,22 +2155,22 @@
             "value": "clk_out2"
           },
           "MMCM_CLKFBOUT_MULT_F": {
-            "value": "42.750"
+            "value": "61.000"
           },
           "MMCM_CLKIN1_PERIOD": {
-            "value": "8.000"
+            "value": "20.000"
           },
           "MMCM_CLKIN2_PERIOD": {
-            "value": "10.000"
+            "value": "10.0"
           },
           "MMCM_CLKOUT0_DIVIDE_F": {
-            "value": "62.125"
+            "value": "82.750"
           },
           "MMCM_CLKOUT1_DIVIDE": {
             "value": "1"
           },
           "MMCM_DIVCLK_DIVIDE": {
-            "value": "7"
+            "value": "3"
           },
           "NUM_OUT_CLKS": {
             "value": "1"
@@ -2431,7 +2435,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2502,7 +2506,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2573,7 +2577,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2644,7 +2648,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2692,7 +2696,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2939,7 +2943,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -3010,7 +3014,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -3054,7 +3058,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12288013",
+                "value": "12286002",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -3900,7 +3904,6 @@
           "axi_dma_0/m_axi_s2mm_aclk",
           "axi_dma_0/m_axi_mm2s_aclk",
           "axis_data_fifo_0/s_axis_aclk",
-          "axi_smc/aclk",
           "i2s_receiver_0/s_axi_ctrl_aclk",
           "i2s_transmitter_0/s_axi_ctrl_aclk",
           "processing_system7_0/M_AXI_GP0_ACLK",
@@ -3912,7 +3915,8 @@
           "axi_mem_intercon/M00_ACLK",
           "axi_mem_intercon/S01_ACLK",
           "axi_mem_intercon/S02_ACLK",
-          "axi_clock_converter_0/s_axi_aclk"
+          "axi_clock_converter_0/s_axi_aclk",
+          "axi_smc/aclk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -3926,7 +3930,6 @@
         "ports": [
           "rst_ps7_0_100M/peripheral_aresetn",
           "axi_dma_0/axi_resetn",
-          "axi_smc/aresetn",
           "i2s_receiver_0/s_axi_ctrl_aresetn",
           "i2s_transmitter_0/s_axi_ctrl_aresetn",
           "axi_mem_intercon/S00_ARESETN",
@@ -3935,7 +3938,8 @@
           "axi_mem_intercon/S01_ARESETN",
           "axi_mem_intercon/S02_ARESETN",
           "axis_data_fifo_0/s_axis_aresetn",
-          "axi_clock_converter_0/s_axi_aresetn"
+          "axi_clock_converter_0/s_axi_aresetn",
+          "axi_smc/aresetn"
         ]
       },
       "sdata_0_in_0_1": {

@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Thu Apr  9 23:02:20 2026
+//Date        : Fri Apr 10 22:23:01 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -66,8 +66,8 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
   output lrclk_out_0;
   output lrclk_out_1;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_ADC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_ADC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_adc;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_DAC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_DAC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_dac;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_ADC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_ADC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12286002, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_adc;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_DAC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_DAC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12286002, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_dac;
   input pedal_in_0;
   output sclk_out_0;
   output sclk_out_1;

@@ -13,8 +13,7 @@
 XAxiDma AxiDma;
 
 // ATENCION: Para CO-SIMULACION o EMULACION, usar un valor pequeño (ej. 16 o 32).
-// Si usas 1024, la simulación tardará muchísimo tiempo en completarse.
-// Cámbialo de nuevo a 1024 cuando vayas a flashear la placa física.
+// usar 1024 para arrib apara hardware real. ACORDARSE DE CAMBIARLO EN VIVADO
 #define MAX_PKT_LEN 16
 u8 RxBuffer[MAX_PKT_LEN] __attribute__((aligned(32))); // Alinear a la línea de caché
 

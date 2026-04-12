@@ -8,7 +8,6 @@ sv xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --
 verilog xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --include "E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" \
 "../../../bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0_clk_wiz.v" \
 "../../../bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0.v" \
-"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/sim/bd_6e42.v" \
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_0/sim/bd_6e42_one_0.v" \
 
 sv xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --include "E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" \
@@ -64,6 +63,11 @@ sv xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_51/sim/bd_6e42_m03wn_0.sv" \
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_52/sim/bd_6e42_m03bn_0.sv" \
 "../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/ip/ip_53/sim/bd_6e42_m03e_0.sv" \
+
+verilog xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --include "E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" \
+"../../../bd/design_1/ip/design_1_axi_smc_2/bd_0/sim/bd_6e42.v" \
+
+sv xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --include "E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" \
 "../../../bd/design_1/ip/design_1_axi_smc_2/sim/design_1_axi_smc_2.sv" \
 
 verilog xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" --include "E:/Xilinx/2025.1/Vivado/data/xilinx_vip/include" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/6cfa/hdl" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a9be" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/a8e4/hdl/verilog" --include "../../../../Passthrough_v1.gen/sources_1/bd/design_1/ipshared/434f/hdl" \
@@ -72,9 +76,9 @@ verilog xil_defaultlib -i "../../../../../../Xilinx/2025.1/Vivado/data/rsb/busde
 "../../../bd/design_1/ip/design_1_axis_data_fifo_0_3/sim/design_1_axis_data_fifo_0_3.v" \
 "../../../bd/design_1/ip/design_1_axis_tlast_gen_trans_0_0/sim/design_1_axis_tlast_gen_trans_0_0.v" \
 "../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_xbar_0/sim/design_1_axi_mem_intercon_imp_xbar_0.v" \
-"../../../bd/design_1/sim/design_1.v" \
-"../../../bd/design_1/ip/design_1_axi_clock_converter_0_0/sim/design_1_axi_clock_converter_0_0.v" \
 "../../../bd/design_1/ip/design_1_axi_mem_intercon_imp_auto_pc_0/sim/design_1_axi_mem_intercon_imp_auto_pc_0.v" \
+"../../../bd/design_1/ip/design_1_axi_clock_converter_0_0/sim/design_1_axi_clock_converter_0_0.v" \
+"../../../bd/design_1/sim/design_1.v" \
 
 verilog xil_defaultlib "glbl.v"
 
