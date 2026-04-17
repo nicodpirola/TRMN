@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Thu Apr  9 23:02:20 2026
+//Date        : Tue Apr 14 22:30:08 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -41,8 +41,7 @@ module design_1
     sclk_out_0,
     sclk_out_1,
     sdata_0_in_0,
-    sdata_0_out_0,
-    sys_clock);
+    sdata_0_out_0);
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_MODE = "Master" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -73,7 +72,6 @@ module design_1
   output sclk_out_1;
   input sdata_0_in_0;
   output sdata_0_out_0;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYS_CLOCK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.SYS_CLOCK, CLK_DOMAIN design_1_sys_clock, FREQ_HZ 50000000, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) input sys_clock;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -326,7 +324,6 @@ module design_1
   wire sclk_out_1;
   wire sdata_0_in_0;
   wire sdata_0_out_0;
-  wire sys_clock;
 
   assign mclk_out_dac = mclk_out_adc;
   design_1_axi_clock_converter_0_0 axi_clock_converter_0
@@ -718,7 +715,7 @@ module design_1
         .s_axis_tvalid(axi_stream_looper_mi_0_m_dma_axis_TVALID));
   design_1_clk_wiz_0_0 clk_wiz_0
        (.clk_aud(mclk_out_adc),
-        .clk_in1(sys_clock),
+        .clk_in1(processing_system7_0_FCLK_CLK0),
         .locked(clk_wiz_0_locked),
         .reset(ilconstant_0_dout));
   design_1_i2s_receiver_0_0 i2s_receiver_0

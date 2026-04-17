@@ -1,10 +1,10 @@
-# 1 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\system-top.dts"
+# 1 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\system-top.dts"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\system-top.dts"
+# 1 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\system-top.dts"
 /dts-v1/;
-# 1 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\zynq-7000.dtsi" 1
-# 10 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\zynq-7000.dtsi"
+# 1 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\zynq-7000.dtsi" 1
+# 10 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\zynq-7000.dtsi"
 / {
  #address-cells = <1>;
  #size-cells = <1>;
@@ -585,8 +585,8 @@
   };
  };
 };
-# 3 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\system-top.dts" 2
-# 1 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\pl.dtsi" 1
+# 3 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\system-top.dts" 2
+# 1 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\pl.dtsi" 1
 / {
  amba_pl: amba_pl {
   ranges;
@@ -710,8 +710,8 @@
   };
  };
 };
-# 4 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\system-top.dts" 2
-# 1 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\pcw.dtsi" 1
+# 4 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\system-top.dts" 2
+# 1 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\pcw.dtsi" 1
  &ps7_cortexa9_0 {
   xlnx,i-cache-size = <0x8000>;
   xlnx,d-cache-line-size = <20>;
@@ -974,7 +974,7 @@
   fclk-enable = <0x1>;
   ps-clk-frequency = <50000000>;
  };
-# 5 "E:\\Tesis\\Vitis_Loop\\platform_TEW\\hw\\sdt\\system-top.dts" 2
+# 5 "E:\\Tesis\\Vitis_Loop\\platform\\hw\\sdt\\system-top.dts" 2
 / {
  board = "arty-z7-20";
  compatible = "xlnx,arty-z7-20";

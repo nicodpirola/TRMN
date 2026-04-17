@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.836505",
-   "Default View_TopLeft":"1180,338",
+   "Default View_ScaleFactor":"0.441941",
+   "Default View_TopLeft":"-213,9",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.8.0 2024-04-26 e1825d835c VDI=44 GEI=38 GUI=JA:21.0
 #  -string -flagsOSRD
@@ -15,7 +15,6 @@ preplace port port-id_sclk_out_1 -pg 1 -lvl 9 -x 3200 -y 490 -defaultsOSRD
 preplace port port-id_lrclk_out_1 -pg 1 -lvl 9 -x 3200 -y 460 -defaultsOSRD
 preplace port port-id_mclk_out_dac -pg 1 -lvl 9 -x 3200 -y 660 -defaultsOSRD
 preplace port port-id_mclk_out_adc -pg 1 -lvl 9 -x 3200 -y 620 -defaultsOSRD
-preplace port port-id_sys_clock -pg 1 -lvl 0 -x -70 -y 290 -defaultsOSRD
 preplace port port-id_pedal_in_0 -pg 1 -lvl 0 -x -70 -y 1260 -defaultsOSRD
 preplace inst processing_system7_0 -pg 1 -lvl 6 -x 2100 -y 150 -defaultsOSRD
 preplace inst i2s_receiver_0 -pg 1 -lvl 4 -x 1150 -y 490 -defaultsOSRD
@@ -44,11 +43,10 @@ preplace netloc i2s_transmitter_0_sdata_0_out 1 6 3 2350J 550 NJ 550 3160
 preplace netloc ilconstant_0_dout 1 1 1 330 230n
 preplace netloc proc_sys_reset_0_peripheral_aresetn 1 2 5 620 990 970 670 1320 700 1790 910 2330
 preplace netloc proc_sys_reset_0_peripheral_reset 1 3 4 1000 690 N 690 1800 700 2330
-preplace netloc processing_system7_0_FCLK_CLK0 1 2 6 610 790 990 790 1300 1190 1830 20 2420 20 2830
+preplace netloc processing_system7_0_FCLK_CLK0 1 1 7 410 780 600 780 990 780 1300 1190 1830 20 2420 20 2830
 preplace netloc processing_system7_0_FCLK_RESET0_N 1 5 2 1860 270 2340
-preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 2 6 600 460 960 360 1310 370 1850 370 2380 560 2810
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 2 6 610 460 960 360 1310 370 1850 370 2380 560 2810
 preplace netloc sdata_0_in_0_1 1 0 4 NJ 470 N 470 NJ 470 980
-preplace netloc sys_clock_1 1 0 2 NJ 290 330
 preplace netloc axi_clock_converter_0_M_AXI 1 3 1 940 890n
 preplace netloc axi_dma_0_M_AXIS_MM2S 1 4 2 1380 1180 1720
 preplace netloc axi_dma_0_M_AXI_MM2S 1 5 3 1730J -150 NJ -150 2820

@@ -2,7 +2,7 @@
 # Script Tcl para exportar plataforma de Co-Simulacion (Hardware Emulation)
 # Para Vivado 2024.x / 2025.x - Proyecto Arty Z7-20
 # ==============================================================================
-
+# se ejecuta con "source generar_emulacion.tcl"
 # 1. Asegurarnos de que el proyecto tiene asignada la FPGA correcta
 #    (Evita el error de "Board part not found" si faltan los archivos de Digilent)
 set_property part xc7z020clg400-1 [current_project]
@@ -47,7 +47,7 @@ set_property top design_1_wrapper [current_fileset]
 
 # 9. Exportar la plataforma de emulación (-hw_emu)
 #    El archivo se guardará en la carpeta Vitis_Loop.
-write_hw_platform -hw_emu -file E:/Tesis/Vitis_Loop/HW_emu.xsa -force
+write_hw_platform -hw -hw_emu -file E:/Tesis/Vitis_Loop/HW_emu.xsa -force
 
 puts "=============================================================================="
 puts "¡Plataforma de emulación (HW_emu.xsa) generada con éxito!"

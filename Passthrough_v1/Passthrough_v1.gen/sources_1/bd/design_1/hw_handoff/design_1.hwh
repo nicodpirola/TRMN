@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Apr 10 22:23:29 2026" VIVADOVERSION="2025.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Apr 14 22:30:28 2026" VIVADOVERSION="2025.1">
 
-  <SYSTEMINFO ARCH="zynq" DEVICE="7z020" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
+  <SYSTEMINFO ARCH="zynq" BOARD="digilentinc.com:arty-z7-20:part0:1.1" DEVICE="7z020" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
   <EXTERNALPORTS>
     <PORT DIR="IO" LEFT="14" NAME="DDR_addr" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_DDR_Addr">
@@ -119,12 +119,12 @@
         <CONNECTION INSTANCE="i2s_transmitter_0" PORT="lrclk_out"/>
       </CONNECTIONS>
     </PORT>
-    <PORT CLKFREQUENCY="12286002" DIR="O" NAME="mclk_out_adc" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+    <PORT CLKFREQUENCY="12288013" DIR="O" NAME="mclk_out_adc" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
       <CONNECTIONS>
         <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
       </CONNECTIONS>
     </PORT>
-    <PORT CLKFREQUENCY="12286002" DIR="O" NAME="mclk_out_dac" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+    <PORT CLKFREQUENCY="12288013" DIR="O" NAME="mclk_out_dac" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
       <CONNECTIONS>
         <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
       </CONNECTIONS>
@@ -148,11 +148,6 @@
     <PORT DIR="O" NAME="sdata_0_out_0" SIGIS="undef" SIGNAME="i2s_transmitter_0_sdata_0_out">
       <CONNECTIONS>
         <CONNECTION INSTANCE="i2s_transmitter_0" PORT="sdata_0_out"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT CLKFREQUENCY="50000000" DIR="I" NAME="sys_clock" SIGIS="clk" SIGNAME="External_Ports_sys_clock">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_in1"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -244,7 +239,7 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="m_axi_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="m_axi_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -507,7 +502,7 @@
           <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
           <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_BRESP" VALUE="1"/>
           <PARAMETER NAME="HAS_BURST" VALUE="0"/>
           <PARAMETER NAME="HAS_CACHE" VALUE="0"/>
@@ -2136,7 +2131,7 @@
             <CONNECTION INSTANCE="axi_stream_looper_mi_0" PORT="mode"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -2240,7 +2235,7 @@
           <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
           <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_BRESP" VALUE="1"/>
           <PARAMETER NAME="HAS_BURST" VALUE="0"/>
           <PARAMETER NAME="HAS_CACHE" VALUE="0"/>
@@ -4003,7 +3998,7 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -4087,7 +4082,7 @@
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="axi_stream_looper_mi_0_m_dma_axis" NAME="m_dma_axis" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4107,7 +4102,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="axi_stream_looper_mi_0_m_i2s_axis" NAME="m_i2s_axis" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4127,7 +4122,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="i2s_receiver_0_m_axis_aud" NAME="s0_axis" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4147,7 +4142,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="axis_data_fifo_0_M_AXIS" NAME="s1_axis" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4217,7 +4212,7 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="m_axis_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="m_axis_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -4303,7 +4298,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="axis_data_fifo_0_M_AXIS" NAME="M_AXIS" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4398,7 +4393,7 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="s_axis_s2mm_tvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="s_axis_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="s_axis_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -4432,7 +4427,7 @@
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="axis_tlast_gen_trans_0_m_axis" NAME="S_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4482,7 +4477,7 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -4531,7 +4526,7 @@
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="axis_tlast_gen_trans_0_m_axis" NAME="m_axis" TYPE="MASTER" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4552,7 +4547,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="axi_stream_looper_mi_0_m_dma_axis" NAME="s_axis" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -4594,14 +4589,14 @@
         <PARAMETER NAME="C_CLKIN2_JITTER_PS" VALUE="100.0"/>
         <PARAMETER NAME="C_CLKOUT0_1" VALUE="0000"/>
         <PARAMETER NAME="C_CLKOUT0_2" VALUE="0000"/>
-        <PARAMETER NAME="C_CLKOUT0_ACTUAL_FREQ" VALUE="12.28600"/>
+        <PARAMETER NAME="C_CLKOUT0_ACTUAL_FREQ" VALUE="12.28801"/>
         <PARAMETER NAME="C_CLKOUT1_1" VALUE="0000"/>
         <PARAMETER NAME="C_CLKOUT1_2" VALUE="0000"/>
         <PARAMETER NAME="C_CLKOUT1_ACTUAL_FREQ" VALUE="100.000"/>
         <PARAMETER NAME="C_CLKOUT1_DRIVES" VALUE="BUFG"/>
         <PARAMETER NAME="C_CLKOUT1_DUTY_CYCLE" VALUE="50.0"/>
         <PARAMETER NAME="C_CLKOUT1_MATCHED_ROUTING" VALUE="false"/>
-        <PARAMETER NAME="C_CLKOUT1_OUT_FREQ" VALUE="12.28600"/>
+        <PARAMETER NAME="C_CLKOUT1_OUT_FREQ" VALUE="12.28801"/>
         <PARAMETER NAME="C_CLKOUT1_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="C_CLKOUT1_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
         <PARAMETER NAME="C_CLKOUT1_REQUESTED_OUT_FREQ" VALUE="12.288"/>
@@ -4699,12 +4694,12 @@
         <PARAMETER NAME="C_DIN_PORT" VALUE="din"/>
         <PARAMETER NAME="C_DIVCLK" VALUE="0000"/>
         <PARAMETER NAME="C_DIVIDE1_AUTO" VALUE="1"/>
-        <PARAMETER NAME="C_DIVIDE2_AUTO" VALUE="0.012084592145015106"/>
-        <PARAMETER NAME="C_DIVIDE3_AUTO" VALUE="0.012084592145015106"/>
-        <PARAMETER NAME="C_DIVIDE4_AUTO" VALUE="0.012084592145015106"/>
-        <PARAMETER NAME="C_DIVIDE5_AUTO" VALUE="0.012084592145015106"/>
-        <PARAMETER NAME="C_DIVIDE6_AUTO" VALUE="0.012084592145015106"/>
-        <PARAMETER NAME="C_DIVIDE7_AUTO" VALUE="0.012084592145015106"/>
+        <PARAMETER NAME="C_DIVIDE2_AUTO" VALUE="0.01609657947686117"/>
+        <PARAMETER NAME="C_DIVIDE3_AUTO" VALUE="0.01609657947686117"/>
+        <PARAMETER NAME="C_DIVIDE4_AUTO" VALUE="0.01609657947686117"/>
+        <PARAMETER NAME="C_DIVIDE5_AUTO" VALUE="0.01609657947686117"/>
+        <PARAMETER NAME="C_DIVIDE6_AUTO" VALUE="0.01609657947686117"/>
+        <PARAMETER NAME="C_DIVIDE7_AUTO" VALUE="0.01609657947686117"/>
         <PARAMETER NAME="C_DOUT_PORT" VALUE="dout"/>
         <PARAMETER NAME="C_DRDY_PORT" VALUE="drdy"/>
         <PARAMETER NAME="C_DWE_PORT" VALUE="dwe"/>
@@ -4723,7 +4718,7 @@
         <PARAMETER NAME="C_FILTER_2" VALUE="0000"/>
         <PARAMETER NAME="C_HAS_CDDC" VALUE="0"/>
         <PARAMETER NAME="C_INCLK_SUM_ROW0" VALUE="Input Clock   Freq (MHz)    Input Jitter (UI)"/>
-        <PARAMETER NAME="C_INCLK_SUM_ROW1" VALUE="__primary__________50.000____________0.010"/>
+        <PARAMETER NAME="C_INCLK_SUM_ROW1" VALUE="__primary_________125.000____________0.010"/>
         <PARAMETER NAME="C_INCLK_SUM_ROW2" VALUE="no_secondary_input_clock"/>
         <PARAMETER NAME="C_INPUT_CLK_STOPPED_PORT" VALUE="input_clk_stopped"/>
         <PARAMETER NAME="C_INTERFACE_SELECTION" VALUE="0"/>
@@ -4742,12 +4737,12 @@
         <PARAMETER NAME="C_MMCMBUFGCEDIV6" VALUE="false"/>
         <PARAMETER NAME="C_MMCMBUFGCEDIV7" VALUE="false"/>
         <PARAMETER NAME="C_MMCM_BANDWIDTH" VALUE="OPTIMIZED"/>
-        <PARAMETER NAME="C_MMCM_CLKFBOUT_MULT_F" VALUE="61.000"/>
+        <PARAMETER NAME="C_MMCM_CLKFBOUT_MULT_F" VALUE="42.750"/>
         <PARAMETER NAME="C_MMCM_CLKFBOUT_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="C_MMCM_CLKFBOUT_USE_FINE_PS" VALUE="FALSE"/>
-        <PARAMETER NAME="C_MMCM_CLKIN1_PERIOD" VALUE="20.000"/>
-        <PARAMETER NAME="C_MMCM_CLKIN2_PERIOD" VALUE="10.0"/>
-        <PARAMETER NAME="C_MMCM_CLKOUT0_DIVIDE_F" VALUE="82.750"/>
+        <PARAMETER NAME="C_MMCM_CLKIN1_PERIOD" VALUE="8.000"/>
+        <PARAMETER NAME="C_MMCM_CLKIN2_PERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT0_DIVIDE_F" VALUE="62.125"/>
         <PARAMETER NAME="C_MMCM_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
         <PARAMETER NAME="C_MMCM_CLKOUT0_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="C_MMCM_CLKOUT0_USE_FINE_PS" VALUE="FALSE"/>
@@ -4778,7 +4773,7 @@
         <PARAMETER NAME="C_MMCM_CLKOUT6_USE_FINE_PS" VALUE="FALSE"/>
         <PARAMETER NAME="C_MMCM_CLOCK_HOLD" VALUE="FALSE"/>
         <PARAMETER NAME="C_MMCM_COMPENSATION" VALUE="ZHOLD"/>
-        <PARAMETER NAME="C_MMCM_DIVCLK_DIVIDE" VALUE="3"/>
+        <PARAMETER NAME="C_MMCM_DIVCLK_DIVIDE" VALUE="7"/>
         <PARAMETER NAME="C_MMCM_NOTES" VALUE="None"/>
         <PARAMETER NAME="C_MMCM_REF_JITTER1" VALUE="0.010"/>
         <PARAMETER NAME="C_MMCM_REF_JITTER2" VALUE="0.010"/>
@@ -4789,7 +4784,7 @@
         <PARAMETER NAME="C_OPTIMIZE_CLOCKING_STRUCTURE_EN" VALUE="0"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW0A" VALUE="Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW0B" VALUE="Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)"/>
-        <PARAMETER NAME="C_OUTCLK_SUM_ROW1" VALUE="_clk_aud__12.28600______0.000______50.0______373.299____409.976"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW1" VALUE="_clk_aud__12.28801______0.000______50.0______473.813____351.816"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW2" VALUE="no_CLK_OUT2_output"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW3" VALUE="no_CLK_OUT3_output"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW4" VALUE="no_CLK_OUT4_output"/>
@@ -4840,7 +4835,7 @@
         <PARAMETER NAME="C_PRIMARY_PORT" VALUE="clk_in1"/>
         <PARAMETER NAME="C_PRIMITIVE" VALUE="MMCM"/>
         <PARAMETER NAME="C_PRIMTYPE_SEL" VALUE="AUTO"/>
-        <PARAMETER NAME="C_PRIM_IN_FREQ" VALUE="50.000"/>
+        <PARAMETER NAME="C_PRIM_IN_FREQ" VALUE="125.000"/>
         <PARAMETER NAME="C_PRIM_IN_JITTER" VALUE="0.010"/>
         <PARAMETER NAME="C_PRIM_IN_TIMEPERIOD" VALUE="10.000"/>
         <PARAMETER NAME="C_PRIM_SOURCE" VALUE="Single_ended_clock_capable_pin"/>
@@ -5022,12 +5017,12 @@
         <PARAMETER NAME="JITTER_SEL" VALUE="No_Jitter"/>
         <PARAMETER NAME="LOCKED_PORT" VALUE="locked"/>
         <PARAMETER NAME="MMCM_BANDWIDTH" VALUE="OPTIMIZED"/>
-        <PARAMETER NAME="MMCM_CLKFBOUT_MULT_F" VALUE="61.000"/>
+        <PARAMETER NAME="MMCM_CLKFBOUT_MULT_F" VALUE="42.750"/>
         <PARAMETER NAME="MMCM_CLKFBOUT_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="MMCM_CLKFBOUT_USE_FINE_PS" VALUE="false"/>
-        <PARAMETER NAME="MMCM_CLKIN1_PERIOD" VALUE="20.000"/>
-        <PARAMETER NAME="MMCM_CLKIN2_PERIOD" VALUE="10.0"/>
-        <PARAMETER NAME="MMCM_CLKOUT0_DIVIDE_F" VALUE="82.750"/>
+        <PARAMETER NAME="MMCM_CLKIN1_PERIOD" VALUE="8.000"/>
+        <PARAMETER NAME="MMCM_CLKIN2_PERIOD" VALUE="10.000"/>
+        <PARAMETER NAME="MMCM_CLKOUT0_DIVIDE_F" VALUE="62.125"/>
         <PARAMETER NAME="MMCM_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
         <PARAMETER NAME="MMCM_CLKOUT0_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="MMCM_CLKOUT0_USE_FINE_PS" VALUE="false"/>
@@ -5058,7 +5053,7 @@
         <PARAMETER NAME="MMCM_CLKOUT6_USE_FINE_PS" VALUE="false"/>
         <PARAMETER NAME="MMCM_CLOCK_HOLD" VALUE="false"/>
         <PARAMETER NAME="MMCM_COMPENSATION" VALUE="ZHOLD"/>
-        <PARAMETER NAME="MMCM_DIVCLK_DIVIDE" VALUE="3"/>
+        <PARAMETER NAME="MMCM_DIVCLK_DIVIDE" VALUE="7"/>
         <PARAMETER NAME="MMCM_NOTES" VALUE="None"/>
         <PARAMETER NAME="MMCM_REF_JITTER1" VALUE="0.010"/>
         <PARAMETER NAME="MMCM_REF_JITTER2" VALUE="0.010"/>
@@ -5102,7 +5097,7 @@
         <PARAMETER NAME="PRIMARY_PORT" VALUE="clk_in1"/>
         <PARAMETER NAME="PRIMITIVE" VALUE="MMCM"/>
         <PARAMETER NAME="PRIMTYPE_SEL" VALUE="mmcm_adv"/>
-        <PARAMETER NAME="PRIM_IN_FREQ" VALUE="50.000"/>
+        <PARAMETER NAME="PRIM_IN_FREQ" VALUE="125.000"/>
         <PARAMETER NAME="PRIM_IN_JITTER" VALUE="0.010"/>
         <PARAMETER NAME="PRIM_IN_TIMEPERIOD" VALUE="10.000"/>
         <PARAMETER NAME="PRIM_SOURCE" VALUE="Single_ended_clock_capable_pin"/>
@@ -5152,26 +5147,26 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="O" NAME="clk_aud" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="O" NAME="clk_aud" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="mclk_out_dac"/>
             <CONNECTION INSTANCE="External_Ports" PORT="mclk_out_adc"/>
-            <CONNECTION INSTANCE="i2s_receiver_0" PORT="aud_mclk"/>
-            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="aud_mclk"/>
-            <CONNECTION INSTANCE="proc_sys_reset_0" PORT="slowest_sync_clk"/>
-            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axis_aud_aclk"/>
-            <CONNECTION INSTANCE="i2s_receiver_0" PORT="m_axis_aud_aclk"/>
             <CONNECTION INSTANCE="axis_tlast_gen_trans_0" PORT="clk"/>
             <CONNECTION INSTANCE="axis_data_fifo_0" PORT="m_axis_aclk"/>
             <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_aclk"/>
             <CONNECTION INSTANCE="axi_stream_looper_mi_0" PORT="clk"/>
-            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aclk"/>
             <CONNECTION INSTANCE="axi_clock_converter_0" PORT="m_axi_aclk"/>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aclk"/>
+            <CONNECTION INSTANCE="i2s_receiver_0" PORT="aud_mclk"/>
+            <CONNECTION INSTANCE="i2s_receiver_0" PORT="m_axis_aud_aclk"/>
+            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="aud_mclk"/>
+            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axis_aud_aclk"/>
+            <CONNECTION INSTANCE="proc_sys_reset_0" PORT="slowest_sync_clk"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="50000000" DIR="I" NAME="clk_in1" SIGIS="clk" SIGNAME="External_Ports_sys_clock">
+        <PORT CLKFREQUENCY="50000000" DIR="I" NAME="clk_in1" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="sys_clock"/>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="locked" SIGIS="undef" SIGNAME="clk_wiz_0_locked">
@@ -5205,7 +5200,7 @@
         <PARAMETER NAME="C_HIGHADDR" VALUE="0x43C0FFFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="aud_mclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="aud_mclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -5221,7 +5216,7 @@
             <CONNECTION INSTANCE="External_Ports" PORT="lrclk_out_0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="m_axis_aud_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="m_axis_aud_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -5401,7 +5396,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="i2s_receiver_0_m_axis_aud" NAME="m_axis_aud" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -5440,7 +5435,7 @@
         <PARAMETER NAME="C_HIGHADDR" VALUE="0x43C1FFFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="aud_mclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="aud_mclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -5546,7 +5541,7 @@
             <CONNECTION INSTANCE="axi_smc" PORT="M01_AXI_wvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="s_axis_aud_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="s_axis_aud_aclk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -5636,7 +5631,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="axi_stream_looper_mi_0_m_i2s_axis" NAME="s_axis_aud" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="/clk_wiz_0_clk_out1"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="12286002"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="12288013"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
@@ -5710,22 +5705,22 @@
         <PORT DIR="O" NAME="mb_reset" POLARITY="ACTIVE_HIGH" SIGIS="rst"/>
         <PORT DIR="O" LEFT="0" NAME="peripheral_aresetn" POLARITY="ACTIVE_LOW" RIGHT="0" SIGIS="rst" SIGNAME="proc_sys_reset_0_peripheral_aresetn">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axis_aud_aresetn"/>
-            <CONNECTION INSTANCE="i2s_receiver_0" PORT="m_axis_aud_aresetn"/>
             <CONNECTION INSTANCE="axis_tlast_gen_trans_0" PORT="resetn"/>
             <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_aresetn"/>
             <CONNECTION INSTANCE="axi_stream_looper_mi_0" PORT="resetn"/>
-            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aresetn"/>
             <CONNECTION INSTANCE="axi_clock_converter_0" PORT="m_axi_aresetn"/>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aresetn"/>
+            <CONNECTION INSTANCE="i2s_receiver_0" PORT="m_axis_aud_aresetn"/>
+            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axis_aud_aresetn"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="0" NAME="peripheral_reset" POLARITY="ACTIVE_HIGH" RIGHT="0" SIGIS="rst" SIGNAME="proc_sys_reset_0_peripheral_reset">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="aud_mrst"/>
             <CONNECTION INSTANCE="i2s_receiver_0" PORT="aud_mrst"/>
+            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="aud_mrst"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="12286002" DIR="I" NAME="slowest_sync_clk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
+        <PORT CLKFREQUENCY="12288013" DIR="I" NAME="slowest_sync_clk" SIGIS="clk" SIGNAME="clk_wiz_0_clk_aud">
           <CONNECTIONS>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_aud"/>
           </CONNECTIONS>
@@ -6771,11 +6766,6 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axi_s2mm_aclk"/>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axi_mm2s_aclk"/>
             <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_aclk"/>
-            <CONNECTION INSTANCE="i2s_receiver_0" PORT="s_axi_ctrl_aclk"/>
-            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axi_ctrl_aclk"/>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="M_AXI_GP0_ACLK"/>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="S_AXI_HP0_ACLK"/>
-            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="slowest_sync_clk"/>
             <CONNECTION INSTANCE="axis_data_fifo_1" PORT="m_axis_aclk"/>
             <CONNECTION INSTANCE="axi_mem_intercon" PORT="ACLK"/>
             <CONNECTION INSTANCE="axi_mem_intercon" PORT="S00_ACLK"/>
@@ -6784,6 +6774,12 @@
             <CONNECTION INSTANCE="axi_mem_intercon" PORT="S02_ACLK"/>
             <CONNECTION INSTANCE="axi_clock_converter_0" PORT="s_axi_aclk"/>
             <CONNECTION INSTANCE="axi_smc" PORT="aclk"/>
+            <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_in1"/>
+            <CONNECTION INSTANCE="i2s_receiver_0" PORT="s_axi_ctrl_aclk"/>
+            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axi_ctrl_aclk"/>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="M_AXI_GP0_ACLK"/>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="S_AXI_HP0_ACLK"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="slowest_sync_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="12345679" DIR="O" NAME="FCLK_CLK1" SIGIS="clk"/>
@@ -7469,8 +7465,6 @@
         <PORT DIR="O" LEFT="0" NAME="peripheral_aresetn" POLARITY="ACTIVE_LOW" RIGHT="0" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma_0" PORT="axi_resetn"/>
-            <CONNECTION INSTANCE="i2s_receiver_0" PORT="s_axi_ctrl_aresetn"/>
-            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axi_ctrl_aresetn"/>
             <CONNECTION INSTANCE="axi_mem_intercon" PORT="S00_ARESETN"/>
             <CONNECTION INSTANCE="axi_mem_intercon" PORT="M00_ARESETN"/>
             <CONNECTION INSTANCE="axi_mem_intercon" PORT="ARESETN"/>
@@ -7479,6 +7473,8 @@
             <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_aresetn"/>
             <CONNECTION INSTANCE="axi_clock_converter_0" PORT="s_axi_aresetn"/>
             <CONNECTION INSTANCE="axi_smc" PORT="aresetn"/>
+            <CONNECTION INSTANCE="i2s_receiver_0" PORT="s_axi_ctrl_aresetn"/>
+            <CONNECTION INSTANCE="i2s_transmitter_0" PORT="s_axi_ctrl_aresetn"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="0" NAME="peripheral_reset" POLARITY="ACTIVE_HIGH" RIGHT="0" SIGIS="rst"/>

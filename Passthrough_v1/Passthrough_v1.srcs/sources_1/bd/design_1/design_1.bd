@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xE098B41DB15A1426",
+      "boundary_crc": "0xF70DEF6B8676B033",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../Passthrough_v1.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -235,7 +235,7 @@
             "value_src": "ip_prop"
           },
           "FREQ_HZ": {
-            "value": "12286002",
+            "value": "12288013",
             "value_src": "ip_prop"
           },
           "FREQ_TOLERANCE_HZ": {
@@ -261,7 +261,7 @@
             "value_src": "ip_prop"
           },
           "FREQ_HZ": {
-            "value": "12286002",
+            "value": "12288013",
             "value_src": "ip_prop"
           },
           "FREQ_TOLERANCE_HZ": {
@@ -275,30 +275,6 @@
           "PHASE": {
             "value": "0.0",
             "value_src": "ip_prop"
-          }
-        }
-      },
-      "sys_clock": {
-        "type": "clk",
-        "direction": "I",
-        "parameters": {
-          "CLK_DOMAIN": {
-            "value": "design_1_sys_clock",
-            "value_src": "default"
-          },
-          "FREQ_HZ": {
-            "value": "50000000"
-          },
-          "FREQ_TOLERANCE_HZ": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "INSERT_VIP": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "PHASE": {
-            "value": "0.0"
           }
         }
       },
@@ -2155,22 +2131,22 @@
             "value": "clk_out2"
           },
           "MMCM_CLKFBOUT_MULT_F": {
-            "value": "61.000"
+            "value": "42.750"
           },
           "MMCM_CLKIN1_PERIOD": {
-            "value": "20.000"
+            "value": "8.000"
           },
           "MMCM_CLKIN2_PERIOD": {
-            "value": "10.0"
+            "value": "10.000"
           },
           "MMCM_CLKOUT0_DIVIDE_F": {
-            "value": "82.750"
+            "value": "62.125"
           },
           "MMCM_CLKOUT1_DIVIDE": {
             "value": "1"
           },
           "MMCM_DIVCLK_DIVIDE": {
-            "value": "3"
+            "value": "7"
           },
           "NUM_OUT_CLKS": {
             "value": "1"
@@ -2435,7 +2411,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2506,7 +2482,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2577,7 +2553,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2648,7 +2624,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2696,7 +2672,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -2943,7 +2919,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -3014,7 +2990,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -3058,7 +3034,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "12286002",
+                "value": "12288013",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -3823,17 +3799,17 @@
           "clk_wiz_0/clk_aud",
           "mclk_out_dac",
           "mclk_out_adc",
-          "i2s_receiver_0/aud_mclk",
-          "i2s_transmitter_0/aud_mclk",
-          "proc_sys_reset_0/slowest_sync_clk",
-          "i2s_transmitter_0/s_axis_aud_aclk",
-          "i2s_receiver_0/m_axis_aud_aclk",
           "axis_tlast_gen_trans_0/clk",
           "axis_data_fifo_0/m_axis_aclk",
           "axis_data_fifo_1/s_axis_aclk",
           "axi_stream_looper_mi_0/clk",
+          "axi_clock_converter_0/m_axi_aclk",
           "axi_gpio_0/s_axi_aclk",
-          "axi_clock_converter_0/m_axi_aclk"
+          "i2s_receiver_0/aud_mclk",
+          "i2s_receiver_0/m_axis_aud_aclk",
+          "i2s_transmitter_0/aud_mclk",
+          "i2s_transmitter_0/s_axis_aud_aclk",
+          "proc_sys_reset_0/slowest_sync_clk"
         ]
       },
       "clk_wiz_0_locked": {
@@ -3881,20 +3857,20 @@
       "proc_sys_reset_0_peripheral_aresetn": {
         "ports": [
           "proc_sys_reset_0/peripheral_aresetn",
-          "i2s_transmitter_0/s_axis_aud_aresetn",
-          "i2s_receiver_0/m_axis_aud_aresetn",
           "axis_tlast_gen_trans_0/resetn",
           "axis_data_fifo_1/s_axis_aresetn",
           "axi_stream_looper_mi_0/resetn",
+          "axi_clock_converter_0/m_axi_aresetn",
           "axi_gpio_0/s_axi_aresetn",
-          "axi_clock_converter_0/m_axi_aresetn"
+          "i2s_receiver_0/m_axis_aud_aresetn",
+          "i2s_transmitter_0/s_axis_aud_aresetn"
         ]
       },
       "proc_sys_reset_0_peripheral_reset": {
         "ports": [
           "proc_sys_reset_0/peripheral_reset",
-          "i2s_transmitter_0/aud_mrst",
-          "i2s_receiver_0/aud_mrst"
+          "i2s_receiver_0/aud_mrst",
+          "i2s_transmitter_0/aud_mrst"
         ]
       },
       "processing_system7_0_FCLK_CLK0": {
@@ -3904,11 +3880,6 @@
           "axi_dma_0/m_axi_s2mm_aclk",
           "axi_dma_0/m_axi_mm2s_aclk",
           "axis_data_fifo_0/s_axis_aclk",
-          "i2s_receiver_0/s_axi_ctrl_aclk",
-          "i2s_transmitter_0/s_axi_ctrl_aclk",
-          "processing_system7_0/M_AXI_GP0_ACLK",
-          "processing_system7_0/S_AXI_HP0_ACLK",
-          "rst_ps7_0_100M/slowest_sync_clk",
           "axis_data_fifo_1/m_axis_aclk",
           "axi_mem_intercon/ACLK",
           "axi_mem_intercon/S00_ACLK",
@@ -3916,7 +3887,13 @@
           "axi_mem_intercon/S01_ACLK",
           "axi_mem_intercon/S02_ACLK",
           "axi_clock_converter_0/s_axi_aclk",
-          "axi_smc/aclk"
+          "axi_smc/aclk",
+          "clk_wiz_0/clk_in1",
+          "i2s_receiver_0/s_axi_ctrl_aclk",
+          "i2s_transmitter_0/s_axi_ctrl_aclk",
+          "processing_system7_0/M_AXI_GP0_ACLK",
+          "processing_system7_0/S_AXI_HP0_ACLK",
+          "rst_ps7_0_100M/slowest_sync_clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -3930,8 +3907,6 @@
         "ports": [
           "rst_ps7_0_100M/peripheral_aresetn",
           "axi_dma_0/axi_resetn",
-          "i2s_receiver_0/s_axi_ctrl_aresetn",
-          "i2s_transmitter_0/s_axi_ctrl_aresetn",
           "axi_mem_intercon/S00_ARESETN",
           "axi_mem_intercon/M00_ARESETN",
           "axi_mem_intercon/ARESETN",
@@ -3939,19 +3914,15 @@
           "axi_mem_intercon/S02_ARESETN",
           "axis_data_fifo_0/s_axis_aresetn",
           "axi_clock_converter_0/s_axi_aresetn",
-          "axi_smc/aresetn"
+          "axi_smc/aresetn",
+          "i2s_receiver_0/s_axi_ctrl_aresetn",
+          "i2s_transmitter_0/s_axi_ctrl_aresetn"
         ]
       },
       "sdata_0_in_0_1": {
         "ports": [
           "sdata_0_in_0",
           "i2s_receiver_0/sdata_0_in"
-        ]
-      },
-      "sys_clock_1": {
-        "ports": [
-          "sys_clock",
-          "clk_wiz_0/clk_in1"
         ]
       }
     },
@@ -3996,15 +3967,6 @@
             }
           },
           "Data_S2MM": {
-            "segments": {
-              "SEG_processing_system7_0_HP0_DDR_LOWOCM": {
-                "address_block": "/processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM",
-                "offset": "0x00000000",
-                "range": "512M"
-              }
-            }
-          },
-          "Data_SG": {
             "segments": {
               "SEG_processing_system7_0_HP0_DDR_LOWOCM": {
                 "address_block": "/processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM",
