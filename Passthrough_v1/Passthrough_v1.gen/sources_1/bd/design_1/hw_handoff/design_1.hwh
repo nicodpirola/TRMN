@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Apr 14 22:30:28 2026" VIVADOVERSION="2025.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Apr 24 21:48:16 2026" VIVADOVERSION="2025.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="digilentinc.com:arty-z7-20:part0:1.1" DEVICE="7z020" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -4472,7 +4472,7 @@
     <MODULE COREREVISION="1" FULLNAME="/axis_tlast_gen_trans_0" HWVERSION="1.0" INSTANCE="axis_tlast_gen_trans_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="axis_tlast_gen_transparent" VLNV="xilinx.com:module_ref:axis_tlast_gen_transparent:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="PKT_SIZE" VALUE="64"/>
+        <PARAMETER NAME="PKT_SIZE" VALUE="512"/>
         <PARAMETER NAME="Component_Name" VALUE="design_1_axis_tlast_gen_trans_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>

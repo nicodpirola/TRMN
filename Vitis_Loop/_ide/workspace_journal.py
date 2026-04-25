@@ -1,12 +1,6 @@
-# 2026-04-18T17:39:51.782715400
+# 2026-04-24T23:30:31.841328300
 import vitis
 
 client = vitis.create_client()
 client.set_workspace(path="Vitis_Loop")
-
-platform = client.get_component(name="platform")
-status = platform.build()
-
-comp = client.get_component(name="App")
-comp.build()
 

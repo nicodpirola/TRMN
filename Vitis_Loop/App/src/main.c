@@ -31,7 +31,7 @@
 // ==========================================================
 #define AUDIO_BUFFER_BASEADDR 0x10000000 
 #define MAX_SAMPLES           441000 // ~10 segundos a 44.1kHz
-#define PACKET_SIZE           64   // Muestras por transferencia DMA (Ajustable)
+#define PACKET_SIZE           512   // Muestras por transferencia DMA (Ajustable)
 
 #define PRESIONADO            1
 #define SOLTADO               0
@@ -149,31 +149,51 @@ int main() {
     // Arrancar la primera recepcion en Ping
     XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
+    int last_global_enable = -1;
+
     while(1) {
         // --- MAQUINA DE ESTADOS (Lectura de Pedal) ---
-        int pedal = XGpio_DiscreteRead(&GpioPedal, 1);
-        if (pedal == PRESIONADO && last_pedal_state == SOLTADO) {
-            if (current_state == STATE_BYPASS || current_state == STATE_PLAYBACK) {
-                current_state = STATE_RECORD;
-                loop_index = 0; // Empezar a grabar desde el principio
-                xil_printf(">>> GRABANDO...\r\n");
+        int switches = XGpio_DiscreteRead(&GpioPedal, 1);
+        int global_enable = (switches & 0x01); // Switch 0
+        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Switch 1
+
+        if (global_enable != last_global_enable) {
+            if (global_enable) {
+                xil_printf(">>> PEDAL ENCENDIDO\r\n");
+            } else {
+                xil_printf(">>> PEDAL APAGADO (Bypass general)\r\n");
             }
-        } else if (pedal == SOLTADO && last_pedal_state == PRESIONADO) {
-            if (current_state == STATE_RECORD) {
-                current_state = STATE_PLAYBACK;
-                loop_length = loop_index; // Guardar la longitud total del loop
-                loop_index = 0;           // Reiniciar indice para reproducir
-                xil_printf("<<< REPRODUCIENDO (Loop de %d muestras)...\r\n", (int)loop_length);
+            last_global_enable = global_enable;
+        }
+
+        if (global_enable == 0) {
+            current_state = STATE_BYPASS;
+        } else {
+            if (pedal == PRESIONADO && last_pedal_state == SOLTADO) {
+                if (current_state == STATE_BYPASS || current_state == STATE_PLAYBACK) {
+                    current_state = STATE_RECORD;
+                    loop_index = 0; // Empezar a grabar desde el principio
+                    xil_printf(">>> GRABANDO...\r\n");
+                }
+            } else if (pedal == SOLTADO && last_pedal_state == PRESIONADO) {
+                if (current_state == STATE_RECORD) {
+                    current_state = STATE_PLAYBACK;
+                    loop_length = loop_index; // Guardar la longitud total del loop
+                    loop_index = 0;           // Reiniciar indice para reproducir
+                    xil_printf("<<< REPRODUCIENDO (Loop de %d muestras)...\r\n", (int)loop_length);
+                }
             }
         }
         last_pedal_state = pedal;
-
+        
+        xil_printf("Esperando RX DMA...\r\n"); 
         // ==========================================================
         // MITAD PING
         // ==========================================================
         
         // 1. Esperar a que el DMA termine de llenar rx_ping
         while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
+        xil_printf("RX DMA Completado!\r\n");
         Xil_DCacheInvalidateRange((UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32)); // Vaciar cache de lectura
         
         // 2. Iniciar inmediatamente la recepcion en rx_pong para no perder datos del PL
