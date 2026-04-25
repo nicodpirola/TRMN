@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Fri Apr 24 21:48:12 2026
+//Date        : Sat Apr 25 00:36:29 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=22,numReposBlks=17,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=13,da_board_cnt=5,da_clkrst_cnt=15,da_ps7_cnt=1,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=23,numReposBlks=18,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=13,da_board_cnt=5,da_clkrst_cnt=15,da_ps7_cnt=1,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -37,7 +37,6 @@ module design_1
     lrclk_out_1,
     mclk_out_adc,
     mclk_out_dac,
-    pedal_in_0,
     sclk_out_0,
     sclk_out_1,
     sdata_0_in_0,
@@ -67,7 +66,6 @@ module design_1
   output lrclk_out_1;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_ADC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_ADC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_adc;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_DAC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_DAC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_dac;
-  input pedal_in_0;
   output sclk_out_0;
   output sclk_out_1;
   input sdata_0_in_0;
@@ -261,10 +259,10 @@ module design_1
   wire axis_data_fifo_0_M_AXIS_TLAST;
   wire axis_data_fifo_0_M_AXIS_TREADY;
   wire axis_data_fifo_0_M_AXIS_TVALID;
-  wire [31:0]axis_data_fifo_1_M_AXIS_TDATA;
-  wire axis_data_fifo_1_M_AXIS_TLAST;
-  wire axis_data_fifo_1_M_AXIS_TREADY;
-  wire axis_data_fifo_1_M_AXIS_TVALID;
+  (* CONN_BUS_INFO = "axis_data_fifo_1_M_AXIS xilinx.com:interface:axis:1.0 None TDATA" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire [31:0]axis_data_fifo_1_M_AXIS_TDATA;
+  (* CONN_BUS_INFO = "axis_data_fifo_1_M_AXIS xilinx.com:interface:axis:1.0 None TLAST" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire axis_data_fifo_1_M_AXIS_TLAST;
+  (* CONN_BUS_INFO = "axis_data_fifo_1_M_AXIS xilinx.com:interface:axis:1.0 None TREADY" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire axis_data_fifo_1_M_AXIS_TREADY;
+  (* CONN_BUS_INFO = "axis_data_fifo_1_M_AXIS xilinx.com:interface:axis:1.0 None TVALID" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire axis_data_fifo_1_M_AXIS_TVALID;
   wire [31:0]axis_tlast_gen_trans_0_m_axis_TDATA;
   wire axis_tlast_gen_trans_0_m_axis_TLAST;
   wire axis_tlast_gen_trans_0_m_axis_TREADY;
@@ -898,6 +896,13 @@ module design_1
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(rst_ps7_0_100M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
+  design_1_system_ila_0_0 system_ila_0
+       (.SLOT_0_AXIS_tdata(axis_data_fifo_1_M_AXIS_TDATA),
+        .SLOT_0_AXIS_tlast(axis_data_fifo_1_M_AXIS_TLAST),
+        .SLOT_0_AXIS_tready(axis_data_fifo_1_M_AXIS_TREADY),
+        .SLOT_0_AXIS_tvalid(axis_data_fifo_1_M_AXIS_TVALID),
+        .clk(processing_system7_0_FCLK_CLK0),
+        .resetn(rst_ps7_0_100M_peripheral_aresetn));
 endmodule
 
 module design_1_axi_mem_intercon_0

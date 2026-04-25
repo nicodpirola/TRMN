@@ -4,7 +4,7 @@
 		compatible = "simple-bus";
 		#address-cells = <1>;
 		#size-cells = <1>;
-		firmware-name = "HW.bit.bin";
+		firmware-name = "design_1_wrapper.bit.bin";
 		clocking1: clocking1 {
 			compatible = "xlnx,fclk";
 			assigned-clocks = <&clkc 16>;

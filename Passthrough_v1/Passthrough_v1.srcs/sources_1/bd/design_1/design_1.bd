@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xF70DEF6B8676B033",
+      "boundary_crc": "0xF84410C7DA1D5538",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../Passthrough_v1.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -35,7 +35,8 @@
         }
       },
       "axi_gpio_0": "",
-      "axi_clock_converter_0": ""
+      "axi_clock_converter_0": "",
+      "system_ila_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -277,9 +278,6 @@
             "value_src": "ip_prop"
           }
         }
-      },
-      "pedal_in_0": {
-        "direction": "I"
       }
     },
     "components": {
@@ -3671,6 +3669,42 @@
             }
           }
         }
+      },
+      "system_ila_0": {
+        "vlnv": "xilinx.com:ip:system_ila:1.1",
+        "ip_revision": "21",
+        "xci_name": "design_1_system_ila_0_0",
+        "xci_path": "ip\\design_1_system_ila_0_0\\design_1_system_ila_0_0.xci",
+        "inst_hier_path": "system_ila_0",
+        "has_run_ip_tcl": "true",
+        "parameters": {
+          "C_MON_TYPE": {
+            "value": "INTERFACE"
+          },
+          "C_NUM_MONITOR_SLOTS": {
+            "value": "1"
+          },
+          "C_SLOT_0_APC_EN": {
+            "value": "0"
+          },
+          "C_SLOT_0_AXI_DATA_SEL": {
+            "value": "1"
+          },
+          "C_SLOT_0_AXI_TRIG_SEL": {
+            "value": "1"
+          },
+          "C_SLOT_0_INTF_TYPE": {
+            "value": "xilinx.com:interface:axis_rtl:1.0"
+          }
+        },
+        "interface_ports": {
+          "SLOT_0_AXIS": {
+            "mode": "Monitor",
+            "monitor_type": "SlaveType",
+            "vlnv_bus_definition": "xilinx.com:interface:axis:1.0",
+            "vlnv": "xilinx.com:interface:axis_rtl:1.0"
+          }
+        }
       }
     },
     "interface_nets": {
@@ -3749,8 +3783,17 @@
       "axis_data_fifo_1_M_AXIS": {
         "interface_ports": [
           "axis_data_fifo_1/M_AXIS",
-          "axi_dma_0/S_AXIS_S2MM"
-        ]
+          "axi_dma_0/S_AXIS_S2MM",
+          "system_ila_0/SLOT_0_AXIS"
+        ],
+        "hdl_attributes": {
+          "DEBUG": {
+            "value": "true"
+          },
+          "MARK_DEBUG": {
+            "value": "true"
+          }
+        }
       },
       "axis_tlast_gen_trans_0_m_axis": {
         "interface_ports": [
@@ -3889,7 +3932,8 @@
           "i2s_transmitter_0/s_axi_ctrl_aclk",
           "processing_system7_0/M_AXI_GP0_ACLK",
           "processing_system7_0/S_AXI_HP0_ACLK",
-          "rst_ps7_0_100M/slowest_sync_clk"
+          "rst_ps7_0_100M/slowest_sync_clk",
+          "system_ila_0/clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -3912,7 +3956,8 @@
           "axi_clock_converter_0/s_axi_aresetn",
           "axi_smc/aresetn",
           "i2s_receiver_0/s_axi_ctrl_aresetn",
-          "i2s_transmitter_0/s_axi_ctrl_aresetn"
+          "i2s_transmitter_0/s_axi_ctrl_aresetn",
+          "system_ila_0/resetn"
         ]
       },
       "sdata_0_in_0_1": {
