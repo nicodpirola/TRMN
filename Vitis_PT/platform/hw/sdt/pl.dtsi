@@ -1,0 +1,56 @@
+/ {
+	amba_pl: amba_pl {
+		ranges;
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		firmware-name = "design_1_wrapper.bit.bin";
+		clocking0: clocking0 {
+			compatible = "xlnx,fclk";
+			assigned-clocks = <&clkc 15>;
+			assigned-clock-rates = <125000000>;
+			#clock-cells = <0>;
+			clock-output-names = "fabric_clk";
+			clocks = <&clkc 15>;
+		};
+		misc_clk_0: misc_clk_0 {
+			compatible = "fixed-clock";
+			clock-frequency = <12288013>;
+			#clock-cells = <0>;
+		};
+		i2s_receiver_0: i2s_receiver@43c00000 {
+			aud_mclk = <12288013>;
+			compatible = "xlnx,i2s-receiver-1.0" , "xlnx,i2s-receiver-1.0";
+			xlnx,dwidth = <0x18>;
+			xlnx,depth = <0x80>;
+			xlnx,ip-name = "i2s_receiver";
+			reg = <0x43c00000 0x10000>;
+			clocks = <&misc_clk_0>, <&clkc 15>, <&clkc 15>;
+			xlnx,num-channels = <0x1>;
+			xlnx,i2srx-board-interface = "Custom";
+			xlnx,edk-iptype = "PERIPHERAL";
+			xlnx,is-master = <1>;
+			status = "okay";
+			clock-names = "aud_mclk" , "m_axis_aud_aclk" , "s_axi_ctrl_aclk";
+			xlnx,32bit-lr = <1>;
+			xlnx,name = "i2s_receiver_0";
+		};
+		i2s_transmitter_0: i2s_transmitter@43c10000 {
+			aud_mclk = <12288013>;
+			compatible = "xlnx,i2s-transmitter-1.0" , "xlnx,i2s-transmitter-1.0";
+			xlnx,dwidth = <0x18>;
+			xlnx,depth = <0x80>;
+			xlnx,ip-name = "i2s_transmitter";
+			reg = <0x43c10000 0x10000>;
+			clocks = <&misc_clk_0>, <&clkc 15>, <&clkc 15>;
+			xlnx,num-channels = <0x1>;
+			xlnx,edk-iptype = "PERIPHERAL";
+			xlnx,is-master = <1>;
+			xlnx,i2stx-board-interface = "Custom";
+			status = "okay";
+			clock-names = "aud_mclk" , "s_axi_ctrl_aclk" , "s_axis_aud_aclk";
+			xlnx,32bit-lr = <1>;
+			xlnx,name = "i2s_transmitter_0";
+		};
+	};
+};

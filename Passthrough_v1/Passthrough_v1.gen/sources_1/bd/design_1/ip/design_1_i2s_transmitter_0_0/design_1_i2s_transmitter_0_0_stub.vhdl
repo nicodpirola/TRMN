@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
--- Date        : Sat Apr 25 22:48:31 2026
+-- Date        : Sun Apr 26 15:29:59 2026
 -- Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub -rename_top design_1_i2s_transmitter_0_0 -prefix
---               design_1_i2s_transmitter_0_0_ design_1_i2s_transmitter_0_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub
+--               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_i2s_transmitter_0_0/design_1_i2s_transmitter_0_0_stub.vhdl
 -- Design      : design_1_i2s_transmitter_0_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1
@@ -71,13 +71,13 @@ architecture stub of design_1_i2s_transmitter_0_0 is
   attribute X_INTERFACE_PARAMETER of s_axi_ctrl_aresetn : signal is "XIL_INTERFACENAME s_axi_ctrl_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of aud_mclk : signal is "xilinx.com:signal:clock:1.0 aud_mclk CLK";
   attribute X_INTERFACE_MODE of aud_mclk : signal is "slave";
-  attribute X_INTERFACE_PARAMETER of aud_mclk : signal is "XIL_INTERFACENAME aud_mclk, ASSOCIATED_RESET aud_mrst, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of aud_mclk : signal is "XIL_INTERFACENAME aud_mclk, ASSOCIATED_RESET aud_mrst, FREQ_HZ 12286002, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of aud_mrst : signal is "xilinx.com:signal:reset:1.0 aud_mrst RST";
   attribute X_INTERFACE_MODE of aud_mrst : signal is "slave";
   attribute X_INTERFACE_PARAMETER of aud_mrst : signal is "XIL_INTERFACENAME aud_mrst, POLARITY ACTIVE_HIGH, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axis_aud_aclk : signal is "xilinx.com:signal:clock:1.0 s_axis_aud_aclk CLK";
   attribute X_INTERFACE_MODE of s_axis_aud_aclk : signal is "slave";
-  attribute X_INTERFACE_PARAMETER of s_axis_aud_aclk : signal is "XIL_INTERFACENAME s_axis_aud_aclk, ASSOCIATED_BUSIF s_axis_aud, ASSOCIATED_RESET s_axis_aud_aresetn, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of s_axis_aud_aclk : signal is "XIL_INTERFACENAME s_axis_aud_aclk, ASSOCIATED_BUSIF s_axis_aud, ASSOCIATED_RESET s_axis_aud_aresetn, FREQ_HZ 12286002, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axis_aud_aresetn : signal is "xilinx.com:signal:reset:1.0 s_axis_aud_aresetn RST";
   attribute X_INTERFACE_MODE of s_axis_aud_aresetn : signal is "slave";
   attribute X_INTERFACE_PARAMETER of s_axis_aud_aresetn : signal is "XIL_INTERFACENAME s_axis_aud_aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0";
@@ -104,7 +104,7 @@ architecture stub of design_1_i2s_transmitter_0_0 is
   attribute X_INTERFACE_PARAMETER of irq : signal is "XIL_INTERFACENAME irq, SENSITIVITY LEVEL_HIGH, PortWidth 1";
   attribute X_INTERFACE_INFO of s_axis_aud_tdata : signal is "xilinx.com:interface:axis:1.0 s_axis_aud TDATA";
   attribute X_INTERFACE_MODE of s_axis_aud_tdata : signal is "slave";
-  attribute X_INTERFACE_PARAMETER of s_axis_aud_tdata : signal is "XIL_INTERFACENAME s_axis_aud, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 3, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 12288013, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of s_axis_aud_tdata : signal is "XIL_INTERFACENAME s_axis_aud, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 3, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 12286002, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axis_aud_tid : signal is "xilinx.com:interface:axis:1.0 s_axis_aud TID";
   attribute X_INTERFACE_INFO of s_axis_aud_tvalid : signal is "xilinx.com:interface:axis:1.0 s_axis_aud TVALID";
   attribute X_INTERFACE_INFO of s_axis_aud_tready : signal is "xilinx.com:interface:axis:1.0 s_axis_aud TREADY";

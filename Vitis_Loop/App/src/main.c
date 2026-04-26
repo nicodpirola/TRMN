@@ -105,11 +105,11 @@ int main() {
     xil_printf("\r\n--- Iniciando Sistema Looper (Ping-Pong Polling) ---\r\n");
 
     // 1. Configurar IP I2S
-    xil_printf("Configurando divisores I2S para ~52kHz...\r\n");
-    Xil_Out32(I2S_RX_BASE + 0x20, 0x00400002);
-    Xil_Out32(I2S_TX_BASE + 0x20, 0x00400002);
-    Xil_Out32(I2S_RX_BASE + 0x0C, 0x00000001);
-    Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001);
+    xil_printf("Configurando divisores I2S para ~48kHz...\r\n");
+    // Divisor = 1 -> SCLK = 12.288M / (2 * (1+1)) = 3.072 MHz -> 48 kHz con 64 bits/frame
+    Xil_Out32(I2S_RX_BASE + 0x20, 0x00000001);
+    Xil_Out32(I2S_TX_BASE + 0x20, 0x00000001);
+    Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001); // Validez para TX
 
     // Habilitar canales de audio 0 (0x30)
     Xil_Out32(I2S_RX_BASE + 0x30, 0x00000001); // RX: Mux = 1 (Rutea I2S Ch0 a AXI Stream)
@@ -123,6 +123,14 @@ int main() {
     xil_printf("Encendiendo modulos I2S...\r\n");
     Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
     Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
+
+    // Diagnóstico I2S
+    xil_printf("--- I2S STATUS ---\r\n");
+    xil_printf("RX Config (0x04): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x04));
+    xil_printf("RX Timing (0x20): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x20));
+    xil_printf("RX Status (0x14): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x14));
+    xil_printf("TX Status (0x14): 0x%08X\r\n", Xil_In32(I2S_TX_BASE + 0x14));
+    xil_printf("------------------\r\n");
 
     // 4. Inicializar GPIO del Pedal
     status = XGpio_Initialize(&GpioPedal, GPIO_DEV_ID);

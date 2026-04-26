@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
--- Date        : Sat Apr 25 23:24:43 2026
+-- Date        : Sat Apr 25 23:24:39 2026
 -- Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub
---               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_system_ila_2_0/design_1_system_ila_2_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top design_1_system_ila_2_0 -prefix
+--               design_1_system_ila_2_0_ design_1_system_ila_2_0_stub.vhdl
 -- Design      : design_1_system_ila_2_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1

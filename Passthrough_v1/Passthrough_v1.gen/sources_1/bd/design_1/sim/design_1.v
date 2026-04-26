@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Sat Apr 25 22:57:46 2026
+//Date        : Sun Apr 26 15:28:08 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -64,8 +64,8 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
   output lrclk_out_0;
   output lrclk_out_1;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_ADC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_ADC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_adc;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_DAC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_DAC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12288013, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_dac;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_ADC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_ADC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12286002, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_adc;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.MCLK_OUT_DAC CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.MCLK_OUT_DAC, CLK_DOMAIN /clk_wiz_0_clk_out1, FREQ_HZ 12286002, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) output mclk_out_dac;
   output sclk_out_0;
   output sclk_out_1;
   input sdata_0_in_0;
@@ -716,9 +716,9 @@ module design_1
         .s_axis_tdata(axi_stream_looper_mi_0_m_dma_axis_TDATA),
         .s_axis_tready(axi_stream_looper_mi_0_m_dma_axis_TREADY),
         .s_axis_tvalid(axi_stream_looper_mi_0_m_dma_axis_TVALID));
-  design_1_clk_wiz_0_0 clk_wiz_0
-       (.clk_aud(clk_wiz_0_clk_aud),
-        .clk_in1(processing_system7_0_FCLK_CLK0),
+  design_1_clk_wiz_0_1 clk_wiz_0
+       (.clk_in1(processing_system7_0_FCLK_CLK0),
+        .clk_out1(clk_wiz_0_clk_aud),
         .locked(clk_wiz_0_locked),
         .reset(ilconstant_0_dout));
   design_1_i2s_receiver_0_0 i2s_receiver_0
@@ -784,7 +784,7 @@ module design_1
   assign ilconstant_0_dout = 1'h0;
   design_1_proc_sys_reset_0_0 proc_sys_reset_0
        (.aux_reset_in(1'b1),
-        .dcm_locked(clk_wiz_0_locked),
+        .dcm_locked(1'b1),
         .ext_reset_in(processing_system7_0_FCLK_RESET0_N),
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(proc_sys_reset_0_peripheral_aresetn),
@@ -897,7 +897,7 @@ module design_1
         .USB0_VBUS_PWRFAULT(1'b0));
   design_1_rst_ps7_0_100M_2 rst_ps7_0_100M
        (.aux_reset_in(1'b1),
-        .dcm_locked(1'b1),
+        .dcm_locked(clk_wiz_0_locked),
         .ext_reset_in(processing_system7_0_FCLK_RESET0_N),
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(rst_ps7_0_100M_peripheral_aresetn),

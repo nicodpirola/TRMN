@@ -30,21 +30,16 @@ create_clock -add -name sys_clk_pin -period 8.00 -waveform {0 4} [get_ports { sy
 #set_property -dict { PACKAGE_PIN D20    IOSTANDARD LVCMOS33 } [get_ports { btn[1] }]; #IO_L4N_T0_35 Sch=BTN1
 #set_property -dict { PACKAGE_PIN L20    IOSTANDARD LVCMOS33 } [get_ports { btn[2] }]; #IO_L9N_T1_DQS_AD3N_35 Sch=BTN2
 #set_property -dict { PACKAGE_PIN L19    IOSTANDARD LVCMOS33 } [get_ports { btn[3] }]; #IO_L9P_T1_DQS_AD3P_35 Sch=BTN3
-
 ## Pmod Header JA
-set_property -dict { PACKAGE_PIN Y18   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_adc}]; #IO_L17P_T2_34 Sch=JA1_P (Pin 1) sdata_0_in_0 || BCK
+set_property -dict { PACKAGE_PIN Y18   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_0 }]; #IO_L17P_T2_34 Sch=JA1_P (Pin 1) sclk_out_0 || BCK
 set_property -dict { PACKAGE_PIN Y19   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_in_0 }]; #IO_L17N_T2_34 Sch=JA1_N (Pin 2)             || OUT
-set_property -dict { PACKAGE_PIN Y16   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_0 }]; #IO_L7P_T1_34 Sch=JA2_P (Pin 3) mclk_out_adc  || LRC
-set_property -dict { PACKAGE_PIN Y17   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_0 }]; #IO_L7N_T1_34 Sch=JA2_N (Pin 4)                || SCK
-#set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_0 }]; #IO_L12P_T1_MRCC_34 Sch=JA3_P (Pin 7) sclk_out_0
-#set_property -dict { PACKAGE_PIN U19   IOSTANDARD LVCMOS33 } [get_ports { ja_n[3] }]; #IO_L12N_T1_MRCC_34 Sch=JA3_N (Pin 8)
-#set_property -dict { PACKAGE_PIN W18   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_0 }]; #IO_L22P_T3_34 Sch=JA4_P (Pin 9) lrclk_out_0
-#set_property -dict { PACKAGE_PIN W19   IOSTANDARD LVCMOS33 } [get_ports { ja_n[4] }]; #IO_L22N_T3_34 Sch=JA4_N (Pin 10)
+set_property -dict { PACKAGE_PIN Y16   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_0 }]; #IO_L7P_T1_34 Sch=JA2_P (Pin 3) lrclk_out_0  || LRC
+set_property -dict { PACKAGE_PIN Y17   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_adc }]; #IO_L7N_T1_34 Sch=JA2_N (Pin 4)                || SCK
 
 ## Pmod Header JB
-set_property -dict { PACKAGE_PIN W14   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_1 }]; #IO_L8P_T1_34 Sch=JB1_P (Pin 1)  mclk_out_dac  || SCK
-set_property -dict { PACKAGE_PIN Y14   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_dac }]; #IO_L8N_T1_34 Sch=JB1_N (Pin 2)              || BCK
-set_property -dict { PACKAGE_PIN T11   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_out_0 }]; #IO_L1P_T0_34 Sch=JB2_P (Pin 3) lrclk_out_1 || IN
+set_property -dict { PACKAGE_PIN W14   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_dac }]; #IO_L8P_T1_34 Sch=JB1_P (Pin 1)  mclk_out_dac  || SCK
+set_property -dict { PACKAGE_PIN Y14   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_1 }]; #IO_L8N_T1_34 Sch=JB1_N (Pin 2)              || BCK
+set_property -dict { PACKAGE_PIN T11   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_out_0 }]; #IO_L1P_T0_34 Sch=JB2_P (Pin 3) sdata_0_out_0 || IN
 set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_1 }]; #IO_L1N_T0_34 Sch=JB2_N (Pin 4)               || LRC
 #set_property -dict { PACKAGE_PIN V16   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_1 }]; #IO_L18P_T2_34 Sch=JB3_P (Pin 7) sclk_out_1
 #set_property -dict { PACKAGE_PIN W16   IOSTANDARD LVCMOS33 } [get_ports { jb_n[3] }]; #IO_L18N_T2_34 Sch=JB3_N (Pin 8)
