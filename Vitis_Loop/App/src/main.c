@@ -111,6 +111,10 @@ int main() {
     Xil_Out32(I2S_RX_BASE + 0x0C, 0x00000001);
     Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001);
 
+    // Habilitar canales de audio 0 (0x30)
+    Xil_Out32(I2S_RX_BASE + 0x30, 0x00000001); // RX: Mux = 1 (Rutea I2S Ch0 a AXI Stream)
+    Xil_Out32(I2S_TX_BASE + 0x30, 0x00000001); // TX: En algunos IPs esto habilita el canal
+
     // 2. Configurar AXI GPIO (Looper Mixer)
     xil_printf("Inicializando Looper Mixer en MODO IDLE...\r\n");
     Xil_Out32(GPIO_MIXER_BASE + 0x00, 0x00000000);
