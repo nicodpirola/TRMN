@@ -106,9 +106,9 @@ int main() {
 
     // 1. Configurar IP I2S
     xil_printf("Configurando divisores I2S para ~48kHz...\r\n");
-    // Divisor = 1 -> SCLK = 12.288M / (2 * (1+1)) = 3.072 MHz -> 48 kHz con 64 bits/frame
-    Xil_Out32(I2S_RX_BASE + 0x20, 0x00000001);
-    Xil_Out32(I2S_TX_BASE + 0x20, 0x00000001);
+    // Divisor = 3 -> SCLK = 24.576M / (2 * (3+1)) = 3.072 MHz -> 48 kHz con 64 bits/frame
+    Xil_Out32(I2S_RX_BASE + 0x20, 0x00000003);
+    Xil_Out32(I2S_TX_BASE + 0x20, 0x00000003);
     Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001); // Validez para TX
 
     // Habilitar canales de audio 0 (0x30)

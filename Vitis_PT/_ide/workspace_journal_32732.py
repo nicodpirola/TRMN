@@ -1,4 +1,4 @@
-# 2026-04-28T19:44:23.878631800
+# 2026-04-28T16:39:04.046566300
 import vitis
 
 client = vitis.create_client()
@@ -12,8 +12,6 @@ comp.build()
 
 status = platform.build()
 
-comp.build()
-
 status = platform.build()
 
 comp.build()
@@ -21,4 +19,8 @@ comp.build()
 status = platform.build()
 
 comp.build()
+
+vitis.dispose()
+
+vitis.dispose()
 
