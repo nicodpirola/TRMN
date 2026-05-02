@@ -9,7 +9,6 @@
 // ==========================================================
 // DEFINICIONES DE HARDWARE
 // ==========================================================
-// IDs de dispositivos en xparameters.h
 #ifndef XPAR_AXIDMA_0_DEVICE_ID
 #define XPAR_AXIDMA_0_DEVICE_ID 0
 #endif
@@ -21,28 +20,31 @@
 #define DMA_DEV_ID      XPAR_AXIDMA_0_DEVICE_ID
 #define GPIO_DEV_ID     XPAR_GPIO_0_DEVICE_ID
 
-// Direcciones Base (Desde tb_zynq.sv)
+// Direcciones Base
 #define I2S_RX_BASE     0x43C00000
 #define I2S_TX_BASE     0x43C10000
 #define GPIO_MIXER_BASE 0x41200000
 
+// Modos del Hardware Mixer (axi_stream_looper_mixer.v)
+#define HW_MODE_IDLE    0  // Bypass puro en hardware
+#define HW_MODE_RECORD  1  // Guarda en RAM, TX DMA apagado
+#define HW_MODE_PLAY    2  // Mezcla hardware, guarda en RAM lo mismo
+#define HW_MODE_OVERDUB 3  // Mezcla hardware, guarda en RAM la mezcla
+
 // ==========================================================
-// CONFIGURACION DEL LOOPER Y PING-PONG
+// CONFIGURACION DEL LOOPER
 // ==========================================================
 #define AUDIO_BUFFER_BASEADDR 0x10000000 
-#define MAX_SAMPLES           441000 // ~10 segundos a 44.1kHz
-#define PACKET_SIZE           512   // Muestras por transferencia DMA (Ajustable)
+#define MAX_SAMPLES           441000 // ~9 segundos a 48kHz
+#define PACKET_SIZE           512    // Muestras por transferencia DMA
 
 #define PRESIONADO            1
 #define SOLTADO               0
 
-// ==========================================================
-// VARIABLES GLOBALES Y BUFFERS
-// ==========================================================
 XAxiDma AxiDma;     
 XGpio GpioPedal;    
 
-// Buffers Ping-Pong alineados para cache (crucial para DMA)
+// Buffers Ping-Pong alineados para cache
 u32 rx_ping[PACKET_SIZE] __attribute__((aligned(32)));
 u32 rx_pong[PACKET_SIZE] __attribute__((aligned(32)));
 u32 tx_ping[PACKET_SIZE] __attribute__((aligned(32)));
@@ -51,197 +53,194 @@ u32 tx_pong[PACKET_SIZE] __attribute__((aligned(32)));
 // Gran buffer circular en DDR
 u32 *LoopBuffer = (u32 *)AUDIO_BUFFER_BASEADDR; 
 
-// Estado del Looper
-typedef enum {
-    STATE_BYPASS = 0,
-    STATE_RECORD = 1,
-    STATE_PLAYBACK = 2
-} LooperState;
-
-LooperState current_state = STATE_BYPASS;
-u32 loop_length = 0;
-u32 loop_index = 0;
-int last_pedal_state = SOLTADO;
-
-// ==========================================================
-// FUNCION DE PROCESAMIENTO DE AUDIO
-// ==========================================================
-void process_audio(u32 *rx_buf, u32 *tx_buf, int packet_size) {
-    for (int i = 0; i < packet_size; i++) {
-        u32 in_sample = rx_buf[i];
-        u32 out_sample = in_sample; // Passthrough para testing
-
-        if (current_state == STATE_RECORD) {
-            if (loop_index < MAX_SAMPLES) {
-                LoopBuffer[loop_index] = in_sample;
-                loop_index++;
-            }
-        } 
-        else if (current_state == STATE_PLAYBACK) {
-            if (loop_length > 0) {
-                // Modo Playback simple (reemplaza el audio entrante con el grabado)
-                // Para mezcla (overdub real), se debe manejar la suma de muestras con signo.
-                out_sample = LoopBuffer[loop_index];
-                
-                LoopBuffer[loop_index] = in_sample;
-
-                // Avanzar el indice de forma circular
-                loop_index++;
-                if (loop_index >= loop_length) {
-                    loop_index = 0; 
-                }
-            }
-        }
-
-        tx_buf[i] = out_sample;
-    }
-}
-
-// ==========================================================
-// MAIN
-// ==========================================================
 int main() {
     int status;
-    xil_printf("\r\n--- Iniciando Sistema Looper (Ping-Pong Polling) ---\r\n");
+    xil_printf("\r\n--- Iniciando Sistema Looper (Hardware Mixer V2) ---\r\n");
 
     // 1. Configurar IP I2S
     xil_printf("Configurando divisores I2S para ~48kHz...\r\n");
-    // Divisor = 3 -> SCLK = 24.576M / (2 * (3+1)) = 3.072 MHz -> 48 kHz con 64 bits/frame
-    Xil_Out32(I2S_RX_BASE + 0x20, 0x00000003);
-    Xil_Out32(I2S_TX_BASE + 0x20, 0x00000003);
-    Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001); // Validez para TX
+    Xil_Out32(I2S_RX_BASE + 0x20, 0x00000002);
+    Xil_Out32(I2S_TX_BASE + 0x20, 0x00000002);
+    Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001); 
+    Xil_Out32(I2S_RX_BASE + 0x30, 0x00000001); 
+    Xil_Out32(I2S_TX_BASE + 0x30, 0x00000001); 
 
-    // Habilitar canales de audio 0 (0x30)
-    Xil_Out32(I2S_RX_BASE + 0x30, 0x00000001); // RX: Mux = 1 (Rutea I2S Ch0 a AXI Stream)
-    Xil_Out32(I2S_TX_BASE + 0x30, 0x00000001); // TX: En algunos IPs esto habilita el canal
+    // 2. Inicializar Hardware Mixer en IDLE (Bypass total)
+    Xil_Out32(GPIO_MIXER_BASE + 0x00, HW_MODE_IDLE);
 
-    // 2. Configurar AXI GPIO (Looper Mixer)
-    xil_printf("Inicializando Looper Mixer en MODO IDLE...\r\n");
-    Xil_Out32(GPIO_MIXER_BASE + 0x00, 0x00000000);
+    // 3. Inicializar GPIO del Pedal
+    status = XGpio_Initialize(&GpioPedal, GPIO_DEV_ID);
+    if (status != XST_SUCCESS) return XST_FAILURE;
+    XGpio_SetDataDirection(&GpioPedal, 1, 0xFFFFFFFF);
 
-    // 3. Encender modulos I2S
+    // 4. Inicializar DMA
+    XAxiDma_Config *CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
+    status = XAxiDma_CfgInitialize(&AxiDma, CfgPtr);
+    if (status != XST_SUCCESS) return XST_FAILURE;
+    
+    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+
+    // Llenar buffers TX con ceros por si acaso
+    for(int i = 0; i < PACKET_SIZE; i++) {
+        tx_ping[i] = 0;
+        tx_pong[i] = 0;
+    }
+    Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+    Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
+
+    // 5. Encender modulos I2S
     xil_printf("Encendiendo modulos I2S...\r\n");
     Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
     Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
 
-    // Diagnóstico I2S
-    xil_printf("--- I2S STATUS ---\r\n");
-    xil_printf("RX Config (0x04): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x04));
-    xil_printf("RX Timing (0x20): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x20));
-    xil_printf("RX Status (0x14): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x14));
-    xil_printf("TX Status (0x14): 0x%08X\r\n", Xil_In32(I2S_TX_BASE + 0x14));
-    xil_printf("------------------\r\n");
+    int hw_mode = HW_MODE_IDLE;
+    int last_pedal = SOLTADO;
+    u32 loop_length = 0;
+    u32 loop_index = 0;
+    int dma_started = 0;
 
-    // 4. Inicializar GPIO del Pedal
-    status = XGpio_Initialize(&GpioPedal, GPIO_DEV_ID);
-    if (status != XST_SUCCESS) {
-        xil_printf("Fallo al inicializar GPIO.\r\n");
-        return XST_FAILURE;
-    }
-    XGpio_SetDataDirection(&GpioPedal, 1, 0xFFFFFFFF); // Canal 1 como Entrada
-
-    // 5. Inicializar DMA
-    XAxiDma_Config *CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
-    if (!CfgPtr) {
-        xil_printf("No se encontro configuracion para el DMA.\r\n");
-        return XST_FAILURE;
-    }
-    status = XAxiDma_CfgInitialize(&AxiDma, CfgPtr);
-    if (status != XST_SUCCESS) {
-        xil_printf("Fallo al inicializar DMA.\r\n");
-        return XST_FAILURE;
-    }
-    
-    // Deshabilitar interrupciones porque usaremos Polling
-    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
-    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
-
-    xil_printf("Hardware Inicializado. Iniciando ciclo Ping-Pong...\r\n");
-
-    // Arrancar la primera recepcion en Ping
-    XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
-
-    int last_global_enable = -1;
+    xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
 
     while(1) {
-        // --- MAQUINA DE ESTADOS (Lectura de Pedal) ---
+        // --- LECTURA DE PEDAL ---
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
-        int global_enable = (switches & 0x01); // Switch 0
-        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Switch 1
+        int global_enable = (switches & 0x01);
+        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO;
 
-        if (global_enable != last_global_enable) {
-            if (global_enable) {
-                xil_printf(">>> PEDAL ENCENDIDO\r\n");
-            } else {
-                xil_printf(">>> PEDAL APAGADO (Bypass general)\r\n");
+        // Reset global a BYPASS
+        if (global_enable == 0 && hw_mode != HW_MODE_IDLE) {
+            hw_mode = HW_MODE_IDLE;
+            xil_printf(">>> BYPASS GLOBAL\r\n");
+        } 
+        else if (global_enable) {
+            // Maquina de estados del pedal
+            if (pedal == PRESIONADO && last_pedal == SOLTADO) {
+                if (hw_mode == HW_MODE_IDLE) {
+                    hw_mode = HW_MODE_RECORD;
+                    loop_index = 0; // Iniciar grabacion
+                    xil_printf(">>> RECORDING...\r\n");
+                } else if (hw_mode == HW_MODE_PLAY) {
+                    hw_mode = HW_MODE_OVERDUB;
+                    xil_printf(">>> OVERDUBBING...\r\n");
+                } else if (hw_mode == HW_MODE_OVERDUB) {
+                    hw_mode = HW_MODE_PLAY;
+                    xil_printf("<<< PLAYING...\r\n");
+                }
+            } else if (pedal == SOLTADO && last_pedal == PRESIONADO) {
+                if (hw_mode == HW_MODE_RECORD) {
+                    hw_mode = HW_MODE_PLAY;
+                    loop_length = loop_index; // Sellar el tamaño del loop
+                    // Regresar index al principio para reproducir inmediatamente
+                    loop_index = 0; 
+                    xil_printf("<<< PLAYING (Loop de %d muestras)...\r\n", (int)loop_length);
+                }
             }
-            last_global_enable = global_enable;
         }
+        last_pedal = pedal;
 
-        if (global_enable == 0) {
-            current_state = STATE_BYPASS;
-        } else {
-            if (pedal == PRESIONADO && last_pedal_state == SOLTADO) {
-                if (current_state == STATE_BYPASS || current_state == STATE_PLAYBACK) {
-                    current_state = STATE_RECORD;
-                    loop_index = 0; // Empezar a grabar desde el principio
-                    xil_printf(">>> GRABANDO...\r\n");
-                }
-            } else if (pedal == SOLTADO && last_pedal_state == PRESIONADO) {
-                if (current_state == STATE_RECORD) {
-                    current_state = STATE_PLAYBACK;
-                    loop_length = loop_index; // Guardar la longitud total del loop
-                    loop_index = 0;           // Reiniciar indice para reproducir
-                    xil_printf("<<< REPRODUCIENDO (Loop de %d muestras)...\r\n", (int)loop_length);
-                }
-            }
-        }
-        last_pedal_state = pedal;
+        // Actualizar el modo en el Mixer de Hardware (Crucial!)
+        Xil_Out32(GPIO_MIXER_BASE + 0x00, hw_mode);
+
+        // --- MANEJO DEL DMA SEGÚN EL MODO ---
         
-        xil_printf("Esperando RX DMA...\r\n"); 
+        if (hw_mode == HW_MODE_IDLE) {
+            // En BYPASS, el hardware no intercambia datos con el DMA.
+            // Si el DMA estaba corriendo, hay que detenerlo (Reset) para que no se trabe la CPU.
+            if (dma_started) {
+                XAxiDma_Reset(&AxiDma);
+                while (!XAxiDma_ResetIsDone(&AxiDma)) {}
+                dma_started = 0;
+            }
+            continue; // Volver al inicio del loop sin esperar al DMA
+        }
+
+        // Si entramos a RECORD, PLAY o OVERDUB, necesitamos el DMA circulando
+        if (!dma_started) {
+            // Cargar la primera rafaga de TX si vamos a PLAY/OVERDUB directo
+            if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
+                for(int i=0; i<PACKET_SIZE; i++) {
+                    tx_ping[i] = LoopBuffer[(loop_index + i) % loop_length];
+                }
+                Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+                XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+            }
+            // Arrancar RX
+            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
+            dma_started = 1;
+        }
+
         // ==========================================================
         // MITAD PING
         // ==========================================================
-        
-        // 1. Esperar a que el DMA termine de llenar rx_ping
         while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
-        xil_printf("RX DMA Completado!\r\n");
-        Xil_DCacheInvalidateRange((UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32)); // Vaciar cache de lectura
+        Xil_DCacheInvalidateRange((UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32));
         
-        // 2. Iniciar inmediatamente la recepcion en rx_pong para no perder datos del PL
+        // Iniciar inmediatamente la recepcion PONG
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
-        // 3. El CPU procesa los datos recien llegados a rx_ping y prepara tx_ping
-        process_audio(rx_ping, tx_ping, PACKET_SIZE);
-
-        // 4. Esperar que el DMA termine de transmitir el TX anterior (si lo hay)
-        while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
-        Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32)); // Forzar escritura a RAM
+        // Procesar PING: Guardar audio entrante (Vivo en RECORD, Mezcla en OVERDUB)
+        if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
+            for(int i=0; i<PACKET_SIZE; i++) {
+                if (loop_index < MAX_SAMPLES) LoopBuffer[loop_index] = rx_ping[i];
+                loop_index++;
+            }
+        } else if (hw_mode == HW_MODE_PLAY) {
+            loop_index += PACKET_SIZE; // Solo avanzamos el indice
+        }
         
-        // 5. Iniciar la transmision de tx_ping hacia el PL
-        XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+        if (loop_length > 0 && loop_index >= loop_length && hw_mode != HW_MODE_RECORD) {
+            loop_index = loop_index % loop_length; // Wrap around
+        }
 
+        // Preparar y enviar TX PING (Solo necesario en Play y Overdub)
+        if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
+            int tx_idx = loop_index;
+            for(int i=0; i<PACKET_SIZE; i++) {
+                tx_ping[i] = LoopBuffer[tx_idx++];
+                if (tx_idx >= loop_length) tx_idx = 0;
+            }
+            
+            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
+            Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+        }
 
         // ==========================================================
         // MITAD PONG
         // ==========================================================
-        
-        // 1. Esperar a que el DMA termine de llenar rx_pong
         while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
         Xil_DCacheInvalidateRange((UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32));
         
-        // 2. Iniciar inmediatamente la recepcion de vuelta en rx_ping
+        // Iniciar inmediatamente la recepcion PING
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
-        // 3. El CPU procesa los datos de rx_pong y prepara tx_pong
-        process_audio(rx_pong, tx_pong, PACKET_SIZE);
+        // Procesar PONG
+        if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
+            for(int i=0; i<PACKET_SIZE; i++) {
+                if (loop_index < MAX_SAMPLES) LoopBuffer[loop_index] = rx_pong[i];
+                loop_index++;
+            }
+        } else if (hw_mode == HW_MODE_PLAY) {
+            loop_index += PACKET_SIZE;
+        }
 
-        // 4. Esperar que el DMA termine de transmitir el TX anterior
-        while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
-        Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
-        
-        // 5. Iniciar la transmision de tx_pong hacia el PL
-        XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+        if (loop_length > 0 && loop_index >= loop_length && hw_mode != HW_MODE_RECORD) {
+            loop_index = loop_index % loop_length; // Wrap around
+        }
+
+        // Preparar y enviar TX PONG
+        if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
+            int tx_idx = loop_index;
+            for(int i=0; i<PACKET_SIZE; i++) {
+                tx_pong[i] = LoopBuffer[tx_idx++];
+                if (tx_idx >= loop_length) tx_idx = 0;
+            }
+            
+            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
+            Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
+            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+        }
     }
 
     return XST_SUCCESS;

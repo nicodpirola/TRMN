@@ -941,6 +941,8 @@
 						"ACLK": { "actual": "clk"},
 						"ARESETN": { "actual": "resetn"},
 						"TDATA": { "actual": "m_dma_axis_tdata[31:0]"},
+						"TID": { "actual": "m_dma_axis_tid[2:0]"},
+						"TKEEP": { "actual": "m_dma_axis_tkeep[3:0]"},
 						"TLAST": { "actual": "m_dma_axis_tlast"},
 						"TREADY": { "actual": "m_dma_axis_tready"},
 						"TVALID": { "actual": "m_dma_axis_tvalid"}
@@ -952,6 +954,8 @@
 						"ACLK": { "actual": "clk"},
 						"ARESETN": { "actual": "resetn"},
 						"TDATA": { "actual": "m_i2s_axis_tdata[31:0]"},
+						"TID": { "actual": "m_i2s_axis_tid[2:0]"},
+						"TKEEP": { "actual": "m_i2s_axis_tkeep[3:0]"},
 						"TLAST": { "actual": "m_i2s_axis_tlast"},
 						"TREADY": { "actual": "m_i2s_axis_tready"},
 						"TVALID": { "actual": "m_i2s_axis_tvalid"}
@@ -963,6 +967,8 @@
 						"ACLK": { "actual": "clk"},
 						"ARESETN": { "actual": "resetn"},
 						"TDATA": { "actual": "s0_axis_tdata[31:0]"},
+						"TID": { "actual": "s0_axis_tid[2:0]"},
+						"TKEEP": { "actual": "s0_axis_tkeep[3:0]"},
 						"TLAST": { "actual": "s0_axis_tlast"},
 						"TREADY": { "actual": "s0_axis_tready"},
 						"TVALID": { "actual": "s0_axis_tvalid"}
@@ -974,6 +980,8 @@
 						"ACLK": { "actual": "clk"},
 						"ARESETN": { "actual": "resetn"},
 						"TDATA": { "actual": "s1_axis_tdata[31:0]"},
+						"TID": { "actual": "s1_axis_tid[2:0]"},
+						"TKEEP": { "actual": "s1_axis_tkeep[3:0]"},
 						"TLAST": { "actual": "s1_axis_tlast"},
 						"TREADY": { "actual": "s1_axis_tready"},
 						"TVALID": { "actual": "s1_axis_tvalid"}

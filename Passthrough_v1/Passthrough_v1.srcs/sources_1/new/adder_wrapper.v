@@ -32,24 +32,32 @@ module axi_stream_looper_mixer (
     input [31:0] s0_axis_tdata,
     input        s0_axis_tvalid,
     input        s0_axis_tlast,
+    input [2:0]  s0_axis_tid,
+    input [3:0]  s0_axis_tkeep,
     output       s0_axis_tready,
 
     // Entrada 1: Audio de la RAM (Desde DMA MM2S)
     input [31:0] s1_axis_tdata,
     input        s1_axis_tvalid,
     input        s1_axis_tlast,
+    input [2:0]  s1_axis_tid,
+    input [3:0]  s1_axis_tkeep,
     output       s1_axis_tready,
 
     // Salida 0: Al Parlante (Hacia I2S TX)
     output [31:0] m_i2s_axis_tdata,
     output        m_i2s_axis_tvalid,
     output        m_i2s_axis_tlast,
+    output [2:0]  m_i2s_axis_tid,
+    output [3:0]  m_i2s_axis_tkeep,
     input         m_i2s_axis_tready,
 
     // Salida 1: De vuelta a la RAM (Hacia DMA S2MM)
     output [31:0] m_dma_axis_tdata,
     output        m_dma_axis_tvalid,
     output        m_dma_axis_tlast,
+    output [2:0]  m_dma_axis_tid,
+    output [3:0]  m_dma_axis_tkeep,
     input         m_dma_axis_tready
 );
 
@@ -58,7 +66,7 @@ module axi_stream_looper_mixer (
     // ==========================================
     // Captura la señal 'mode' (dominio 50MHz) y la sincroniza al reloj
     // local del audio (dominio 12.288MHz) evitando metaestabilidad.
-    reg [1:0] mode_sync_1, mode_sync_2;
+    (* ASYNC_REG = "TRUE" *) reg [1:0] mode_sync_1, mode_sync_2;
     always @(posedge clk or negedge resetn) begin
         if (!resetn) begin
             mode_sync_1 <= 2'b00;
@@ -114,7 +122,12 @@ module axi_stream_looper_mixer (
     // ==========================================
     // TLAST es marcado por la entrada en vivo (I2S marca el tamaño del paquete/frame)
     assign m_i2s_axis_tlast = s0_axis_tlast;
+    assign m_i2s_axis_tid   = s0_axis_tid;
+    assign m_i2s_axis_tkeep = s0_axis_tkeep;
+    
     assign m_dma_axis_tlast = s0_axis_tlast;
+    assign m_dma_axis_tid   = s0_axis_tid;
+    assign m_dma_axis_tkeep = s0_axis_tkeep;
 
     // Indicador interno: ¿El DMA está grabando en este modo?
     wire dma_active = (mode_sync_2 != 2'b00); // 1 en RECORD, PLAY y OVERDUB

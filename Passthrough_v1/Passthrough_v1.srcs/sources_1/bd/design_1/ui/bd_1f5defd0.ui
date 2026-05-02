@@ -1,24 +1,24 @@
 {
    "ActiveEmotionalView":"Default View",
    "Default View_ScaleFactor":"0.624999",
-   "Default View_TopLeft":"1659,53",
+   "Default View_TopLeft":"1646,186",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.8.0 2024-04-26 e1825d835c VDI=44 GEI=38 GUI=JA:21.0
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -lvl 9 -x 3540 -y -60 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -lvl 9 -x 3540 -y -30 -defaultsOSRD
+preplace port DDR -pg 1 -lvl 9 -x 3590 -y -60 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 9 -x 3590 -y -30 -defaultsOSRD
 preplace port port-id_sdata_0_in_0 -pg 1 -lvl 0 -x -70 -y 470 -defaultsOSRD
-preplace port port-id_sclk_out_0 -pg 1 -lvl 9 -x 3540 -y 430 -defaultsOSRD
-preplace port port-id_lrclk_out_0 -pg 1 -lvl 9 -x 3540 -y 550 -defaultsOSRD
-preplace port port-id_sdata_0_out_0 -pg 1 -lvl 9 -x 3540 -y 520 -defaultsOSRD
-preplace port port-id_sclk_out_1 -pg 1 -lvl 9 -x 3540 -y 490 -defaultsOSRD
-preplace port port-id_lrclk_out_1 -pg 1 -lvl 9 -x 3540 -y 460 -defaultsOSRD
-preplace port port-id_mclk_out_dac -pg 1 -lvl 9 -x 3540 -y 660 -defaultsOSRD
-preplace port port-id_mclk_out_adc -pg 1 -lvl 9 -x 3540 -y 620 -defaultsOSRD
+preplace port port-id_sclk_out_0 -pg 1 -lvl 9 -x 3590 -y 430 -defaultsOSRD
+preplace port port-id_lrclk_out_0 -pg 1 -lvl 9 -x 3590 -y 550 -defaultsOSRD
+preplace port port-id_sdata_0_out_0 -pg 1 -lvl 9 -x 3590 -y 520 -defaultsOSRD
+preplace port port-id_sclk_out_1 -pg 1 -lvl 9 -x 3590 -y 490 -defaultsOSRD
+preplace port port-id_lrclk_out_1 -pg 1 -lvl 9 -x 3590 -y 460 -defaultsOSRD
+preplace port port-id_mclk_out_dac -pg 1 -lvl 9 -x 3590 -y 660 -defaultsOSRD
+preplace port port-id_mclk_out_adc -pg 1 -lvl 9 -x 3590 -y 620 -defaultsOSRD
 preplace inst processing_system7_0 -pg 1 -lvl 6 -x 2450 -y 150 -defaultsOSRD
 preplace inst i2s_receiver_0 -pg 1 -lvl 4 -x 1440 -y 500 -defaultsOSRD
 preplace inst i2s_transmitter_0 -pg 1 -lvl 6 -x 2450 -y 500 -defaultsOSRD
-preplace inst axi_smc -pg 1 -lvl 7 -x 2940 -y 430 -defaultsOSRD
+preplace inst axi_smc -pg 1 -lvl 7 -x 2940 -y 550 -defaultsOSRD
 preplace inst rst_ps7_0_100M -pg 1 -lvl 7 -x 2940 -y 260 -defaultsOSRD
 preplace inst proc_sys_reset_0 -pg 1 -lvl 6 -x 2450 -y 810 -defaultsOSRD
 preplace inst ilconstant_0 -pg 1 -lvl 1 -x 250 -y 260 -defaultsOSRD
@@ -27,52 +27,53 @@ preplace inst axi_dma_0 -pg 1 -lvl 5 -x 1900 -y 1040 -defaultsOSRD -resize 288 2
 preplace inst axis_data_fifo_0 -pg 1 -lvl 5 -x 1900 -y 820 -defaultsOSRD
 preplace inst axis_data_fifo_1 -pg 1 -lvl 6 -x 2450 -y 1190 -defaultsOSRD
 preplace inst axis_tlast_gen_trans_0 -pg 1 -lvl 6 -x 2450 -y 1040 -defaultsOSRD
-preplace inst axi_mem_intercon -pg 1 -lvl 8 -x 3330 -y -40 -defaultsOSRD
+preplace inst axi_mem_intercon -pg 1 -lvl 8 -x 3370 -y -40 -defaultsOSRD
 preplace inst axi_gpio_0 -pg 1 -lvl 4 -x 1440 -y 930 -defaultsOSRD
 preplace inst axi_clock_converter_0 -pg 1 -lvl 3 -x 1040 -y 880 -defaultsOSRD
 preplace inst system_ila_2 -pg 1 -lvl 4 -x 1440 -y 290 -defaultsOSRD
-preplace inst system_ila_0 -pg 1 -lvl 7 -x 2940 -y 710 -defaultsOSRD
+preplace inst system_ila_0 -pg 1 -lvl 7 -x 2940 -y 730 -defaultsOSRD
 preplace inst clk_wiz_0 -pg 1 -lvl 2 -x 570 -y 290 -defaultsOSRD
+preplace inst system_ila_1 -pg 1 -lvl 7 -x 2940 -y 410 -defaultsOSRD
 preplace netloc axi_gpio_0_gpio_io_o 1 4 1 1700 600n
-preplace netloc clk_wiz_0_clk_aud 1 2 7 850 580 1260 670 1660 720 2180 650 2770 620 N 620 3480
-preplace netloc i2s_receiver_0_lrclk_out 1 4 5 1600J 460 2090 370 2730J 550 3140J 560 3520
-preplace netloc i2s_receiver_0_sclk_out 1 4 5 1690J 660 N 660 2750J 610 3180J 530 3480
-preplace netloc i2s_transmitter_0_lrclk_out 1 6 3 2720J 540 NJ 540 3490
-preplace netloc i2s_transmitter_0_sclk_out 1 6 3 2690J 570 NJ 570 3510
-preplace netloc i2s_transmitter_0_sdata_0_out 1 6 3 2680J 560 3170J 550 3500
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 2 5 870 980 1240 640 1710 680 2200 710 2740
-preplace netloc proc_sys_reset_0_peripheral_reset 1 3 4 1280 700 N 700 2170 700 2680
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 5 2 2210 270 2740
-preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 2 6 880 710 1230 710 1690 710 2140 640 2710 580 3160
-preplace netloc sdata_0_in_0_1 1 0 4 NJ 470 N 470 660 570 1210
-preplace netloc processing_system7_0_FCLK_CLK0 1 1 7 480 780 860 780 1220 780 1650 1190 2160 20 2770 20 3180
+preplace netloc clk_wiz_0_clk_aud 1 2 7 850 580 1250 640 1710 710 2180 640 2750 140 3180 160 3540
+preplace netloc clk_wiz_0_locked 1 2 5 860 560 1240J 630 1610J 460 2110J 300 NJ
+preplace netloc i2s_receiver_0_lrclk_out 1 4 5 1590J -10 2070 -20 NJ -20 3150J 170 3530
+preplace netloc i2s_receiver_0_sclk_out 1 4 5 1600J 450 2090 20 NJ 20 3190J 180 3560
+preplace netloc i2s_transmitter_0_lrclk_out 1 6 3 2710J 150 3170J 190 3550
+preplace netloc i2s_transmitter_0_sclk_out 1 6 3 2730J 160 3160J 200 3520
+preplace netloc i2s_transmitter_0_sdata_0_out 1 6 3 2690J -220 NJ -220 3570
 preplace netloc ilconstant_0_dout 1 1 1 330 260n
-preplace netloc clk_wiz_0_locked 1 2 5 870 560 1250J 630 1590J 300 NJ 300 NJ
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 2 5 880 980 1230 660 1690 660 2200 910 2770
+preplace netloc proc_sys_reset_0_peripheral_reset 1 3 4 1280 680 N 680 2170 680 2680
+preplace netloc processing_system7_0_FCLK_CLK0 1 1 7 480 780 860 780 1210 780 1650 1190 2150 -10 2740 40 3200
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 5 2 2220 270 2680
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 2 6 870 690 1220 690 1670 690 2160 630 2720 130 3210
+preplace netloc sdata_0_in_0_1 1 0 4 NJ 470 N 470 660 570 1200
 preplace netloc axi_clock_converter_0_M_AXI 1 3 1 1200 880n
-preplace netloc axi_dma_0_M_AXIS_MM2S 1 3 3 1270 790 1680 1180 2070
-preplace netloc axi_dma_0_M_AXI_MM2S 1 5 3 2080J -150 NJ -150 3170
+preplace netloc axi_dma_0_M_AXIS_MM2S 1 3 3 1270 790 1660 1180 2070
+preplace netloc axi_dma_0_M_AXI_MM2S 1 5 3 2080J -150 NJ -150 3210
 preplace netloc axi_dma_0_M_AXI_S2MM 1 5 3 2100 -140 NJ -140 NJ
-preplace netloc axi_mem_intercon_M00_AXI 1 5 4 2220 30 NJ 30 3170J 140 3480
-preplace netloc axi_smc_M00_AXI 1 3 5 1280 10 NJ 10 N 10 NJ 10 3110
-preplace netloc axi_smc_M01_AXI 1 5 3 2220 630 2730J 600 3130
-preplace netloc axi_smc_M02_AXI 1 4 4 1720 350 NJ 350 2750J 520 3120
-preplace netloc axi_smc_M03_AXI 1 2 6 870 650 N 650 1670J 360 NJ 360 2740J 530 3110
-preplace netloc axi_stream_looper_mi_0_m_dma_axis 1 5 1 2150 550n
-preplace netloc axi_stream_looper_mi_0_m_i2s_axis 1 5 2 2190 680 N
+preplace netloc axi_mem_intercon_M00_AXI 1 5 4 2220 -230 NJ -230 NJ -230 3520
+preplace netloc axi_smc_M00_AXI 1 3 5 1260 0 NJ 0 N 0 NJ 0 3130
+preplace netloc axi_smc_M01_AXI 1 5 3 2210 30 NJ 30 3110
+preplace netloc axi_smc_M02_AXI 1 4 4 1720 -30 NJ -30 NJ -30 3140
+preplace netloc axi_smc_M03_AXI 1 2 6 880 10 N 10 NJ 10 NJ 10 NJ 10 3120
+preplace netloc axi_stream_looper_mi_0_m_dma_axis 1 5 2 2140 710 2730
+preplace netloc axi_stream_looper_mi_0_m_i2s_axis 1 5 2 2190 660 2730
 preplace netloc axis_data_fifo_0_M_AXIS 1 4 2 1730 730 2070
-preplace netloc axis_data_fifo_1_M_AXIS 1 3 4 1290 660 1670 670 NJ 670 2710
-preplace netloc axis_tlast_gen_trans_0_m_axis 1 5 2 2220 960 2680
-preplace netloc i2s_receiver_0_m_axis_aud 1 4 3 1680 690 N 690 2740
-preplace netloc processing_system7_0_DDR 1 6 3 NJ 90 3130 150 3490
-preplace netloc processing_system7_0_FIXED_IO 1 6 3 NJ 110 3120 160 3510
-preplace netloc processing_system7_0_M_AXI_GP0 1 6 1 2760 150n
-levelinfo -pg 1 -70 250 570 1040 1440 1900 2450 2940 3330 3540
-pagesize -pg 1 -db -bbox -sgen -280 -360 3690 1890
+preplace netloc axis_data_fifo_1_M_AXIS 1 3 4 1290 670 1690 670 NJ 670 2700
+preplace netloc axis_tlast_gen_trans_0_m_axis 1 5 2 2210 960 2760
+preplace netloc i2s_receiver_0_m_axis_aud 1 4 3 1680 700 N 700 N
+preplace netloc processing_system7_0_DDR 1 6 3 NJ 90 3220 140 3530
+preplace netloc processing_system7_0_FIXED_IO 1 6 3 NJ 110 3200 150 3560
+preplace netloc processing_system7_0_M_AXI_GP0 1 6 1 2700 150n
+levelinfo -pg 1 -70 250 570 1040 1440 1900 2450 2940 3370 3590
+pagesize -pg 1 -db -bbox -sgen -280 -360 3740 1890
 "
 }
 {
    "da_axi4_cnt":"13",
    "da_board_cnt":"5",
-   "da_clkrst_cnt":"16",
+   "da_clkrst_cnt":"17",
    "da_ps7_cnt":"1"
 }
