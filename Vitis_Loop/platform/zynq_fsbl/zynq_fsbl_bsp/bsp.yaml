@@ -160,6 +160,10 @@ drv_info:
     driver: gpio
     ip_name: axi_gpio
     path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpio_v4_12
+  axi_gpio_1:
+    driver: gpio
+    ip_name: axi_gpio
+    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpio_v4_12
   i2s_receiver_0:
     driver: i2srx
     ip_name: i2s_receiver

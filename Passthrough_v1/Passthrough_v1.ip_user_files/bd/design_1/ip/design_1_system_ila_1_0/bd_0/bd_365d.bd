@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x614E43BA7CDFA651",
+      "boundary_crc": "0x614E43BAA21E9AB7",
       "design_src": "SBD",
       "device": "xc7z020clg400-1",
       "name": "bd_365d",
@@ -20,11 +20,11 @@
         "direction": "I",
         "parameters": {
           "CLK_DOMAIN": {
-            "value": "design_1_processing_system7_0_0_FCLK_CLK0",
+            "value": "/clk_wiz_0_clk_out1",
             "value_src": "default_prop"
           },
           "FREQ_HZ": {
-            "value": "50000000",
+            "value": "12286002",
             "value_src": "default_prop"
           },
           "FREQ_TOLERANCE_HZ": {
@@ -72,7 +72,7 @@
             "value": "0"
           },
           "C_ILA_CLK_FREQ": {
-            "value": "50000000"
+            "value": "12286002"
           },
           "C_INPUT_PIPE_STAGES": {
             "value": "0"

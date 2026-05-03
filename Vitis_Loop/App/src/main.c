@@ -17,8 +17,19 @@
 #define XPAR_GPIO_0_DEVICE_ID 0
 #endif
 
+#ifndef XPAR_GPIO_1_DEVICE_ID
+#define XPAR_GPIO_1_DEVICE_ID 1
+#endif
+
 #define DMA_DEV_ID      XPAR_AXIDMA_0_DEVICE_ID
-#define GPIO_DEV_ID     XPAR_GPIO_0_DEVICE_ID
+#define GPIO_DEV_ID     XPAR_GPIO_0_DEVICE_ID // Salida al Mixer
+#define GPIO_SW_DEV_ID  XPAR_GPIO_1_DEVICE_ID // Entrada de Switches
+
+#ifdef SDT
+#define GPIO_SW_INIT_VAL XPAR_XGPIO_1_BASEADDR
+#else
+#define GPIO_SW_INIT_VAL GPIO_SW_DEV_ID
+#endif
 
 // Direcciones Base
 #define I2S_RX_BASE     0x43C00000
@@ -68,10 +79,13 @@ int main() {
     // 2. Inicializar Hardware Mixer en IDLE (Bypass total)
     Xil_Out32(GPIO_MIXER_BASE + 0x00, HW_MODE_IDLE);
 
-    // 3. Inicializar GPIO del Pedal
-    status = XGpio_Initialize(&GpioPedal, GPIO_DEV_ID);
-    if (status != XST_SUCCESS) return XST_FAILURE;
-    XGpio_SetDataDirection(&GpioPedal, 1, 0xFFFFFFFF);
+    // 3. Inicializar GPIO del Pedal (El nuevo GPIO para leer los botones físicos)
+    status = XGpio_Initialize(&GpioPedal, GPIO_SW_INIT_VAL);
+    if (status != XST_SUCCESS) {
+        xil_printf("Advertencia: No se encontro el GPIO de los switches. Usando teclado como respaldo.\r\n");
+    } else {
+        XGpio_SetDataDirection(&GpioPedal, 1, 0xFFFFFFFF); // Todo entradas
+    }
 
     // 4. Inicializar DMA
     XAxiDma_Config *CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
@@ -103,7 +117,7 @@ int main() {
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
 
     while(1) {
-        // --- LECTURA DE PEDAL ---
+        // --- LECTURA DE PEDAL FÍSICO (NUEVO GPIO 1) ---
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
         int global_enable = (switches & 0x01);
         int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO;
@@ -111,29 +125,28 @@ int main() {
         // Reset global a BYPASS
         if (global_enable == 0 && hw_mode != HW_MODE_IDLE) {
             hw_mode = HW_MODE_IDLE;
-            xil_printf(">>> BYPASS GLOBAL\r\n");
+            xil_printf(">>> BYPASS GLOBAL (Switch 0 Abajo)\r\n");
         } 
         else if (global_enable) {
             // Maquina de estados del pedal
             if (pedal == PRESIONADO && last_pedal == SOLTADO) {
                 if (hw_mode == HW_MODE_IDLE) {
                     hw_mode = HW_MODE_RECORD;
-                    loop_index = 0; // Iniciar grabacion
-                    xil_printf(">>> RECORDING...\r\n");
+                    loop_index = 0; // Iniciar grabación
+                    xil_printf(">>> RECORDING... (Pedal Pisado)\r\n");
                 } else if (hw_mode == HW_MODE_PLAY) {
                     hw_mode = HW_MODE_OVERDUB;
-                    xil_printf(">>> OVERDUBBING...\r\n");
+                    xil_printf(">>> OVERDUBBING... (Pedal Pisado)\r\n");
                 } else if (hw_mode == HW_MODE_OVERDUB) {
                     hw_mode = HW_MODE_PLAY;
-                    xil_printf("<<< PLAYING...\r\n");
+                    xil_printf("<<< PLAYING... (Pedal Pisado)\r\n");
                 }
             } else if (pedal == SOLTADO && last_pedal == PRESIONADO) {
                 if (hw_mode == HW_MODE_RECORD) {
                     hw_mode = HW_MODE_PLAY;
-                    loop_length = loop_index; // Sellar el tamaño del loop
-                    // Regresar index al principio para reproducir inmediatamente
+                    loop_length = loop_index; // Sellar tamaño
                     loop_index = 0; 
-                    xil_printf("<<< PLAYING (Loop de %d muestras)...\r\n", (int)loop_length);
+                    xil_printf("<<< PLAYING... [Loop: %d muestras]\r\n", (int)loop_length);
                 }
             }
         }

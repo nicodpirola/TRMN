@@ -54,6 +54,7 @@
 			      <0xffff0000 &ps7_ram_1_memory 0xffff0000 0xfe00>, 
 			      <0x40400000 &axi_dma_0 0x40400000 0x10000>, 
 			      <0x41200000 &axi_gpio_0 0x41200000 0x10000>, 
+			      <0x41210000 &axi_gpio_1 0x41210000 0x10000>, 
 			      <0x43c00000 &i2s_receiver_0 0x43c00000 0x10000>, 
 			      <0x43c10000 &i2s_transmitter_0 0x43c10000 0x10000>, 
 			      <0xf8008000 &ps7_afi_0 0xf8008000 0x1000>, 

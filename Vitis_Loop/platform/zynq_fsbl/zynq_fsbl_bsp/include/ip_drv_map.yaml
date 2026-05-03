@@ -4,6 +4,9 @@ axi_dma_0:
 axi_gpio_0:
 - axi_gpio
 - gpio
+axi_gpio_1:
+- axi_gpio
+- gpio
 i2s_receiver_0:
 - i2s_receiver
 - i2srx

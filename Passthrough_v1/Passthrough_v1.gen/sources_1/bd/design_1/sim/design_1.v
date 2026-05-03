@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Sat May  2 14:59:51 2026
+//Date        : Sun May  3 00:40:15 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=25,numReposBlks=20,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=13,da_board_cnt=5,da_clkrst_cnt=17,da_ps7_cnt=1,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=25,numReposBlks=20,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=13,da_board_cnt=6,da_clkrst_cnt=17,da_ps7_cnt=1,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -40,7 +40,8 @@ module design_1
     sclk_out_0,
     sclk_out_1,
     sdata_0_in_0,
-    sdata_0_out_0);
+    sdata_0_out_0,
+    sw);
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_MODE = "Master" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -70,6 +71,7 @@ module design_1
   output sclk_out_1;
   input sdata_0_in_0;
   output sdata_0_out_0;
+  input [1:0]sw;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -249,6 +251,23 @@ module design_1
   wire axi_smc_M03_AXI_WREADY;
   wire [3:0]axi_smc_M03_AXI_WSTRB;
   wire axi_smc_M03_AXI_WVALID;
+  wire [8:0]axi_smc_M04_AXI_ARADDR;
+  wire axi_smc_M04_AXI_ARREADY;
+  wire axi_smc_M04_AXI_ARVALID;
+  wire [8:0]axi_smc_M04_AXI_AWADDR;
+  wire axi_smc_M04_AXI_AWREADY;
+  wire axi_smc_M04_AXI_AWVALID;
+  wire axi_smc_M04_AXI_BREADY;
+  wire [1:0]axi_smc_M04_AXI_BRESP;
+  wire axi_smc_M04_AXI_BVALID;
+  wire [31:0]axi_smc_M04_AXI_RDATA;
+  wire axi_smc_M04_AXI_RREADY;
+  wire [1:0]axi_smc_M04_AXI_RRESP;
+  wire axi_smc_M04_AXI_RVALID;
+  wire [31:0]axi_smc_M04_AXI_WDATA;
+  wire axi_smc_M04_AXI_WREADY;
+  wire [3:0]axi_smc_M04_AXI_WSTRB;
+  wire axi_smc_M04_AXI_WVALID;
   (* CONN_BUS_INFO = "axi_stream_looper_mi_0_m_dma_axis xilinx.com:interface:axis:1.0 None TDATA" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire [31:0]axi_stream_looper_mi_0_m_dma_axis_TDATA;
   (* CONN_BUS_INFO = "axi_stream_looper_mi_0_m_dma_axis xilinx.com:interface:axis:1.0 None TID" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire [2:0]axi_stream_looper_mi_0_m_dma_axis_TID;
   (* CONN_BUS_INFO = "axi_stream_looper_mi_0_m_dma_axis xilinx.com:interface:axis:1.0 None TKEEP" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire [3:0]axi_stream_looper_mi_0_m_dma_axis_TKEEP;
@@ -280,7 +299,6 @@ module design_1
   (* CONN_BUS_INFO = "i2s_receiver_0_m_axis_aud xilinx.com:interface:axis:1.0 None TID" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire [2:0]i2s_receiver_0_m_axis_aud_TID;
   (* CONN_BUS_INFO = "i2s_receiver_0_m_axis_aud xilinx.com:interface:axis:1.0 None TREADY" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire i2s_receiver_0_m_axis_aud_TREADY;
   (* CONN_BUS_INFO = "i2s_receiver_0_m_axis_aud xilinx.com:interface:axis:1.0 None TVALID" *) (* DEBUG = "true" *) (* MARK_DEBUG *) wire i2s_receiver_0_m_axis_aud_TVALID;
-  (* DEBUG = "true" *) (* MARK_DEBUG *) wire i2s_transmitter_0_sdata_0_out;
   wire [0:0]ilconstant_0_dout;
   wire lrclk_out_0;
   wire lrclk_out_1;
@@ -330,11 +348,12 @@ module design_1
   wire sclk_out_0;
   wire sclk_out_1;
   (* DEBUG = "true" *) (* MARK_DEBUG *) wire sdata_0_in_0_1;
+  wire sdata_0_out_0;
+  wire [1:0]sw;
 
   assign mclk_out_adc = clk_wiz_0_clk_aud;
   assign mclk_out_dac = clk_wiz_0_clk_aud;
   assign sdata_0_in_0_1 = sdata_0_in_0;
-  assign sdata_0_out_0 = i2s_transmitter_0_sdata_0_out;
   design_1_axi_clock_converter_0_0 axi_clock_converter_0
        (.m_axi_aclk(clk_wiz_0_clk_aud),
         .m_axi_araddr(axi_clock_converter_0_M_AXI_ARADDR),
@@ -457,6 +476,27 @@ module design_1
         .s_axi_wready(axi_clock_converter_0_M_AXI_WREADY),
         .s_axi_wstrb(axi_clock_converter_0_M_AXI_WSTRB),
         .s_axi_wvalid(axi_clock_converter_0_M_AXI_WVALID));
+  design_1_axi_gpio_1_1 axi_gpio_1
+       (.gpio_io_i(sw),
+        .s_axi_aclk(processing_system7_0_FCLK_CLK0),
+        .s_axi_araddr(axi_smc_M04_AXI_ARADDR),
+        .s_axi_aresetn(rst_ps7_0_100M_peripheral_aresetn),
+        .s_axi_arready(axi_smc_M04_AXI_ARREADY),
+        .s_axi_arvalid(axi_smc_M04_AXI_ARVALID),
+        .s_axi_awaddr(axi_smc_M04_AXI_AWADDR),
+        .s_axi_awready(axi_smc_M04_AXI_AWREADY),
+        .s_axi_awvalid(axi_smc_M04_AXI_AWVALID),
+        .s_axi_bready(axi_smc_M04_AXI_BREADY),
+        .s_axi_bresp(axi_smc_M04_AXI_BRESP),
+        .s_axi_bvalid(axi_smc_M04_AXI_BVALID),
+        .s_axi_rdata(axi_smc_M04_AXI_RDATA),
+        .s_axi_rready(axi_smc_M04_AXI_RREADY),
+        .s_axi_rresp(axi_smc_M04_AXI_RRESP),
+        .s_axi_rvalid(axi_smc_M04_AXI_RVALID),
+        .s_axi_wdata(axi_smc_M04_AXI_WDATA),
+        .s_axi_wready(axi_smc_M04_AXI_WREADY),
+        .s_axi_wstrb(axi_smc_M04_AXI_WSTRB),
+        .s_axi_wvalid(axi_smc_M04_AXI_WVALID));
   design_1_axi_mem_intercon_0 axi_mem_intercon
        (.ACLK(processing_system7_0_FCLK_CLK0),
         .ARESETN(rst_ps7_0_100M_peripheral_aresetn),
@@ -629,6 +669,23 @@ module design_1
         .M03_AXI_wready(axi_smc_M03_AXI_WREADY),
         .M03_AXI_wstrb(axi_smc_M03_AXI_WSTRB),
         .M03_AXI_wvalid(axi_smc_M03_AXI_WVALID),
+        .M04_AXI_araddr(axi_smc_M04_AXI_ARADDR),
+        .M04_AXI_arready(axi_smc_M04_AXI_ARREADY),
+        .M04_AXI_arvalid(axi_smc_M04_AXI_ARVALID),
+        .M04_AXI_awaddr(axi_smc_M04_AXI_AWADDR),
+        .M04_AXI_awready(axi_smc_M04_AXI_AWREADY),
+        .M04_AXI_awvalid(axi_smc_M04_AXI_AWVALID),
+        .M04_AXI_bready(axi_smc_M04_AXI_BREADY),
+        .M04_AXI_bresp(axi_smc_M04_AXI_BRESP),
+        .M04_AXI_bvalid(axi_smc_M04_AXI_BVALID),
+        .M04_AXI_rdata(axi_smc_M04_AXI_RDATA),
+        .M04_AXI_rready(axi_smc_M04_AXI_RREADY),
+        .M04_AXI_rresp(axi_smc_M04_AXI_RRESP),
+        .M04_AXI_rvalid(axi_smc_M04_AXI_RVALID),
+        .M04_AXI_wdata(axi_smc_M04_AXI_WDATA),
+        .M04_AXI_wready(axi_smc_M04_AXI_WREADY),
+        .M04_AXI_wstrb(axi_smc_M04_AXI_WSTRB),
+        .M04_AXI_wvalid(axi_smc_M04_AXI_WVALID),
         .S00_AXI_araddr(processing_system7_0_M_AXI_GP0_ARADDR),
         .S00_AXI_arburst(processing_system7_0_M_AXI_GP0_ARBURST),
         .S00_AXI_arcache(processing_system7_0_M_AXI_GP0_ARCACHE),
@@ -797,7 +854,7 @@ module design_1
         .s_axis_aud_tready(axi_stream_looper_mi_0_m_i2s_axis_TREADY),
         .s_axis_aud_tvalid(axi_stream_looper_mi_0_m_i2s_axis_TVALID),
         .sclk_out(sclk_out_1),
-        .sdata_0_out(i2s_transmitter_0_sdata_0_out));
+        .sdata_0_out(sdata_0_out_0));
   assign ilconstant_0_dout = 1'h0;
   design_1_proc_sys_reset_0_0 proc_sys_reset_0
        (.aux_reset_in(1'b1),
@@ -943,9 +1000,6 @@ module design_1
         .SLOT_3_AXIS_tvalid(axis_tlast_gen_trans_0_m_axis_TVALID),
         .clk(clk_wiz_0_clk_aud),
         .resetn(proc_sys_reset_0_peripheral_aresetn));
-  design_1_system_ila_1_0 system_ila_1
-       (.clk(processing_system7_0_FCLK_CLK0),
-        .probe0(i2s_transmitter_0_sdata_0_out));
   design_1_system_ila_2_0 system_ila_2
        (.SLOT_0_AXIS_tdata(axi_dma_0_M_AXIS_MM2S_TDATA),
         .SLOT_0_AXIS_tkeep(axi_dma_0_M_AXIS_MM2S_TKEEP),

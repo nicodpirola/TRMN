@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Sat May  2 14:59:51 2026
+//Date        : Sat May  2 21:32:18 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -944,7 +944,7 @@ module design_1
         .clk(clk_wiz_0_clk_aud),
         .resetn(proc_sys_reset_0_peripheral_aresetn));
   design_1_system_ila_1_0 system_ila_1
-       (.clk(processing_system7_0_FCLK_CLK0),
+       (.clk(clk_wiz_0_clk_aud),
         .probe0(i2s_transmitter_0_sdata_0_out));
   design_1_system_ila_2_0 system_ila_2
        (.SLOT_0_AXIS_tdata(axi_dma_0_M_AXIS_MM2S_TDATA),

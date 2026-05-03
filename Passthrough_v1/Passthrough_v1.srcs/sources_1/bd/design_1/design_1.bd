@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xF84410C7CB06E0A9",
+      "boundary_crc": "0x3A6D8A342242E41B",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../Passthrough_v1.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -38,7 +38,7 @@
       "system_ila_2": "",
       "system_ila_0": "",
       "clk_wiz_0": "",
-      "system_ila_1": ""
+      "axi_gpio_1": ""
     },
     "interface_ports": {
       "DDR": {
@@ -208,6 +208,11 @@
             "direction": "IO"
           }
         }
+      },
+      "btns_4bits": {
+        "mode": "Master",
+        "vlnv_bus_definition": "xilinx.com:interface:gpio:1.0",
+        "vlnv": "xilinx.com:interface:gpio_rtl:1.0"
       }
     },
     "ports": {
@@ -280,6 +285,11 @@
             "value_src": "ip_prop"
           }
         }
+      },
+      "sw": {
+        "direction": "I",
+        "left": "1",
+        "right": "0"
       }
     },
     "components": {
@@ -2113,7 +2123,7 @@
         "has_run_ip_tcl": "true",
         "parameters": {
           "NUM_MI": {
-            "value": "4"
+            "value": "5"
           },
           "NUM_SI": {
             "value": "1"
@@ -2136,11 +2146,12 @@
               "M00_AXI",
               "M01_AXI",
               "M02_AXI",
-              "M03_AXI"
+              "M03_AXI",
+              "M04_AXI"
             ],
             "bd_attributes": {
               "BRIDGES": {
-                "value": "M00_AXI:M01_AXI:M02_AXI:M03_AXI",
+                "value": "M00_AXI:M01_AXI:M02_AXI:M03_AXI:M04_AXI",
                 "value_src": "auto"
               },
               "TYPE": {
@@ -2243,6 +2254,37 @@
             }
           },
           "M03_AXI": {
+            "mode": "Master",
+            "vlnv_bus_definition": "xilinx.com:interface:aximm:1.0",
+            "vlnv": "xilinx.com:interface:aximm_rtl:1.0",
+            "parameters": {
+              "NUM_READ_OUTSTANDING": {
+                "value": "8"
+              },
+              "NUM_READ_THREADS": {
+                "value": "1"
+              },
+              "NUM_WRITE_OUTSTANDING": {
+                "value": "8"
+              },
+              "NUM_WRITE_THREADS": {
+                "value": "1"
+              },
+              "RUSER_BITS_PER_BYTE": {
+                "value": "0"
+              },
+              "WUSER_BITS_PER_BYTE": {
+                "value": "0"
+              }
+            },
+            "bd_attributes": {
+              "TYPE": {
+                "value": "interior",
+                "value_src": "default"
+              }
+            }
+          },
+          "M04_AXI": {
             "mode": "Master",
             "vlnv_bus_definition": "xilinx.com:interface:aximm:1.0",
             "vlnv": "xilinx.com:interface:aximm_rtl:1.0",
@@ -3849,22 +3891,19 @@
           }
         }
       },
-      "system_ila_1": {
-        "vlnv": "xilinx.com:ip:system_ila:1.1",
-        "ip_revision": "21",
-        "xci_name": "design_1_system_ila_1_0",
-        "xci_path": "ip\\design_1_system_ila_1_0\\design_1_system_ila_1_0.xci",
-        "inst_hier_path": "system_ila_1",
+      "axi_gpio_1": {
+        "vlnv": "xilinx.com:ip:axi_gpio:2.0",
+        "ip_revision": "37",
+        "xci_name": "design_1_axi_gpio_1_1",
+        "xci_path": "ip\\design_1_axi_gpio_1_1\\design_1_axi_gpio_1_1.xci",
+        "inst_hier_path": "axi_gpio_1",
         "has_run_ip_tcl": "true",
         "parameters": {
-          "C_MON_TYPE": {
-            "value": "NATIVE"
-          },
-          "C_NUM_OF_PROBES": {
+          "C_ALL_INPUTS": {
             "value": "1"
           },
-          "C_PROBE0_TYPE": {
-            "value": "0"
+          "C_GPIO_WIDTH": {
+            "value": "2"
           }
         }
       }
@@ -3931,6 +3970,12 @@
         "interface_ports": [
           "axi_clock_converter_0/S_AXI",
           "axi_smc/M03_AXI"
+        ]
+      },
+      "axi_smc_M04_AXI": {
+        "interface_ports": [
+          "axi_smc/M04_AXI",
+          "axi_gpio_1/S_AXI"
         ]
       },
       "axi_stream_looper_mi_0_m_dma_axis": {
@@ -4067,6 +4112,12 @@
           "rst_ps7_0_100M/dcm_locked"
         ]
       },
+      "gpio_io_i_0_1": {
+        "ports": [
+          "sw",
+          "axi_gpio_1/gpio_io_i"
+        ]
+      },
       "i2s_receiver_0_lrclk_out": {
         "ports": [
           "i2s_receiver_0/lrclk_out",
@@ -4094,17 +4145,8 @@
       "i2s_transmitter_0_sdata_0_out": {
         "ports": [
           "i2s_transmitter_0/sdata_0_out",
-          "sdata_0_out_0",
-          "system_ila_1/probe0"
-        ],
-        "hdl_attributes": {
-          "DEBUG": {
-            "value": "true"
-          },
-          "MARK_DEBUG": {
-            "value": "true"
-          }
-        }
+          "sdata_0_out_0"
+        ]
       },
       "ilconstant_0_dout": {
         "ports": [
@@ -4154,7 +4196,7 @@
           "rst_ps7_0_100M/slowest_sync_clk",
           "system_ila_2/clk",
           "clk_wiz_0/clk_in1",
-          "system_ila_1/clk"
+          "axi_gpio_1/s_axi_aclk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -4178,7 +4220,8 @@
           "axi_smc/aresetn",
           "i2s_receiver_0/s_axi_ctrl_aresetn",
           "i2s_transmitter_0/s_axi_ctrl_aresetn",
-          "system_ila_2/resetn"
+          "system_ila_2/resetn",
+          "axi_gpio_1/s_axi_aresetn"
         ]
       },
       "sdata_0_in_0_1": {
@@ -4210,6 +4253,11 @@
               "SEG_axi_gpio_0_Reg": {
                 "address_block": "/axi_gpio_0/S_AXI/Reg",
                 "offset": "0x41200000",
+                "range": "64K"
+              },
+              "SEG_axi_gpio_1_Reg": {
+                "address_block": "/axi_gpio_1/S_AXI/Reg",
+                "offset": "0x41210000",
                 "range": "64K"
               },
               "SEG_i2s_receiver_0_Reg": {

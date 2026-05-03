@@ -66,7 +66,7 @@ module axi_stream_looper_mixer (
     // ==========================================
     // Captura la señal 'mode' (dominio 50MHz) y la sincroniza al reloj
     // local del audio (dominio 12.288MHz) evitando metaestabilidad.
-    (* ASYNC_REG = "TRUE" *) reg [1:0] mode_sync_1, mode_sync_2;
+    reg [1:0] mode_sync_1, mode_sync_2;
     always @(posedge clk or negedge resetn) begin
         if (!resetn) begin
             mode_sync_1 <= 2'b00;
