@@ -83,11 +83,18 @@ module axi_stream_looper_mixer (
     wire signed [31:0] live_audio = s0_axis_tdata;
     wire signed [31:0] ram_audio  = s1_axis_tvalid ? s1_axis_tdata : 32'd0;
 
-    // Suma con saturación
-    wire signed [33:0] full_sum = $signed(live_audio) + $signed(ram_audio);
-    wire [31:0] mixed_audio = (full_sum > 33'sd2147483647)  ? 32'h7FFFFFFF :
-                              (full_sum < -33'sd2147483648) ? 32'h80000000 :
-                              full_sum[31:0];
+    // MEZCLA CON SATURACIÓN: Para evitar que el volumen baje a la mitad y evitar ruido (clipping/overflow)
+    wire signed [32:0] sum = $signed(live_audio) + $signed(ram_audio);
+    
+    reg signed [31:0] mixed_audio;
+    always @(*) begin
+        if (sum > 33'sh0_7FFFFFFF)
+            mixed_audio = 32'h7FFFFFFF;
+        else if (sum < -33'sh0_80000000)
+            mixed_audio = 32'h80000000;
+        else
+            mixed_audio = sum[31:0];
+    end
 
     // Ruteo de señales según el modo operativo
     reg [31:0] i2s_out_data;

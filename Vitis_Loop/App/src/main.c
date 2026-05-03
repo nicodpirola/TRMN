@@ -108,13 +108,21 @@ int main() {
     Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
     Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
 
+    // Limpiar toda la memoria RAM para evitar ruido blanco (basura de DDR) al final del loop
+    xil_printf("Limpiando memoria RAM...\r\n");
+    memset(LoopBuffer, 0, MAX_SAMPLES * sizeof(u32));
+
     int hw_mode = HW_MODE_IDLE;
     int last_pedal = SOLTADO;
     u32 loop_length = 0;
     u32 loop_index = 0;
     int dma_started = 0;
 
+    // Control de volumen por software para la pista grabada
+    float loop_volume = 1.0f; 
+
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
+    xil_printf("Usa las teclas '+' y '-' para ajustar el volumen del loop.\r\n");
 
     while(1) {
         // --- LECTURA DE PEDAL FÍSICO (NUEVO GPIO 1) ---
@@ -133,6 +141,7 @@ int main() {
                 if (hw_mode == HW_MODE_IDLE) {
                     hw_mode = HW_MODE_RECORD;
                     loop_index = 0; // Iniciar grabación
+                    memset(LoopBuffer, 0, MAX_SAMPLES * sizeof(u32)); // Limpiar basura anterior
                     xil_printf(">>> RECORDING... (Pedal Pisado)\r\n");
                 } else if (hw_mode == HW_MODE_PLAY) {
                     hw_mode = HW_MODE_OVERDUB;
@@ -224,7 +233,7 @@ int main() {
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
             int tx_idx = loop_index;
             for(int i=0; i<PACKET_SIZE; i++) {
-                tx_ping[i] = LoopBuffer[tx_idx++];
+                tx_ping[i] = (u32)((int)LoopBuffer[tx_idx++] * loop_volume);
                 if (tx_idx >= loop_length) tx_idx = 0;
             }
             
@@ -260,7 +269,7 @@ int main() {
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
             int tx_idx = loop_index;
             for(int i=0; i<PACKET_SIZE; i++) {
-                tx_pong[i] = LoopBuffer[tx_idx++];
+                tx_pong[i] = (u32)((int)LoopBuffer[tx_idx++] * loop_volume);
                 if (tx_idx >= loop_length) tx_idx = 0;
             }
             
