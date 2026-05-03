@@ -143,10 +143,24 @@ int main() {
                 }
             } else if (pedal == SOLTADO && last_pedal == PRESIONADO) {
                 if (hw_mode == HW_MODE_RECORD) {
-                    hw_mode = HW_MODE_PLAY;
                     loop_length = loop_index; // Sellar tamaño
                     loop_index = 0; 
                     xil_printf("<<< PLAYING... [Loop: %d muestras]\r\n", (int)loop_length);
+
+                    // PRE-CARGA CRITICA (FIX DEADLOCK):
+                    // En PLAY, el hardware mixer espera datos del DMA inmediatamente.
+                    // Si cambiamos el modo antes de darle datos, el hardware se traba (stall),
+                    // y el DMA nunca termina. Hay que darle el primer paquete AHORA.
+                    if (loop_length > 0) {
+                        for(int i=0; i<PACKET_SIZE; i++) {
+                            tx_ping[i] = LoopBuffer[i % loop_length];
+                        }
+                        Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+                        XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+                    }
+                    
+                    // Ahora sí, cambiamos el modo en hardware de forma segura
+                    hw_mode = HW_MODE_PLAY;
                 }
             }
         }
