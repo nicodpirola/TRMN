@@ -46,7 +46,7 @@
 // CONFIGURACION DEL LOOPER
 // ==========================================================
 #define AUDIO_BUFFER_BASEADDR 0x10000000 
-#define MAX_SAMPLES           441000 // ~9 segundos a 48kHz
+#define MAX_SAMPLES           2880000 // 60 segundos a 48kHz (11.5 MB). Multiplo exacto de 512.
 #define PACKET_SIZE           512    // Muestras por transferencia DMA
 
 #define PRESIONADO            1
@@ -221,6 +221,14 @@ int main() {
                 if (loop_index < MAX_SAMPLES) LoopBuffer[loop_index] = rx_ping[i];
                 loop_index++;
             }
+            // Auto-Stop si alcanzamos el limite de memoria (evita leer basura de DDR al reproducir)
+            if (loop_index >= MAX_SAMPLES - PACKET_SIZE) {
+                if (hw_mode == HW_MODE_RECORD) {
+                    loop_length = loop_index;
+                    hw_mode = HW_MODE_PLAY;
+                    xil_printf("<<< AUTO-PLAY... (Memoria Llena) [Loop: %d]\r\n", (int)loop_length);
+                }
+            }
         } else if (hw_mode == HW_MODE_PLAY) {
             loop_index += PACKET_SIZE; // Solo avanzamos el indice
         }
@@ -256,6 +264,13 @@ int main() {
             for(int i=0; i<PACKET_SIZE; i++) {
                 if (loop_index < MAX_SAMPLES) LoopBuffer[loop_index] = rx_pong[i];
                 loop_index++;
+            }
+            if (loop_index >= MAX_SAMPLES - PACKET_SIZE) {
+                if (hw_mode == HW_MODE_RECORD) {
+                    loop_length = loop_index;
+                    hw_mode = HW_MODE_PLAY;
+                    xil_printf("<<< AUTO-PLAY... (Memoria Llena) [Loop: %d]\r\n", (int)loop_length);
+                }
             }
         } else if (hw_mode == HW_MODE_PLAY) {
             loop_index += PACKET_SIZE;

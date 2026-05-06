@@ -2,7 +2,7 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-// Date        : Sat May  2 21:33:48 2026
+// Date        : Tue May  5 16:10:05 2026
 // Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_axi_stream_looper_mi_0_0/design_1_axi_stream_looper_mi_0_0_sim_netlist.v
@@ -146,103 +146,8 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   input resetn;
 
   wire clk;
-  wire full_sum_carry__0_i_1_n_0;
-  wire full_sum_carry__0_i_2_n_0;
-  wire full_sum_carry__0_i_3_n_0;
-  wire full_sum_carry__0_i_4_n_0;
-  wire full_sum_carry__0_n_0;
-  wire full_sum_carry__0_n_1;
-  wire full_sum_carry__0_n_2;
-  wire full_sum_carry__0_n_3;
-  wire full_sum_carry__0_n_4;
-  wire full_sum_carry__0_n_5;
-  wire full_sum_carry__0_n_6;
-  wire full_sum_carry__0_n_7;
-  wire full_sum_carry__1_i_1_n_0;
-  wire full_sum_carry__1_i_2_n_0;
-  wire full_sum_carry__1_i_3_n_0;
-  wire full_sum_carry__1_i_4_n_0;
-  wire full_sum_carry__1_n_0;
-  wire full_sum_carry__1_n_1;
-  wire full_sum_carry__1_n_2;
-  wire full_sum_carry__1_n_3;
-  wire full_sum_carry__1_n_4;
-  wire full_sum_carry__1_n_5;
-  wire full_sum_carry__1_n_6;
-  wire full_sum_carry__1_n_7;
-  wire full_sum_carry__2_i_1_n_0;
-  wire full_sum_carry__2_i_2_n_0;
-  wire full_sum_carry__2_i_3_n_0;
-  wire full_sum_carry__2_i_4_n_0;
-  wire full_sum_carry__2_n_0;
-  wire full_sum_carry__2_n_1;
-  wire full_sum_carry__2_n_2;
-  wire full_sum_carry__2_n_3;
-  wire full_sum_carry__2_n_4;
-  wire full_sum_carry__2_n_5;
-  wire full_sum_carry__2_n_6;
-  wire full_sum_carry__2_n_7;
-  wire full_sum_carry__3_i_1_n_0;
-  wire full_sum_carry__3_i_2_n_0;
-  wire full_sum_carry__3_i_3_n_0;
-  wire full_sum_carry__3_i_4_n_0;
-  wire full_sum_carry__3_n_0;
-  wire full_sum_carry__3_n_1;
-  wire full_sum_carry__3_n_2;
-  wire full_sum_carry__3_n_3;
-  wire full_sum_carry__3_n_4;
-  wire full_sum_carry__3_n_5;
-  wire full_sum_carry__3_n_6;
-  wire full_sum_carry__3_n_7;
-  wire full_sum_carry__4_i_1_n_0;
-  wire full_sum_carry__4_i_2_n_0;
-  wire full_sum_carry__4_i_3_n_0;
-  wire full_sum_carry__4_i_4_n_0;
-  wire full_sum_carry__4_n_0;
-  wire full_sum_carry__4_n_1;
-  wire full_sum_carry__4_n_2;
-  wire full_sum_carry__4_n_3;
-  wire full_sum_carry__4_n_4;
-  wire full_sum_carry__4_n_5;
-  wire full_sum_carry__4_n_6;
-  wire full_sum_carry__4_n_7;
-  wire full_sum_carry__5_i_1_n_0;
-  wire full_sum_carry__5_i_2_n_0;
-  wire full_sum_carry__5_i_3_n_0;
-  wire full_sum_carry__5_i_4_n_0;
-  wire full_sum_carry__5_n_0;
-  wire full_sum_carry__5_n_1;
-  wire full_sum_carry__5_n_2;
-  wire full_sum_carry__5_n_3;
-  wire full_sum_carry__5_n_4;
-  wire full_sum_carry__5_n_5;
-  wire full_sum_carry__5_n_6;
-  wire full_sum_carry__5_n_7;
-  wire full_sum_carry__6_i_1_n_0;
-  wire full_sum_carry__6_i_2_n_0;
-  wire full_sum_carry__6_i_3_n_0;
-  wire full_sum_carry__6_i_4_n_0;
-  wire full_sum_carry__6_i_5_n_0;
-  wire full_sum_carry__6_n_0;
-  wire full_sum_carry__6_n_1;
-  wire full_sum_carry__6_n_2;
-  wire full_sum_carry__6_n_3;
-  wire full_sum_carry__6_n_4;
-  wire full_sum_carry__6_n_5;
-  wire full_sum_carry__6_n_6;
-  wire full_sum_carry__6_n_7;
-  wire full_sum_carry_i_1_n_0;
-  wire full_sum_carry_i_2_n_0;
-  wire full_sum_carry_i_3_n_0;
-  wire full_sum_carry_i_4_n_0;
-  wire full_sum_carry_n_0;
-  wire full_sum_carry_n_1;
-  wire full_sum_carry_n_2;
-  wire full_sum_carry_n_3;
-  wire full_sum_carry_n_4;
-  wire full_sum_carry_n_5;
-  wire full_sum_carry_n_6;
-  wire full_sum_carry_n_7;
+  wire i__carry_i_1_n_3;
+  wire i__carry_i_2_n_0;
   wire [31:0]m_dma_axis_tdata;
   wire \m_dma_axis_tdata[0]_INST_0_i_1_n_0 ;
   wire \m_dma_axis_tdata[0]_INST_0_i_2_n_0 ;
@@ -313,18 +218,16 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   wire [31:0]m_i2s_axis_tdata;
   wire m_i2s_axis_tready;
   wire mixed_audio1;
-  wire mixed_audio1_carry_i_1_n_3;
-  wire mixed_audio1_carry_i_2_n_0;
+  wire mixed_audio10_in;
+  wire mixed_audio1_carry_i_1_n_0;
+  wire mixed_audio1_carry_i_3_n_0;
   wire mixed_audio1_carry_n_3;
-  wire mixed_audio2;
-  wire mixed_audio2_carry_i_1_n_0;
-  wire mixed_audio2_carry_i_2_n_0;
-  wire mixed_audio2_carry_i_3_n_0;
-  wire mixed_audio2_carry_n_3;
+  wire \mixed_audio1_inferred__0/i__carry_n_3 ;
   wire [1:0]mode;
   wire [1:0]mode_sync_1;
   wire \mode_sync_1[1]_i_1_n_0 ;
   wire [1:0]mode_sync_2;
+  wire [32:0]p_0_in;
   wire resetn;
   wire [31:0]s0_axis_tdata;
   wire s0_axis_tready;
@@ -332,298 +235,91 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   wire [31:0]s1_axis_tdata;
   wire s1_axis_tready;
   wire s1_axis_tvalid;
+  wire sum_carry__0_i_1_n_0;
+  wire sum_carry__0_i_2_n_0;
+  wire sum_carry__0_i_3_n_0;
+  wire sum_carry__0_i_4_n_0;
+  wire sum_carry__0_n_0;
+  wire sum_carry__0_n_1;
+  wire sum_carry__0_n_2;
+  wire sum_carry__0_n_3;
+  wire sum_carry__1_i_1_n_0;
+  wire sum_carry__1_i_2_n_0;
+  wire sum_carry__1_i_3_n_0;
+  wire sum_carry__1_i_4_n_0;
+  wire sum_carry__1_n_0;
+  wire sum_carry__1_n_1;
+  wire sum_carry__1_n_2;
+  wire sum_carry__1_n_3;
+  wire sum_carry__2_i_1_n_0;
+  wire sum_carry__2_i_2_n_0;
+  wire sum_carry__2_i_3_n_0;
+  wire sum_carry__2_i_4_n_0;
+  wire sum_carry__2_n_0;
+  wire sum_carry__2_n_1;
+  wire sum_carry__2_n_2;
+  wire sum_carry__2_n_3;
+  wire sum_carry__3_i_1_n_0;
+  wire sum_carry__3_i_2_n_0;
+  wire sum_carry__3_i_3_n_0;
+  wire sum_carry__3_i_4_n_0;
+  wire sum_carry__3_n_0;
+  wire sum_carry__3_n_1;
+  wire sum_carry__3_n_2;
+  wire sum_carry__3_n_3;
+  wire sum_carry__4_i_1_n_0;
+  wire sum_carry__4_i_2_n_0;
+  wire sum_carry__4_i_3_n_0;
+  wire sum_carry__4_i_4_n_0;
+  wire sum_carry__4_n_0;
+  wire sum_carry__4_n_1;
+  wire sum_carry__4_n_2;
+  wire sum_carry__4_n_3;
+  wire sum_carry__5_i_1_n_0;
+  wire sum_carry__5_i_2_n_0;
+  wire sum_carry__5_i_3_n_0;
+  wire sum_carry__5_i_4_n_0;
+  wire sum_carry__5_n_0;
+  wire sum_carry__5_n_1;
+  wire sum_carry__5_n_2;
+  wire sum_carry__5_n_3;
+  wire sum_carry__6_i_1_n_0;
+  wire sum_carry__6_i_2_n_0;
+  wire sum_carry__6_i_3_n_0;
+  wire sum_carry__6_i_4_n_0;
+  wire sum_carry__6_i_5_n_0;
+  wire sum_carry__6_n_0;
+  wire sum_carry__6_n_1;
+  wire sum_carry__6_n_2;
+  wire sum_carry__6_n_3;
+  wire sum_carry_i_1_n_0;
+  wire sum_carry_i_2_n_0;
+  wire sum_carry_i_3_n_0;
+  wire sum_carry_i_4_n_0;
+  wire sum_carry_n_0;
+  wire sum_carry_n_1;
+  wire sum_carry_n_2;
+  wire sum_carry_n_3;
+  wire [3:1]NLW_i__carry_i_1_CO_UNCONNECTED;
+  wire [3:0]NLW_i__carry_i_1_O_UNCONNECTED;
   wire [3:2]NLW_mixed_audio1_carry_CO_UNCONNECTED;
   wire [3:0]NLW_mixed_audio1_carry_O_UNCONNECTED;
-  wire [3:1]NLW_mixed_audio1_carry_i_1_CO_UNCONNECTED;
-  wire [3:0]NLW_mixed_audio1_carry_i_1_O_UNCONNECTED;
-  wire [3:2]NLW_mixed_audio2_carry_CO_UNCONNECTED;
-  wire [3:0]NLW_mixed_audio2_carry_O_UNCONNECTED;
+  wire [3:2]\NLW_mixed_audio1_inferred__0/i__carry_CO_UNCONNECTED ;
+  wire [3:0]\NLW_mixed_audio1_inferred__0/i__carry_O_UNCONNECTED ;
 
-  CARRY4 full_sum_carry
-       (.CI(1'b0),
-        .CO({full_sum_carry_n_0,full_sum_carry_n_1,full_sum_carry_n_2,full_sum_carry_n_3}),
+  CARRY4 i__carry_i_1
+       (.CI(sum_carry__6_n_0),
+        .CO({NLW_i__carry_i_1_CO_UNCONNECTED[3:1],i__carry_i_1_n_3}),
         .CYINIT(1'b0),
-        .DI(s0_axis_tdata[3:0]),
-        .O({full_sum_carry_n_4,full_sum_carry_n_5,full_sum_carry_n_6,full_sum_carry_n_7}),
-        .S({full_sum_carry_i_1_n_0,full_sum_carry_i_2_n_0,full_sum_carry_i_3_n_0,full_sum_carry_i_4_n_0}));
-  CARRY4 full_sum_carry__0
-       (.CI(full_sum_carry_n_0),
-        .CO({full_sum_carry__0_n_0,full_sum_carry__0_n_1,full_sum_carry__0_n_2,full_sum_carry__0_n_3}),
-        .CYINIT(1'b0),
-        .DI(s0_axis_tdata[7:4]),
-        .O({full_sum_carry__0_n_4,full_sum_carry__0_n_5,full_sum_carry__0_n_6,full_sum_carry__0_n_7}),
-        .S({full_sum_carry__0_i_1_n_0,full_sum_carry__0_i_2_n_0,full_sum_carry__0_i_3_n_0,full_sum_carry__0_i_4_n_0}));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__0_i_1
-       (.I0(s0_axis_tdata[7]),
-        .I1(s1_axis_tdata[7]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__0_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__0_i_2
-       (.I0(s0_axis_tdata[6]),
-        .I1(s1_axis_tdata[6]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__0_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__0_i_3
-       (.I0(s0_axis_tdata[5]),
-        .I1(s1_axis_tdata[5]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__0_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__0_i_4
-       (.I0(s0_axis_tdata[4]),
-        .I1(s1_axis_tdata[4]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__0_i_4_n_0));
-  CARRY4 full_sum_carry__1
-       (.CI(full_sum_carry__0_n_0),
-        .CO({full_sum_carry__1_n_0,full_sum_carry__1_n_1,full_sum_carry__1_n_2,full_sum_carry__1_n_3}),
-        .CYINIT(1'b0),
-        .DI(s0_axis_tdata[11:8]),
-        .O({full_sum_carry__1_n_4,full_sum_carry__1_n_5,full_sum_carry__1_n_6,full_sum_carry__1_n_7}),
-        .S({full_sum_carry__1_i_1_n_0,full_sum_carry__1_i_2_n_0,full_sum_carry__1_i_3_n_0,full_sum_carry__1_i_4_n_0}));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__1_i_1
-       (.I0(s0_axis_tdata[11]),
-        .I1(s1_axis_tdata[11]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__1_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__1_i_2
-       (.I0(s0_axis_tdata[10]),
-        .I1(s1_axis_tdata[10]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__1_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__1_i_3
-       (.I0(s0_axis_tdata[9]),
-        .I1(s1_axis_tdata[9]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__1_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__1_i_4
-       (.I0(s0_axis_tdata[8]),
-        .I1(s1_axis_tdata[8]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__1_i_4_n_0));
-  CARRY4 full_sum_carry__2
-       (.CI(full_sum_carry__1_n_0),
-        .CO({full_sum_carry__2_n_0,full_sum_carry__2_n_1,full_sum_carry__2_n_2,full_sum_carry__2_n_3}),
-        .CYINIT(1'b0),
-        .DI(s0_axis_tdata[15:12]),
-        .O({full_sum_carry__2_n_4,full_sum_carry__2_n_5,full_sum_carry__2_n_6,full_sum_carry__2_n_7}),
-        .S({full_sum_carry__2_i_1_n_0,full_sum_carry__2_i_2_n_0,full_sum_carry__2_i_3_n_0,full_sum_carry__2_i_4_n_0}));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__2_i_1
-       (.I0(s0_axis_tdata[15]),
-        .I1(s1_axis_tdata[15]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__2_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__2_i_2
-       (.I0(s0_axis_tdata[14]),
-        .I1(s1_axis_tdata[14]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__2_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__2_i_3
-       (.I0(s0_axis_tdata[13]),
-        .I1(s1_axis_tdata[13]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__2_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__2_i_4
-       (.I0(s0_axis_tdata[12]),
-        .I1(s1_axis_tdata[12]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__2_i_4_n_0));
-  CARRY4 full_sum_carry__3
-       (.CI(full_sum_carry__2_n_0),
-        .CO({full_sum_carry__3_n_0,full_sum_carry__3_n_1,full_sum_carry__3_n_2,full_sum_carry__3_n_3}),
-        .CYINIT(1'b0),
-        .DI(s0_axis_tdata[19:16]),
-        .O({full_sum_carry__3_n_4,full_sum_carry__3_n_5,full_sum_carry__3_n_6,full_sum_carry__3_n_7}),
-        .S({full_sum_carry__3_i_1_n_0,full_sum_carry__3_i_2_n_0,full_sum_carry__3_i_3_n_0,full_sum_carry__3_i_4_n_0}));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__3_i_1
-       (.I0(s0_axis_tdata[19]),
-        .I1(s1_axis_tdata[19]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__3_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__3_i_2
-       (.I0(s0_axis_tdata[18]),
-        .I1(s1_axis_tdata[18]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__3_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__3_i_3
-       (.I0(s0_axis_tdata[17]),
-        .I1(s1_axis_tdata[17]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__3_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__3_i_4
-       (.I0(s0_axis_tdata[16]),
-        .I1(s1_axis_tdata[16]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__3_i_4_n_0));
-  CARRY4 full_sum_carry__4
-       (.CI(full_sum_carry__3_n_0),
-        .CO({full_sum_carry__4_n_0,full_sum_carry__4_n_1,full_sum_carry__4_n_2,full_sum_carry__4_n_3}),
-        .CYINIT(1'b0),
-        .DI(s0_axis_tdata[23:20]),
-        .O({full_sum_carry__4_n_4,full_sum_carry__4_n_5,full_sum_carry__4_n_6,full_sum_carry__4_n_7}),
-        .S({full_sum_carry__4_i_1_n_0,full_sum_carry__4_i_2_n_0,full_sum_carry__4_i_3_n_0,full_sum_carry__4_i_4_n_0}));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__4_i_1
-       (.I0(s0_axis_tdata[23]),
-        .I1(s1_axis_tdata[23]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__4_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__4_i_2
-       (.I0(s0_axis_tdata[22]),
-        .I1(s1_axis_tdata[22]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__4_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__4_i_3
-       (.I0(s0_axis_tdata[21]),
-        .I1(s1_axis_tdata[21]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__4_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__4_i_4
-       (.I0(s0_axis_tdata[20]),
-        .I1(s1_axis_tdata[20]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__4_i_4_n_0));
-  CARRY4 full_sum_carry__5
-       (.CI(full_sum_carry__4_n_0),
-        .CO({full_sum_carry__5_n_0,full_sum_carry__5_n_1,full_sum_carry__5_n_2,full_sum_carry__5_n_3}),
-        .CYINIT(1'b0),
-        .DI(s0_axis_tdata[27:24]),
-        .O({full_sum_carry__5_n_4,full_sum_carry__5_n_5,full_sum_carry__5_n_6,full_sum_carry__5_n_7}),
-        .S({full_sum_carry__5_i_1_n_0,full_sum_carry__5_i_2_n_0,full_sum_carry__5_i_3_n_0,full_sum_carry__5_i_4_n_0}));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__5_i_1
-       (.I0(s0_axis_tdata[27]),
-        .I1(s1_axis_tdata[27]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__5_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__5_i_2
-       (.I0(s0_axis_tdata[26]),
-        .I1(s1_axis_tdata[26]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__5_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__5_i_3
-       (.I0(s0_axis_tdata[25]),
-        .I1(s1_axis_tdata[25]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__5_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__5_i_4
-       (.I0(s0_axis_tdata[24]),
-        .I1(s1_axis_tdata[24]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__5_i_4_n_0));
-  CARRY4 full_sum_carry__6
-       (.CI(full_sum_carry__5_n_0),
-        .CO({full_sum_carry__6_n_0,full_sum_carry__6_n_1,full_sum_carry__6_n_2,full_sum_carry__6_n_3}),
-        .CYINIT(1'b0),
-        .DI({full_sum_carry__6_i_1_n_0,s0_axis_tdata[30:28]}),
-        .O({full_sum_carry__6_n_4,full_sum_carry__6_n_5,full_sum_carry__6_n_6,full_sum_carry__6_n_7}),
-        .S({full_sum_carry__6_i_2_n_0,full_sum_carry__6_i_3_n_0,full_sum_carry__6_i_4_n_0,full_sum_carry__6_i_5_n_0}));
-  LUT1 #(
-    .INIT(2'h1)) 
-    full_sum_carry__6_i_1
-       (.I0(s0_axis_tdata[31]),
-        .O(full_sum_carry__6_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__6_i_2
-       (.I0(s0_axis_tdata[31]),
-        .I1(s1_axis_tdata[31]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__6_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__6_i_3
-       (.I0(s0_axis_tdata[30]),
-        .I1(s1_axis_tdata[30]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__6_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__6_i_4
-       (.I0(s0_axis_tdata[29]),
-        .I1(s1_axis_tdata[29]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__6_i_4_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry__6_i_5
-       (.I0(s0_axis_tdata[28]),
-        .I1(s1_axis_tdata[28]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry__6_i_5_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry_i_1
-       (.I0(s0_axis_tdata[3]),
-        .I1(s1_axis_tdata[3]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry_i_1_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry_i_2
-       (.I0(s0_axis_tdata[2]),
-        .I1(s1_axis_tdata[2]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry_i_2_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry_i_3
-       (.I0(s0_axis_tdata[1]),
-        .I1(s1_axis_tdata[1]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry_i_3_n_0));
-  LUT3 #(
-    .INIT(8'h6A)) 
-    full_sum_carry_i_4
-       (.I0(s0_axis_tdata[0]),
-        .I1(s1_axis_tdata[0]),
-        .I2(s1_axis_tvalid),
-        .O(full_sum_carry_i_4_n_0));
+        .DI({1'b0,1'b0,1'b0,1'b0}),
+        .O(NLW_i__carry_i_1_O_UNCONNECTED[3:0]),
+        .S({1'b0,1'b0,1'b0,1'b1}));
+  LUT2 #(
+    .INIT(4'h2)) 
+    i__carry_i_2
+       (.I0(p_0_in[30]),
+        .I1(p_0_in[31]),
+        .O(i__carry_i_2_n_0));
   MUXF7 \m_dma_axis_tdata[0]_INST_0 
        (.I0(\m_dma_axis_tdata[0]_INST_0_i_1_n_0 ),
         .I1(\m_dma_axis_tdata[0]_INST_0_i_2_n_0 ),
@@ -639,9 +335,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[0]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[0]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[0]),
         .O(\m_dma_axis_tdata[0]_INST_0_i_2_n_0 ));
@@ -660,9 +356,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[10]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__1_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[10]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[10]),
         .O(\m_dma_axis_tdata[10]_INST_0_i_2_n_0 ));
@@ -681,9 +377,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[11]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__1_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[11]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[11]),
         .O(\m_dma_axis_tdata[11]_INST_0_i_2_n_0 ));
@@ -702,9 +398,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[12]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__2_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[12]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[12]),
         .O(\m_dma_axis_tdata[12]_INST_0_i_2_n_0 ));
@@ -723,9 +419,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[13]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__2_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[13]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[13]),
         .O(\m_dma_axis_tdata[13]_INST_0_i_2_n_0 ));
@@ -744,9 +440,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[14]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__2_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[14]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[14]),
         .O(\m_dma_axis_tdata[14]_INST_0_i_2_n_0 ));
@@ -765,9 +461,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[15]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__2_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[15]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[15]),
         .O(\m_dma_axis_tdata[15]_INST_0_i_2_n_0 ));
@@ -786,9 +482,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[16]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__3_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[16]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[16]),
         .O(\m_dma_axis_tdata[16]_INST_0_i_2_n_0 ));
@@ -807,9 +503,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[17]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__3_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[17]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[17]),
         .O(\m_dma_axis_tdata[17]_INST_0_i_2_n_0 ));
@@ -828,9 +524,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[18]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__3_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[18]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[18]),
         .O(\m_dma_axis_tdata[18]_INST_0_i_2_n_0 ));
@@ -849,9 +545,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[19]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__3_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[19]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[19]),
         .O(\m_dma_axis_tdata[19]_INST_0_i_2_n_0 ));
@@ -870,9 +566,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[1]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[1]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[1]),
         .O(\m_dma_axis_tdata[1]_INST_0_i_2_n_0 ));
@@ -891,9 +587,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[20]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__4_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[20]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[20]),
         .O(\m_dma_axis_tdata[20]_INST_0_i_2_n_0 ));
@@ -912,9 +608,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[21]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__4_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[21]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[21]),
         .O(\m_dma_axis_tdata[21]_INST_0_i_2_n_0 ));
@@ -933,9 +629,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[22]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__4_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[22]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[22]),
         .O(\m_dma_axis_tdata[22]_INST_0_i_2_n_0 ));
@@ -954,9 +650,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[23]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__4_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[23]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[23]),
         .O(\m_dma_axis_tdata[23]_INST_0_i_2_n_0 ));
@@ -975,9 +671,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[24]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__5_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[24]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[24]),
         .O(\m_dma_axis_tdata[24]_INST_0_i_2_n_0 ));
@@ -996,9 +692,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[25]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__5_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[25]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[25]),
         .O(\m_dma_axis_tdata[25]_INST_0_i_2_n_0 ));
@@ -1017,9 +713,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[26]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__5_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[26]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[26]),
         .O(\m_dma_axis_tdata[26]_INST_0_i_2_n_0 ));
@@ -1038,9 +734,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[27]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__5_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[27]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[27]),
         .O(\m_dma_axis_tdata[27]_INST_0_i_2_n_0 ));
@@ -1059,9 +755,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[28]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__6_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[28]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[28]),
         .O(\m_dma_axis_tdata[28]_INST_0_i_2_n_0 ));
@@ -1080,9 +776,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[29]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__6_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[29]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[29]),
         .O(\m_dma_axis_tdata[29]_INST_0_i_2_n_0 ));
@@ -1101,9 +797,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[2]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[2]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[2]),
         .O(\m_dma_axis_tdata[2]_INST_0_i_2_n_0 ));
@@ -1122,9 +818,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[30]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__6_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[30]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[30]),
         .O(\m_dma_axis_tdata[30]_INST_0_i_2_n_0 ));
@@ -1143,9 +839,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'h0EFF0E00)) 
     \m_dma_axis_tdata[31]_INST_0_i_2 
-       (.I0(full_sum_carry__6_n_4),
-        .I1(mixed_audio2),
-        .I2(mixed_audio1),
+       (.I0(p_0_in[31]),
+        .I1(mixed_audio1),
+        .I2(mixed_audio10_in),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[31]),
         .O(\m_dma_axis_tdata[31]_INST_0_i_2_n_0 ));
@@ -1164,9 +860,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[3]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[3]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[3]),
         .O(\m_dma_axis_tdata[3]_INST_0_i_2_n_0 ));
@@ -1185,9 +881,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[4]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__0_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[4]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[4]),
         .O(\m_dma_axis_tdata[4]_INST_0_i_2_n_0 ));
@@ -1206,9 +902,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[5]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__0_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[5]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[5]),
         .O(\m_dma_axis_tdata[5]_INST_0_i_2_n_0 ));
@@ -1227,9 +923,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[6]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__0_n_5),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[6]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[6]),
         .O(\m_dma_axis_tdata[6]_INST_0_i_2_n_0 ));
@@ -1248,9 +944,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[7]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__0_n_4),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[7]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[7]),
         .O(\m_dma_axis_tdata[7]_INST_0_i_2_n_0 ));
@@ -1269,9 +965,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[8]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__1_n_7),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[8]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[8]),
         .O(\m_dma_axis_tdata[8]_INST_0_i_2_n_0 ));
@@ -1290,9 +986,9 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   LUT5 #(
     .INIT(32'hBAFFBA00)) 
     \m_dma_axis_tdata[9]_INST_0_i_2 
-       (.I0(mixed_audio1),
-        .I1(mixed_audio2),
-        .I2(full_sum_carry__1_n_6),
+       (.I0(mixed_audio10_in),
+        .I1(mixed_audio1),
+        .I2(p_0_in[9]),
         .I3(mode_sync_2[1]),
         .I4(s0_axis_tdata[9]),
         .O(\m_dma_axis_tdata[9]_INST_0_i_2_n_0 ));
@@ -1307,288 +1003,288 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[0]_INST_0 
        (.I0(s0_axis_tdata[0]),
-        .I1(full_sum_carry_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[0]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[0]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[10]_INST_0 
        (.I0(s0_axis_tdata[10]),
-        .I1(full_sum_carry__1_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[10]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[10]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[11]_INST_0 
        (.I0(s0_axis_tdata[11]),
-        .I1(full_sum_carry__1_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[11]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[11]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[12]_INST_0 
        (.I0(s0_axis_tdata[12]),
-        .I1(full_sum_carry__2_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[12]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[12]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[13]_INST_0 
        (.I0(s0_axis_tdata[13]),
-        .I1(full_sum_carry__2_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[13]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[13]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[14]_INST_0 
        (.I0(s0_axis_tdata[14]),
-        .I1(full_sum_carry__2_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[14]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[14]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[15]_INST_0 
        (.I0(s0_axis_tdata[15]),
-        .I1(full_sum_carry__2_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[15]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[15]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[16]_INST_0 
        (.I0(s0_axis_tdata[16]),
-        .I1(full_sum_carry__3_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[16]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[16]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[17]_INST_0 
        (.I0(s0_axis_tdata[17]),
-        .I1(full_sum_carry__3_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[17]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[17]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[18]_INST_0 
        (.I0(s0_axis_tdata[18]),
-        .I1(full_sum_carry__3_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[18]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[18]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[19]_INST_0 
        (.I0(s0_axis_tdata[19]),
-        .I1(full_sum_carry__3_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[19]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[19]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[1]_INST_0 
        (.I0(s0_axis_tdata[1]),
-        .I1(full_sum_carry_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[1]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[1]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[20]_INST_0 
        (.I0(s0_axis_tdata[20]),
-        .I1(full_sum_carry__4_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[20]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[20]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[21]_INST_0 
        (.I0(s0_axis_tdata[21]),
-        .I1(full_sum_carry__4_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[21]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[21]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[22]_INST_0 
        (.I0(s0_axis_tdata[22]),
-        .I1(full_sum_carry__4_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[22]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[22]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[23]_INST_0 
        (.I0(s0_axis_tdata[23]),
-        .I1(full_sum_carry__4_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[23]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[23]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[24]_INST_0 
        (.I0(s0_axis_tdata[24]),
-        .I1(full_sum_carry__5_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[24]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[24]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[25]_INST_0 
        (.I0(s0_axis_tdata[25]),
-        .I1(full_sum_carry__5_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[25]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[25]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[26]_INST_0 
        (.I0(s0_axis_tdata[26]),
-        .I1(full_sum_carry__5_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[26]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[26]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[27]_INST_0 
        (.I0(s0_axis_tdata[27]),
-        .I1(full_sum_carry__5_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[27]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[27]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[28]_INST_0 
        (.I0(s0_axis_tdata[28]),
-        .I1(full_sum_carry__6_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[28]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[28]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[29]_INST_0 
        (.I0(s0_axis_tdata[29]),
-        .I1(full_sum_carry__6_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[29]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[29]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[2]_INST_0 
        (.I0(s0_axis_tdata[2]),
-        .I1(full_sum_carry_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[2]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[2]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[30]_INST_0 
        (.I0(s0_axis_tdata[30]),
-        .I1(full_sum_carry__6_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[30]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[30]));
   LUT5 #(
     .INIT(32'h3330AAAA)) 
     \m_i2s_axis_tdata[31]_INST_0 
        (.I0(s0_axis_tdata[31]),
-        .I1(mixed_audio1),
-        .I2(mixed_audio2),
-        .I3(full_sum_carry__6_n_4),
+        .I1(mixed_audio10_in),
+        .I2(mixed_audio1),
+        .I3(p_0_in[31]),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[31]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[3]_INST_0 
        (.I0(s0_axis_tdata[3]),
-        .I1(full_sum_carry_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[3]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[3]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[4]_INST_0 
        (.I0(s0_axis_tdata[4]),
-        .I1(full_sum_carry__0_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[4]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[4]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[5]_INST_0 
        (.I0(s0_axis_tdata[5]),
-        .I1(full_sum_carry__0_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[5]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[5]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[6]_INST_0 
        (.I0(s0_axis_tdata[6]),
-        .I1(full_sum_carry__0_n_5),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[6]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[6]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[7]_INST_0 
        (.I0(s0_axis_tdata[7]),
-        .I1(full_sum_carry__0_n_4),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[7]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[7]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[8]_INST_0 
        (.I0(s0_axis_tdata[8]),
-        .I1(full_sum_carry__1_n_7),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[8]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[8]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
     \m_i2s_axis_tdata[9]_INST_0 
        (.I0(s0_axis_tdata[9]),
-        .I1(full_sum_carry__1_n_6),
-        .I2(mixed_audio2),
-        .I3(mixed_audio1),
+        .I1(p_0_in[9]),
+        .I2(mixed_audio1),
+        .I3(mixed_audio10_in),
         .I4(mode_sync_2[1]),
         .O(m_i2s_axis_tdata[9]));
   (* COMPARATOR_THRESHOLD = "11" *) 
@@ -1596,46 +1292,33 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
        (.CI(1'b0),
         .CO({NLW_mixed_audio1_carry_CO_UNCONNECTED[3:2],mixed_audio1,mixed_audio1_carry_n_3}),
         .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,full_sum_carry__6_n_4}),
+        .DI({1'b0,1'b0,1'b0,mixed_audio1_carry_i_1_n_0}),
         .O(NLW_mixed_audio1_carry_O_UNCONNECTED[3:0]),
-        .S({1'b0,1'b0,mixed_audio1_carry_i_1_n_3,mixed_audio1_carry_i_2_n_0}));
-  CARRY4 mixed_audio1_carry_i_1
-       (.CI(full_sum_carry__6_n_0),
-        .CO({NLW_mixed_audio1_carry_i_1_CO_UNCONNECTED[3:1],mixed_audio1_carry_i_1_n_3}),
-        .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,1'b0}),
-        .O(NLW_mixed_audio1_carry_i_1_O_UNCONNECTED[3:0]),
-        .S({1'b0,1'b0,1'b0,1'b1}));
-  LUT2 #(
-    .INIT(4'h2)) 
+        .S({1'b0,1'b0,p_0_in[32],mixed_audio1_carry_i_3_n_0}));
+  LUT1 #(
+    .INIT(2'h1)) 
+    mixed_audio1_carry_i_1
+       (.I0(p_0_in[31]),
+        .O(mixed_audio1_carry_i_1_n_0));
+  LUT1 #(
+    .INIT(2'h1)) 
     mixed_audio1_carry_i_2
-       (.I0(full_sum_carry__6_n_5),
-        .I1(full_sum_carry__6_n_4),
-        .O(mixed_audio1_carry_i_2_n_0));
-  (* COMPARATOR_THRESHOLD = "11" *) 
-  CARRY4 mixed_audio2_carry
-       (.CI(1'b0),
-        .CO({NLW_mixed_audio2_carry_CO_UNCONNECTED[3:2],mixed_audio2,mixed_audio2_carry_n_3}),
-        .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,mixed_audio2_carry_i_1_n_0}),
-        .O(NLW_mixed_audio2_carry_O_UNCONNECTED[3:0]),
-        .S({1'b0,1'b0,mixed_audio2_carry_i_2_n_0,mixed_audio2_carry_i_3_n_0}));
-  LUT1 #(
-    .INIT(2'h1)) 
-    mixed_audio2_carry_i_1
-       (.I0(full_sum_carry__6_n_4),
-        .O(mixed_audio2_carry_i_1_n_0));
-  LUT1 #(
-    .INIT(2'h1)) 
-    mixed_audio2_carry_i_2
-       (.I0(mixed_audio1_carry_i_1_n_3),
-        .O(mixed_audio2_carry_i_2_n_0));
+       (.I0(i__carry_i_1_n_3),
+        .O(p_0_in[32]));
   LUT2 #(
     .INIT(4'h2)) 
-    mixed_audio2_carry_i_3
-       (.I0(full_sum_carry__6_n_4),
-        .I1(full_sum_carry__6_n_5),
-        .O(mixed_audio2_carry_i_3_n_0));
+    mixed_audio1_carry_i_3
+       (.I0(p_0_in[31]),
+        .I1(p_0_in[30]),
+        .O(mixed_audio1_carry_i_3_n_0));
+  (* COMPARATOR_THRESHOLD = "11" *) 
+  CARRY4 \mixed_audio1_inferred__0/i__carry 
+       (.CI(1'b0),
+        .CO({\NLW_mixed_audio1_inferred__0/i__carry_CO_UNCONNECTED [3:2],mixed_audio10_in,\mixed_audio1_inferred__0/i__carry_n_3 }),
+        .CYINIT(1'b0),
+        .DI({1'b0,1'b0,1'b0,p_0_in[31]}),
+        .O(\NLW_mixed_audio1_inferred__0/i__carry_O_UNCONNECTED [3:0]),
+        .S({1'b0,1'b0,i__carry_i_1_n_3,i__carry_i_2_n_0}));
   LUT1 #(
     .INIT(2'h1)) 
     \mode_sync_1[1]_i_1 
@@ -1683,6 +1366,291 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
         .I2(mode_sync_2[1]),
         .I3(m_dma_axis_tready),
         .O(s1_axis_tready));
+  CARRY4 sum_carry
+       (.CI(1'b0),
+        .CO({sum_carry_n_0,sum_carry_n_1,sum_carry_n_2,sum_carry_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[3:0]),
+        .O(p_0_in[3:0]),
+        .S({sum_carry_i_1_n_0,sum_carry_i_2_n_0,sum_carry_i_3_n_0,sum_carry_i_4_n_0}));
+  CARRY4 sum_carry__0
+       (.CI(sum_carry_n_0),
+        .CO({sum_carry__0_n_0,sum_carry__0_n_1,sum_carry__0_n_2,sum_carry__0_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[7:4]),
+        .O(p_0_in[7:4]),
+        .S({sum_carry__0_i_1_n_0,sum_carry__0_i_2_n_0,sum_carry__0_i_3_n_0,sum_carry__0_i_4_n_0}));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__0_i_1
+       (.I0(s0_axis_tdata[7]),
+        .I1(s1_axis_tdata[7]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__0_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__0_i_2
+       (.I0(s0_axis_tdata[6]),
+        .I1(s1_axis_tdata[6]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__0_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__0_i_3
+       (.I0(s0_axis_tdata[5]),
+        .I1(s1_axis_tdata[5]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__0_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__0_i_4
+       (.I0(s0_axis_tdata[4]),
+        .I1(s1_axis_tdata[4]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__0_i_4_n_0));
+  CARRY4 sum_carry__1
+       (.CI(sum_carry__0_n_0),
+        .CO({sum_carry__1_n_0,sum_carry__1_n_1,sum_carry__1_n_2,sum_carry__1_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[11:8]),
+        .O(p_0_in[11:8]),
+        .S({sum_carry__1_i_1_n_0,sum_carry__1_i_2_n_0,sum_carry__1_i_3_n_0,sum_carry__1_i_4_n_0}));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__1_i_1
+       (.I0(s0_axis_tdata[11]),
+        .I1(s1_axis_tdata[11]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__1_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__1_i_2
+       (.I0(s0_axis_tdata[10]),
+        .I1(s1_axis_tdata[10]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__1_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__1_i_3
+       (.I0(s0_axis_tdata[9]),
+        .I1(s1_axis_tdata[9]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__1_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__1_i_4
+       (.I0(s0_axis_tdata[8]),
+        .I1(s1_axis_tdata[8]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__1_i_4_n_0));
+  CARRY4 sum_carry__2
+       (.CI(sum_carry__1_n_0),
+        .CO({sum_carry__2_n_0,sum_carry__2_n_1,sum_carry__2_n_2,sum_carry__2_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[15:12]),
+        .O(p_0_in[15:12]),
+        .S({sum_carry__2_i_1_n_0,sum_carry__2_i_2_n_0,sum_carry__2_i_3_n_0,sum_carry__2_i_4_n_0}));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__2_i_1
+       (.I0(s0_axis_tdata[15]),
+        .I1(s1_axis_tdata[15]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__2_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__2_i_2
+       (.I0(s0_axis_tdata[14]),
+        .I1(s1_axis_tdata[14]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__2_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__2_i_3
+       (.I0(s0_axis_tdata[13]),
+        .I1(s1_axis_tdata[13]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__2_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__2_i_4
+       (.I0(s0_axis_tdata[12]),
+        .I1(s1_axis_tdata[12]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__2_i_4_n_0));
+  CARRY4 sum_carry__3
+       (.CI(sum_carry__2_n_0),
+        .CO({sum_carry__3_n_0,sum_carry__3_n_1,sum_carry__3_n_2,sum_carry__3_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[19:16]),
+        .O(p_0_in[19:16]),
+        .S({sum_carry__3_i_1_n_0,sum_carry__3_i_2_n_0,sum_carry__3_i_3_n_0,sum_carry__3_i_4_n_0}));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__3_i_1
+       (.I0(s0_axis_tdata[19]),
+        .I1(s1_axis_tdata[19]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__3_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__3_i_2
+       (.I0(s0_axis_tdata[18]),
+        .I1(s1_axis_tdata[18]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__3_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__3_i_3
+       (.I0(s0_axis_tdata[17]),
+        .I1(s1_axis_tdata[17]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__3_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__3_i_4
+       (.I0(s0_axis_tdata[16]),
+        .I1(s1_axis_tdata[16]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__3_i_4_n_0));
+  CARRY4 sum_carry__4
+       (.CI(sum_carry__3_n_0),
+        .CO({sum_carry__4_n_0,sum_carry__4_n_1,sum_carry__4_n_2,sum_carry__4_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[23:20]),
+        .O(p_0_in[23:20]),
+        .S({sum_carry__4_i_1_n_0,sum_carry__4_i_2_n_0,sum_carry__4_i_3_n_0,sum_carry__4_i_4_n_0}));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__4_i_1
+       (.I0(s0_axis_tdata[23]),
+        .I1(s1_axis_tdata[23]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__4_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__4_i_2
+       (.I0(s0_axis_tdata[22]),
+        .I1(s1_axis_tdata[22]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__4_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__4_i_3
+       (.I0(s0_axis_tdata[21]),
+        .I1(s1_axis_tdata[21]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__4_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__4_i_4
+       (.I0(s0_axis_tdata[20]),
+        .I1(s1_axis_tdata[20]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__4_i_4_n_0));
+  CARRY4 sum_carry__5
+       (.CI(sum_carry__4_n_0),
+        .CO({sum_carry__5_n_0,sum_carry__5_n_1,sum_carry__5_n_2,sum_carry__5_n_3}),
+        .CYINIT(1'b0),
+        .DI(s0_axis_tdata[27:24]),
+        .O(p_0_in[27:24]),
+        .S({sum_carry__5_i_1_n_0,sum_carry__5_i_2_n_0,sum_carry__5_i_3_n_0,sum_carry__5_i_4_n_0}));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__5_i_1
+       (.I0(s0_axis_tdata[27]),
+        .I1(s1_axis_tdata[27]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__5_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__5_i_2
+       (.I0(s0_axis_tdata[26]),
+        .I1(s1_axis_tdata[26]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__5_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__5_i_3
+       (.I0(s0_axis_tdata[25]),
+        .I1(s1_axis_tdata[25]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__5_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__5_i_4
+       (.I0(s0_axis_tdata[24]),
+        .I1(s1_axis_tdata[24]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__5_i_4_n_0));
+  CARRY4 sum_carry__6
+       (.CI(sum_carry__5_n_0),
+        .CO({sum_carry__6_n_0,sum_carry__6_n_1,sum_carry__6_n_2,sum_carry__6_n_3}),
+        .CYINIT(1'b0),
+        .DI({sum_carry__6_i_1_n_0,s0_axis_tdata[30:28]}),
+        .O(p_0_in[31:28]),
+        .S({sum_carry__6_i_2_n_0,sum_carry__6_i_3_n_0,sum_carry__6_i_4_n_0,sum_carry__6_i_5_n_0}));
+  LUT1 #(
+    .INIT(2'h1)) 
+    sum_carry__6_i_1
+       (.I0(s0_axis_tdata[31]),
+        .O(sum_carry__6_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__6_i_2
+       (.I0(s0_axis_tdata[31]),
+        .I1(s1_axis_tdata[31]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__6_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__6_i_3
+       (.I0(s0_axis_tdata[30]),
+        .I1(s1_axis_tdata[30]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__6_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__6_i_4
+       (.I0(s0_axis_tdata[29]),
+        .I1(s1_axis_tdata[29]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__6_i_4_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry__6_i_5
+       (.I0(s0_axis_tdata[28]),
+        .I1(s1_axis_tdata[28]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry__6_i_5_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry_i_1
+       (.I0(s0_axis_tdata[3]),
+        .I1(s1_axis_tdata[3]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry_i_1_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry_i_2
+       (.I0(s0_axis_tdata[2]),
+        .I1(s1_axis_tdata[2]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry_i_2_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry_i_3
+       (.I0(s0_axis_tdata[1]),
+        .I1(s1_axis_tdata[1]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry_i_3_n_0));
+  LUT3 #(
+    .INIT(8'h6A)) 
+    sum_carry_i_4
+       (.I0(s0_axis_tdata[0]),
+        .I1(s1_axis_tdata[0]),
+        .I2(s1_axis_tvalid),
+        .O(sum_carry_i_4_n_0));
 endmodule
 `ifndef GLBL
 `define GLBL
