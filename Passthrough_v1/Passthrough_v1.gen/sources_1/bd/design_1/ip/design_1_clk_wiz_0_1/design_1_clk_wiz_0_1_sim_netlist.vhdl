@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
--- Date        : Sun Apr 26 15:29:44 2026
+-- Date        : Sun Apr 26 15:29:43 2026
 -- Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_clk_wiz_0_1/design_1_clk_wiz_0_1_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top design_1_clk_wiz_0_1 -prefix
+--               design_1_clk_wiz_0_1_ design_1_clk_wiz_0_1_sim_netlist.vhdl
 -- Design      : design_1_clk_wiz_0_1
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -15,16 +15,16 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
-entity design_1_clk_wiz_0_1_clk_wiz is
+entity design_1_clk_wiz_0_1_design_1_clk_wiz_0_1_clk_wiz is
   port (
     clk_out1 : out STD_LOGIC;
     reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
-end design_1_clk_wiz_0_1_clk_wiz;
+end design_1_clk_wiz_0_1_design_1_clk_wiz_0_1_clk_wiz;
 
-architecture STRUCTURE of design_1_clk_wiz_0_1_clk_wiz is
+architecture STRUCTURE of design_1_clk_wiz_0_1_design_1_clk_wiz_0_1_clk_wiz is
   signal clk_in1_design_1_clk_wiz_0_1 : STD_LOGIC;
   signal clk_out1_design_1_clk_wiz_0_1 : STD_LOGIC;
   signal clkfbout_buf_design_1_clk_wiz_0_1 : STD_LOGIC;
@@ -179,7 +179,7 @@ end design_1_clk_wiz_0_1;
 
 architecture STRUCTURE of design_1_clk_wiz_0_1 is
 begin
-inst: entity work.design_1_clk_wiz_0_1_clk_wiz
+inst: entity work.design_1_clk_wiz_0_1_design_1_clk_wiz_0_1_clk_wiz
      port map (
       clk_in1 => clk_in1,
       clk_out1 => clk_out1,

@@ -49,6 +49,11 @@
 #define MAX_SAMPLES           2880000 // 60 segundos a 48kHz (11.5 MB). Multiplo exacto de 512.
 #define PACKET_SIZE           512    // Muestras por transferencia DMA
 
+// TEST: Descomentar UNO para diagnosticar
+//#define TEST_SILENCE     // DMA envia ceros (ya probado: sin ruido)
+//#define TEST_OFFSET1     // DMA desfasa 1 muestra
+//#define TEST_SYNTH         // Genera onda senoidal por software (bypassa grabacion)
+
 #define PRESIONADO            1
 #define SOLTADO               0
 
@@ -119,7 +124,11 @@ int main() {
     int dma_started = 0;
 
     // Control de volumen por software para la pista grabada
-    float loop_volume = 1.0f; 
+    // Expresado como shift derecho: 0 = volumen completo (x1), 1 = mitad (x0.5), 2 = cuarto (x0.25)
+    // IMPORTANTE: NO usar float. Un float tiene solo 24 bits de mantisa, lo cual destruye
+    // los 8 bits inferiores de muestras de 32 bits, generando ruido de cuantización audible.
+    int volume_shift = 0;
+
 
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
     xil_printf("Usa las teclas '+' y '-' para ajustar el volumen del loop.\r\n");
@@ -140,7 +149,7 @@ int main() {
             if (pedal == PRESIONADO && last_pedal == SOLTADO) {
                 if (hw_mode == HW_MODE_IDLE) {
                     hw_mode = HW_MODE_RECORD;
-                    loop_index = 0; // Iniciar grabación
+                    loop_index = 0; // Iniciar grabacion
                     memset(LoopBuffer, 0, MAX_SAMPLES * sizeof(u32)); // Limpiar basura anterior
                     xil_printf(">>> RECORDING... (Pedal Pisado)\r\n");
                 } else if (hw_mode == HW_MODE_PLAY) {
@@ -156,20 +165,67 @@ int main() {
                     loop_index = 0; 
                     xil_printf("<<< PLAYING... [Loop: %d muestras]\r\n", (int)loop_length);
 
-                    // PRE-CARGA CRITICA (FIX DEADLOCK):
-                    // En PLAY, el hardware mixer espera datos del DMA inmediatamente.
-                    // Si cambiamos el modo antes de darle datos, el hardware se traba (stall),
-                    // y el DMA nunca termina. Hay que darle el primer paquete AHORA.
+
+                    // PRE-CARGA DE TRANSICIÓN:
                     if (loop_length > 0) {
                         for(int i=0; i<PACKET_SIZE; i++) {
+#ifdef TEST_SILENCE
+                            tx_ping[i] = 0;
+                            tx_pong[i] = 0;
+#elif defined(TEST_OFFSET1)
+                            tx_ping[i] = LoopBuffer[(i + 1) % loop_length];
+                            tx_pong[i] = LoopBuffer[(PACKET_SIZE + i + 1) % loop_length];
+#else
                             tx_ping[i] = LoopBuffer[i % loop_length];
+                            tx_pong[i] = LoopBuffer[(PACKET_SIZE + i) % loop_length];
+#endif
                         }
                         Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+                        Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
+                        
+                        // Lanzar el primer paquete (tx_ping) al DMA MM2S inmediatamente
                         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
                     }
                     
                     // Ahora sí, cambiamos el modo en hardware de forma segura
                     hw_mode = HW_MODE_PLAY;
+
+#ifdef TEST_SYNTH
+                    // Generar onda senoidal perfecta por software (1kHz @ 48kHz = periodo 48 muestras estéreo = 96 words)
+                    // Tabla seno 48 puntos, amplitud = 0x600000 (~75% de 24-bit full scale)
+                    {
+                        // Seno pre-calculado: 48 puntos, escalado a 24-bit signed (max ±0x600000)
+                        static const int32_t sine48[48] = {
+                            0x000000, 0x0C8BD3, 0x18F8B8, 0x251EB1, 0x30FBC5, 0x3C56BA,
+                            0x471CEC, 0x5133CC, 0x5A8279, 0x62F201, 0x6A6D98, 0x70E2C5,
+                            0x7641AF, 0x7A7D05, 0x7D8A5E, 0x7F6213, 0x7FFFFF, 0x7F6213,
+                            0x7D8A5E, 0x7A7D05, 0x7641AF, 0x70E2C5, 0x6A6D98, 0x62F201,
+                            0x5A8279, 0x5133CC, 0x471CEC, 0x3C56BA, 0x30FBC5, 0x251EB1,
+                            0x18F8B8, 0x0C8BD3, 0x000000,-0x0C8BD3,-0x18F8B8,-0x251EB1,
+                           -0x30FBC5,-0x3C56BA,-0x471CEC,-0x5133CC,-0x5A8279,-0x62F201,
+                           -0x6A6D98,-0x70E2C5,-0x7641AF,-0x7A7D05,-0x7D8A5E,-0x7F6213
+                        };
+                        int period = 96; // 48 muestras estéreo = 96 words (L,R,L,R,...)
+                        loop_length = period * 100; // ~200ms de loop
+                        for(int i = 0; i < loop_length; i++) {
+                            int phase = (i / 2) % 48; // L y R usan la misma fase
+                            int32_t audio = sine48[phase] >> 1; // Reducir a ~37% de full scale
+                            u32 preamble = (i & 1) ? 0x2 : 0x3; // R=2, L=3
+                            // Formato: [31]=P, [30:28]=CUV=000, [27:4]=audio, [3:0]=preamble
+                            u32 frame = ((audio & 0xFFFFFF) << 4) | preamble;
+                            frame |= (__builtin_parity(frame) << 31); // P = paridad
+                            LoopBuffer[i] = frame;
+                        }
+                        // Re-cargar tx buffers con datos sintéticos
+                        for(int i=0; i<PACKET_SIZE; i++) {
+                            tx_ping[i] = LoopBuffer[i % loop_length];
+                            tx_pong[i] = LoopBuffer[(PACKET_SIZE + i) % loop_length];
+                        }
+                        Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+                        Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
+                        xil_printf("TEST_SYNTH: Onda sintetica 1kHz cargada (%d muestras)\r\n", (int)loop_length);
+                    }
+#endif
                 }
             }
         }
@@ -182,13 +238,12 @@ int main() {
         
         if (hw_mode == HW_MODE_IDLE) {
             // En BYPASS, el hardware no intercambia datos con el DMA.
-            // Si el DMA estaba corriendo, hay que detenerlo (Reset) para que no se trabe la CPU.
             if (dma_started) {
                 XAxiDma_Reset(&AxiDma);
                 while (!XAxiDma_ResetIsDone(&AxiDma)) {}
                 dma_started = 0;
             }
-            continue; // Volver al inicio del loop sin esperar al DMA
+            continue;
         }
 
         // Si entramos a RECORD, PLAY o OVERDUB, necesitamos el DMA circulando
@@ -196,12 +251,22 @@ int main() {
             // Cargar la primera rafaga de TX si vamos a PLAY/OVERDUB directo
             if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
                 for(int i=0; i<PACKET_SIZE; i++) {
+#ifdef TEST_SILENCE
+                    tx_ping[i] = 0;
+                    tx_pong[i] = 0;
+#elif defined(TEST_OFFSET1)
+                    tx_ping[i] = LoopBuffer[(loop_index + i + 1) % loop_length];
+                    tx_pong[i] = LoopBuffer[(loop_index + PACKET_SIZE + i + 1) % loop_length];
+#else
                     tx_ping[i] = LoopBuffer[(loop_index + i) % loop_length];
+                    tx_pong[i] = LoopBuffer[(loop_index + PACKET_SIZE + i) % loop_length];
+#endif
                 }
                 Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+                Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
                 XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
             }
-            // Arrancar RX
+            // Arrancar RX PING (siempre, en todos los modos activos)
             XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
             dma_started = 1;
         }
@@ -209,88 +274,99 @@ int main() {
         // ==========================================================
         // MITAD PING
         // ==========================================================
+        // 1. Esperar PING RX y lanzar PONG RX
         while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
-        Xil_DCacheInvalidateRange((UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32));
-        
-        // Iniciar inmediatamente la recepcion PONG
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
-        // Procesar PING: Guardar audio entrante (Vivo en RECORD, Mezcla en OVERDUB)
-        if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
-            for(int i=0; i<PACKET_SIZE; i++) {
-                if (loop_index < MAX_SAMPLES) LoopBuffer[loop_index] = rx_ping[i];
-                loop_index++;
-            }
-            // Auto-Stop si alcanzamos el limite de memoria (evita leer basura de DDR al reproducir)
-            if (loop_index >= MAX_SAMPLES - PACKET_SIZE) {
-                if (hw_mode == HW_MODE_RECORD) {
-                    loop_length = loop_index;
-                    hw_mode = HW_MODE_PLAY;
-                    xil_printf("<<< AUTO-PLAY... (Memoria Llena) [Loop: %d]\r\n", (int)loop_length);
-                }
-            }
-        } else if (hw_mode == HW_MODE_PLAY) {
-            loop_index += PACKET_SIZE; // Solo avanzamos el indice
-        }
-        
-        if (loop_length > 0 && loop_index >= loop_length && hw_mode != HW_MODE_RECORD) {
-            loop_index = loop_index % loop_length; // Wrap around
+        // 1b. Esperar PING TX y lanzar PONG TX
+        if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
+            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
+            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
         }
 
-        // Preparar y enviar TX PING (Solo necesario en Play y Overdub)
-        if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
-            int tx_idx = loop_index;
+        // 2. Procesar PING
+        Xil_DCacheInvalidateRange((UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32));
+
+
+        if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
             for(int i=0; i<PACKET_SIZE; i++) {
-                tx_ping[i] = (u32)((int)LoopBuffer[tx_idx++] * loop_volume);
+                if (loop_index + i < MAX_SAMPLES) LoopBuffer[loop_index + i] = rx_ping[i];
+            }
+        }
+        
+        // 3. Avanzar tiempo
+        loop_index += PACKET_SIZE;
+        if (hw_mode == HW_MODE_RECORD && loop_index >= MAX_SAMPLES - PACKET_SIZE) {
+            loop_length = loop_index;
+            hw_mode = HW_MODE_PLAY;
+            xil_printf("<<< AUTO-PLAY... (Memoria Llena) [Loop: %d]\r\n", (int)loop_length);
+        }
+        if (hw_mode != HW_MODE_RECORD && loop_length > 0) {
+            loop_index %= loop_length;
+        }
+
+        // 4. Pre-calcular TX PING para la SIGUIENTE pasada
+        if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
+            int tx_idx = (loop_index + PACKET_SIZE) % loop_length;
+            for(int i=0; i<PACKET_SIZE; i++) {
+#ifdef TEST_SILENCE
+                tx_ping[i] = 0;
+#elif defined(TEST_OFFSET1)
+                tx_ping[i] = LoopBuffer[((tx_idx + 1) >= loop_length ? 0 : tx_idx + 1)];
+#else
+                tx_ping[i] = LoopBuffer[tx_idx++];
+#endif
                 if (tx_idx >= loop_length) tx_idx = 0;
             }
-            
-            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
             Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
-            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
         }
 
         // ==========================================================
         // MITAD PONG
         // ==========================================================
+        // 1. Esperar PONG RX y lanzar PING RX
         while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
-        Xil_DCacheInvalidateRange((UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32));
-        
-        // Iniciar inmediatamente la recepcion PING
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
-        // Procesar PONG
+        // 1b. Esperar PONG TX y lanzar PING TX
+        if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
+            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
+            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+        }
+
+        // 2. Procesar PONG
+        Xil_DCacheInvalidateRange((UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32));
         if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
             for(int i=0; i<PACKET_SIZE; i++) {
-                if (loop_index < MAX_SAMPLES) LoopBuffer[loop_index] = rx_pong[i];
-                loop_index++;
+                if (loop_index + i < MAX_SAMPLES) LoopBuffer[loop_index + i] = rx_pong[i];
             }
-            if (loop_index >= MAX_SAMPLES - PACKET_SIZE) {
-                if (hw_mode == HW_MODE_RECORD) {
-                    loop_length = loop_index;
-                    hw_mode = HW_MODE_PLAY;
-                    xil_printf("<<< AUTO-PLAY... (Memoria Llena) [Loop: %d]\r\n", (int)loop_length);
-                }
-            }
-        } else if (hw_mode == HW_MODE_PLAY) {
-            loop_index += PACKET_SIZE;
+        }
+        
+        // 3. Avanzar tiempo
+        loop_index += PACKET_SIZE;
+        if (hw_mode == HW_MODE_RECORD && loop_index >= MAX_SAMPLES - PACKET_SIZE) {
+            loop_length = loop_index;
+            hw_mode = HW_MODE_PLAY;
+            xil_printf("<<< AUTO-PLAY... (Memoria Llena) [Loop: %d]\r\n", (int)loop_length);
+        }
+        if (hw_mode != HW_MODE_RECORD && loop_length > 0) {
+            loop_index %= loop_length;
         }
 
-        if (loop_length > 0 && loop_index >= loop_length && hw_mode != HW_MODE_RECORD) {
-            loop_index = loop_index % loop_length; // Wrap around
-        }
-
-        // Preparar y enviar TX PONG
+        // 4. Pre-calcular TX PONG para la SIGUIENTE pasada
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
-            int tx_idx = loop_index;
+            int tx_idx = (loop_index + PACKET_SIZE) % loop_length;
             for(int i=0; i<PACKET_SIZE; i++) {
-                tx_pong[i] = (u32)((int)LoopBuffer[tx_idx++] * loop_volume);
+#ifdef TEST_SILENCE
+                tx_pong[i] = 0;
+#elif defined(TEST_OFFSET1)
+                tx_pong[i] = LoopBuffer[((tx_idx + 1) >= loop_length ? 0 : tx_idx + 1)];
+#else
+                tx_pong[i] = LoopBuffer[tx_idx++];
+#endif
                 if (tx_idx >= loop_length) tx_idx = 0;
             }
-            
-            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
             Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
-            XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
         }
     }
 

@@ -1891,7 +1891,7 @@
                 axi_dma_0: dma@40400000 {
                         compatible = "xlnx,axi-dma-7.1", "xlnx,axi-dma-1.00.a";
                         xlnx,s2mm-data-width = <0x20>;
-                        xlnx,mm2s-burst-size = <0x10>;
+                        xlnx,mm2s-burst-size = <0x100>;
                         xlnx,m-axi-mm2s-data-width = <0x20>;
                         xlnx,num-s2mm-channels = <0x1>;
                         xlnx,dlytmr-resolution = <0x7d>;
@@ -1917,7 +1917,7 @@
                         xlnx,sg-use-stsapp-length = <0x0>;
                         xlnx,m-axis-mm2s-tdata-width = <0x20>;
                         xlnx,edk-iptype = "PERIPHERAL";
-                        xlnx,s2mm-burst-size = <0x10>;
+                        xlnx,s2mm-burst-size = <0x100>;
                         xlnx,m-axi-s2mm-data-width = <0x20>;
                         xlnx,num-mm2s-channels = <0x1>;
                         xlnx,enable-multi-channel = <0x0>;

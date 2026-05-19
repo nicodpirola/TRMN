@@ -14,7 +14,7 @@
 // Dependencies: 
 // 
 // Revision:
-// Revision 0.01 - File Created
+// Revision 0.02 - File Created
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
@@ -73,50 +73,102 @@ module axi_stream_looper_mixer (
             mode_sync_2 <= 2'b00;
         end else begin
             mode_sync_1 <= mode;
-            mode_sync_2 <= mode_sync_1;
+            // SINCRONIZACIÓN DE CANAL (FIX RUIDO BLANCO/STEREO):
+            // Solo aplicamos el cambio de modo cuando estamos exactamente en la muestra
+            // del canal Izquierdo (tid == 0). Esto garantiza que el primer dato que
+            // entra/sale del DMA sea siempre Left, manteniendo la alineación L/R perfecta.
+            if (s0_axis_tvalid && s0_axis_tid == 3'd0) begin
+                mode_sync_2 <= mode_sync_1;
+            end
         end
     end
 
     // ==========================================
     // 1. LOGICA DE DATOS Y MEZCLA
     // ==========================================
-    wire signed [31:0] live_audio = s0_axis_tdata;
-    wire signed [31:0] ram_audio  = s1_axis_tvalid ? s1_axis_tdata : 32'd0;
+    // FORMATO I2S SUB-FRAME (32 bits):
+    //   [31]    P  - Parity
+    //   [30]    C  - Channel Status
+    //   [29]    U  - User bit
+    //   [28]    V  - Validity (0=valido)
+    //   [27:4]  Audio Sample (24-bit signed)
+    //   [3:0]   Preamble code (identifica L/R y bloques)
+    //
+    // CRITICO: Solo bits [27:4] son audio. Los demas son metadata del protocolo.
+    // Toda aritmetica debe hacerse SOLO sobre los bits de audio.
+    // La metadata de salida se toma del I2S RX (s0), que siempre tiene el timing correcto.
 
-    // MEZCLA CON SATURACIÓN: Para evitar que el volumen baje a la mitad y evitar ruido (clipping/overflow)
-    wire signed [32:0] sum = $signed(live_audio) + $signed(ram_audio);
-    
-    reg signed [31:0] mixed_audio;
+    // Metadata del I2S RX en vivo (siempre correcta para el frame actual)
+    wire [3:0]  live_meta_hi  = s0_axis_tdata[31:28]; // P, C, U, V
+    wire [3:0]  live_preamble = s0_axis_tdata[3:0];   // Preamble
+
+    // Extraer audio limpio (24-bit signed) del I2S RX
+    wire signed [23:0] live_audio = s0_axis_tdata[27:4];
+
+    // SAMPLE-AND-HOLD para audio de RAM (solo bits de audio [27:4]):
+    reg signed [23:0] last_ram_audio;
+    always @(posedge clk or negedge resetn) begin
+        if (!resetn)
+            last_ram_audio <= 24'd0;
+        else if (s1_axis_tvalid && s1_axis_tready)
+            last_ram_audio <= s1_axis_tdata[27:4];
+    end
+    wire signed [23:0] ram_audio = s1_axis_tvalid ? s1_axis_tdata[27:4] : last_ram_audio;
+
+    // RAW DMA PASSTHROUGH (32-bit completo, sin extraccion ni reconstruccion)
+    reg [31:0] last_raw_ram;
+    always @(posedge clk or negedge resetn) begin
+        if (!resetn)
+            last_raw_ram <= 32'd0;
+        else if (s1_axis_tvalid && s1_axis_tready)
+            last_raw_ram <= s1_axis_tdata;
+    end
+    wire [31:0] raw_ram = s1_axis_tvalid ? s1_axis_tdata : last_raw_ram;
+
+    // MEZCLA CON SATURACION (solo audio limpio 24-bit, sin metadata)
+    wire signed [24:0] sum = $signed(live_audio) + $signed(ram_audio);
+
+    reg signed [23:0] mixed_audio;
     always @(*) begin
-        if (sum > 33'sh0_7FFFFFFF)
-            mixed_audio = 32'h7FFFFFFF;
-        else if (sum < -33'sh0_80000000)
-            mixed_audio = 32'h80000000;
+        if (sum > 25'sh7FFFFF)
+            mixed_audio = 24'h7FFFFF;
+        else if (sum < -25'sh800000)
+            mixed_audio = 24'h800000;
         else
-            mixed_audio = sum[31:0];
+            mixed_audio = sum[23:0];
     end
 
-    // Ruteo de señales según el modo operativo
+    // Reconstruir frames completos: audio procesado + metadata correcta del I2S RX
+    // P (parity) se RECALCULA para cada frame: P = XOR de bits [30:0] (paridad par)
+    wire [31:0] live_frame  = s0_axis_tdata; // Passthrough: frame original intacto
+
+    wire [30:0] ram_bits   = {live_meta_hi[2:0], ram_audio,   live_preamble};
+    wire [31:0] ram_frame  = {^ram_bits, ram_bits};
+
+    wire [30:0] mix_bits   = {live_meta_hi[2:0], mixed_audio, live_preamble};
+    wire [31:0] mixed_frame = {^mix_bits, mix_bits};
+
+    // Ruteo de senales segun el modo operativo
     reg [31:0] i2s_out_data;
     reg [31:0] dma_out_data;
 
     always @(*) begin
         case(mode_sync_2)
-            2'b00: begin // IDLE: Escuchas en vivo, no guardas nada.
-                i2s_out_data = live_audio;
+            2'b00: begin // IDLE: Passthrough directo (frame original intacto)
+                i2s_out_data = live_frame;
                 dma_out_data = 32'd0;
             end
-            2'b01: begin // RECORD: Escuchas en vivo, guardas en vivo a RAM.
-                i2s_out_data = live_audio;
-                dma_out_data = live_audio;
+            2'b01: begin // RECORD: Passthrough + guardar en RAM
+                i2s_out_data = live_frame;
+                dma_out_data = live_frame;
             end
-            2'b10: begin // PLAY: Escuchas mezcla, guardas la RAM intacta de nuevo.
-                i2s_out_data = mixed_audio;
-                dma_out_data = ram_audio;
+            2'b10: begin // PLAY: Mezcla en vivo + RAM (solo a parlante)
+                i2s_out_data = mixed_frame;
+                dma_out_data = 32'd0;       // No se graba en PLAY
             end
-            2'b11: begin // OVERDUB: Escuchas mezcla, guardas la mezcla en RAM.
-                i2s_out_data = mixed_audio;
-                dma_out_data = mixed_audio;
+            2'b11: begin // OVERDUB: Mezcla en vivo + RAM (parlante y grabación)
+                i2s_out_data = mixed_frame;
+                dma_out_data = mixed_frame;
             end
         endcase
     end
@@ -136,8 +188,9 @@ module axi_stream_looper_mixer (
     assign m_dma_axis_tid   = s0_axis_tid;
     assign m_dma_axis_tkeep = s0_axis_tkeep;
 
-    // Indicador interno: ¿El DMA está grabando en este modo?
-    wire dma_active = (mode_sync_2 != 2'b00); // 1 en RECORD, PLAY y OVERDUB
+    // Indicador interno: ¿El DMA está activo en este modo?
+    // Activo en RECORD, PLAY y OVERDUB (todo excepto IDLE)
+    wire dma_active = (mode_sync_2 != 2'b00);
 
     // I2S TX siempre recibe datos. DMA S2MM recibe datos solo si está activo.
     // IMPORTANTE: Si apagamos tvalid al DMA en IDLE, evitamos que el sistema 
@@ -146,13 +199,14 @@ module axi_stream_looper_mixer (
     assign m_dma_axis_tvalid = s0_axis_tvalid && dma_active;
 
     // ¿Cuándo estamos listos para recibir una nueva muestra del I2S RX (s0)?
-    // Cuando el parlante está listo Y (si el DMA está activo) el DMA está listo.
-    wire dma_ready_condition = dma_active ? m_dma_axis_tready : 1'b1;
-    assign s0_axis_tready = m_i2s_axis_tready && dma_ready_condition;
+    // Para garantizar que el flujo de audio en vivo NUNCA se congele ni pierda muestras
+    // (lo cual causa desalineación L/R y ruido blanco), hacemos que el tready de entrada
+    // dependa EXCLUSIVAMENTE del parlante (I2S TX). El DMA capturará los datos a su ritmo.
+    assign s0_axis_tready = m_i2s_axis_tready;
 
     // ¿Cuándo pedimos y consumimos una muestra de la RAM (s1)?
     // Solo en los modos donde leemos de la RAM (PLAY y OVERDUB) y al ritmo del I2S.
-    wire ram_active = (mode_sync_2 == 2'b10 || mode_sync_2 == 2'b11);
+    assign ram_active = (mode_sync_2 == 2'b10 || mode_sync_2 == 2'b11);
     assign s1_axis_tready = ram_active && s0_axis_tvalid && s0_axis_tready;
 
 endmodule

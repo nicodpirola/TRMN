@@ -2741,6 +2741,12 @@
         "parameters": {
           "c_include_sg": {
             "value": "0"
+          },
+          "c_mm2s_burst_size": {
+            "value": "256"
+          },
+          "c_s2mm_burst_size": {
+            "value": "256"
           }
         },
         "interface_ports": {

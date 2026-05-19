@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
--- Date        : Sun Apr 26 15:29:49 2026
+-- Date        : Sun Apr 26 15:29:48 2026
 -- Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_axi_clock_converter_0_0/design_1_axi_clock_converter_0_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top design_1_axi_clock_converter_0_0 -prefix
+--               design_1_axi_clock_converter_0_0_ design_1_axi_clock_converter_0_0_sim_netlist.vhdl
 -- Design      : design_1_axi_clock_converter_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -26,8 +26,6 @@ entity design_1_axi_clock_converter_0_0_xpm_cdc_single is
   attribute DEST_SYNC_FF of design_1_axi_clock_converter_0_0_xpm_cdc_single : entity is 3;
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of design_1_axi_clock_converter_0_0_xpm_cdc_single : entity is 0;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_clock_converter_0_0_xpm_cdc_single : entity is "xpm_cdc_single";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of design_1_axi_clock_converter_0_0_xpm_cdc_single : entity is 0;
   attribute SRC_INPUT_REG : integer;
@@ -792,8 +790,6 @@ entity design_1_axi_clock_converter_0_0_xpm_cdc_handshake is
   attribute DEST_SYNC_FF of design_1_axi_clock_converter_0_0_xpm_cdc_handshake : entity is 3;
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of design_1_axi_clock_converter_0_0_xpm_cdc_handshake : entity is 0;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_clock_converter_0_0_xpm_cdc_handshake : entity is "xpm_cdc_handshake";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of design_1_axi_clock_converter_0_0_xpm_cdc_handshake : entity is 0;
   attribute SRC_SYNC_FF : integer;
@@ -3127,8 +3123,6 @@ entity design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_lite_async i
     m_axi_arready : in STD_LOGIC;
     s_axi_arvalid : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_lite_async : entity is "axi_clock_converter_v2_1_34_lite_async";
 end design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_lite_async;
 
 architecture STRUCTURE of design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_lite_async is
@@ -5109,8 +5103,6 @@ entity design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_axi_clock_co
   attribute C_W_WIDTH of design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_axi_clock_converter : entity is 36;
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_axi_clock_converter : entity is "yes";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_axi_clock_converter : entity is "axi_clock_converter_v2_1_34_axi_clock_converter";
   attribute P_ACLK_RATIO : integer;
   attribute P_ACLK_RATIO of design_1_axi_clock_converter_0_0_axi_clock_converter_v2_1_34_axi_clock_converter : entity is 2;
   attribute P_AXI3 : integer;
