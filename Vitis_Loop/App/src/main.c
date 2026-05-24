@@ -3,6 +3,7 @@
 #include "xgpio.h"
 #include "xil_printf.h"
 #include "xil_cache.h"
+#include "ff.h"
 #include "xil_types.h"
 #include "xil_io.h"
 
@@ -43,6 +44,27 @@
 #define HW_MODE_OVERDUB 3  // Mezcla hardware, guarda en RAM la mezcla
 
 // ==========================================================
+// ESTRUCTURA WAV HEADER
+// ==========================================================
+#pragma pack(push, 1)
+typedef struct {
+    char riff_tag[4];      // "RIFF"
+    u32  riff_length;      // file length - 8
+    char wave_tag[4];      // "WAVE"
+    char fmt_tag[4];       // "fmt "
+    u32  fmt_length;       // 16
+    u16  audio_format;     // 1 (PCM)
+    u16  num_channels;     // 2 (Stereo)
+    u32  sample_rate;      // 48000
+    u32  byte_rate;        // sample_rate * num_channels * byte_per_sample (48000 * 2 * 3 = 288000)
+    u16  block_align;      // num_channels * byte_per_sample (2 * 3 = 6)
+    u16  bits_per_sample;  // 24
+    char data_tag[4];      // "data"
+    u32  data_length;      // num_samples * block_align
+} WavHeader;
+#pragma pack(pop)
+
+// ==========================================================
 // CONFIGURACION DEL LOOPER
 // ==========================================================
 #define AUDIO_BUFFER_BASEADDR 0x10000000 
@@ -68,6 +90,80 @@ u32 tx_pong[PACKET_SIZE] __attribute__((aligned(32)));
 
 // Gran buffer circular en DDR
 u32 *LoopBuffer = (u32 *)AUDIO_BUFFER_BASEADDR; 
+
+// ==========================================================
+// GUARDAR WAV EN SD CARD
+// ==========================================================
+void SaveWavToSD(u32* buffer, u32 num_frames) {
+    FATFS fatfs;
+    FIL wav_file;
+    FRESULT res;
+    UINT bytes_written;
+
+    xil_printf("\r\n--- INICIANDO GUARDADO EN SD ---\r\n");
+
+    // 1. Montar tarjeta SD
+    res = f_mount(&fatfs, "0:/", 1);
+    if (res != FR_OK) {
+        xil_printf("ERROR: No se pudo montar la SD (Error %d)\r\n", res);
+        return;
+    }
+
+    // 2. Crear archivo
+    res = f_open(&wav_file, "0:/LOOP.WAV", FA_CREATE_ALWAYS | FA_WRITE);
+    if (res != FR_OK) {
+        xil_printf("ERROR: No se pudo crear LOOP.WAV (Error %d).\r\n", res);
+        return;
+    }
+
+    // 3. Escribir Header WAV (24-bit PCM Stereo, 48000Hz)
+    u32 data_size = num_frames * 6; // 6 bytes por frame estéreo a 24 bits (3L + 3R)
+    WavHeader header = {
+        .riff_tag = {'R','I','F','F'},
+        .riff_length = data_size + sizeof(WavHeader) - 8,
+        .wave_tag = {'W','A','V','E'},
+        .fmt_tag = {'f','m','t',' '},
+        .fmt_length = 16,
+        .audio_format = 1,
+        .num_channels = 2,
+        .sample_rate = 48000,
+        .byte_rate = 48000 * 2 * 3,
+        .block_align = 6,
+        .bits_per_sample = 24,
+        .data_tag = {'d','a','t','a'},
+        .data_length = data_size
+    };
+    f_write(&wav_file, &header, sizeof(WavHeader), &bytes_written);
+
+    // 4. Escribir datos de audio
+    xil_printf("Guardando %d frames... por favor espera.\r\n", (int)num_frames);
+    u8 pcm_buffer[6000]; // Buffer intermedio (1000 frames)
+    int pcm_idx = 0;
+
+    for (u32 i = 0; i < num_frames; i++) {
+        // Extraer audio 24-bit del formato I2S: (buffer[i] >> 4) & 0xFFFFFF
+        u32 sample = (buffer[i] >> 4) & 0xFFFFFF;
+        
+        // Empaquetar en 3 bytes Little-Endian
+        pcm_buffer[pcm_idx++] = (u8)(sample & 0xFF);
+        pcm_buffer[pcm_idx++] = (u8)((sample >> 8) & 0xFF);
+        pcm_buffer[pcm_idx++] = (u8)((sample >> 16) & 0xFF);
+
+        // Volcar a SD cuando el buffer intermedio se llena
+        if (pcm_idx >= sizeof(pcm_buffer)) {
+            f_write(&wav_file, pcm_buffer, pcm_idx, &bytes_written);
+            pcm_idx = 0;
+        }
+    }
+    // Volcar remanente
+    if (pcm_idx > 0) {
+        f_write(&wav_file, pcm_buffer, pcm_idx, &bytes_written);
+    }
+
+    // 5. Cerrar archivo
+    f_close(&wav_file);
+    xil_printf("EXITO: Archivo LOOP.WAV guardado correctamente en la SD.\r\n");
+}
 
 int main() {
     int status;
@@ -119,6 +215,7 @@ int main() {
 
     int hw_mode = HW_MODE_IDLE;
     int last_pedal = SOLTADO;
+    int last_sd_switch = 0;
     u32 loop_length = 0;
     u32 loop_index = 0;
     int dma_started = 0;
@@ -134,19 +231,34 @@ int main() {
     xil_printf("Usa las teclas '+' y '-' para ajustar el volumen del loop.\r\n");
 
     while(1) {
-        // --- LECTURA DE PEDAL FÍSICO (NUEVO GPIO 1) ---
+        // --- LECTURA DE SWITCHES FÍSICOS ---
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
-        int global_enable = (switches & 0x01);
-        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO;
+        int sd_switch = (switches & 0x01); // SW0: Switch para guardar SD
+        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // SW1: Pedal Looper
 
-        // Reset global a BYPASS
-        if (global_enable == 0 && hw_mode != HW_MODE_IDLE) {
-            hw_mode = HW_MODE_IDLE;
-            xil_printf(">>> BYPASS GLOBAL (Switch 0 Abajo)\r\n");
-        } 
-        else if (global_enable) {
-            // Maquina de estados del pedal
-            if (pedal == PRESIONADO && last_pedal == SOLTADO) {
+        // Disparador de guardado SD (Flanco ascendente en SW0)
+        if (sd_switch == 1 && last_sd_switch == 0) {
+            if (loop_length > 0) {
+                // Detener temporalmente el DMA para evitar corrupción de memoria mientras leemos
+                if (dma_started) {
+                    XAxiDma_Reset(&AxiDma);
+                    while (!XAxiDma_ResetIsDone(&AxiDma)) {}
+                    dma_started = 0;
+                }
+                Xil_Out32(GPIO_MIXER_BASE + 0x00, HW_MODE_IDLE);
+                
+                SaveWavToSD(LoopBuffer, loop_length);
+                
+                // Restaurar estado
+                Xil_Out32(GPIO_MIXER_BASE + 0x00, hw_mode);
+            } else {
+                xil_printf("ERROR: No hay ningun loop grabado para guardar.\r\n");
+            }
+        }
+        last_sd_switch = sd_switch;
+
+        // Maquina de estados del pedal (SW1)
+        if (pedal == PRESIONADO && last_pedal == SOLTADO) {
                 if (hw_mode == HW_MODE_IDLE) {
                     hw_mode = HW_MODE_RECORD;
                     loop_index = 0; // Iniciar grabacion
@@ -228,7 +340,7 @@ int main() {
 #endif
                 }
             }
-        }
+        
         last_pedal = pedal;
 
         // Actualizar el modo en el Mixer de Hardware (Crucial!)
