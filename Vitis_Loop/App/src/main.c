@@ -71,6 +71,10 @@ typedef struct {
 #define MAX_SAMPLES           2880000 // 60 segundos a 48kHz (11.5 MB). Multiplo exacto de 512.
 #define PACKET_SIZE           512    // Muestras por transferencia DMA
 
+// Buffer gigante independiente para grabar en la MicroSD (5 minutos)
+#define SD_RECORD_BASEADDR    0x11000000
+#define MAX_SD_SAMPLES        (48000 * 2 * 60 * 5) // 5 minutos a 48kHz (57.6 MB)
+
 // TEST: Descomentar UNO para diagnosticar
 //#define TEST_SILENCE     // DMA envia ceros (ya probado: sin ruido)
 //#define TEST_OFFSET1     // DMA desfasa 1 muestra
@@ -88,8 +92,11 @@ u32 rx_pong[PACKET_SIZE] __attribute__((aligned(32)));
 u32 tx_ping[PACKET_SIZE] __attribute__((aligned(32)));
 u32 tx_pong[PACKET_SIZE] __attribute__((aligned(32)));
 
-// Gran buffer circular en DDR
+// Gran buffer circular en DDR para el Looper
 u32 *LoopBuffer = (u32 *)AUDIO_BUFFER_BASEADDR; 
+
+// Gran buffer lineal en DDR para grabar hacia la SD
+u32 *SdRecordBuffer = (u32 *)SD_RECORD_BASEADDR; 
 
 // ==========================================================
 // GUARDAR WAV EN SD CARD
@@ -218,6 +225,7 @@ int main() {
     int last_sd_switch = 0;
     u32 loop_length = 0;
     u32 loop_index = 0;
+    u32 sd_length = 0; // Cantidad de muestras grabadas para la SD
     int dma_started = 0;
 
     // Control de volumen por software para la pista grabada
@@ -236,23 +244,26 @@ int main() {
         int sd_switch = (switches & 0x01); // SW0: Switch para guardar SD
         int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // SW1: Pedal Looper
 
-        // Disparador de guardado SD (Flanco ascendente en SW0)
+        // Disparador de inicio de grabación SD (Flanco ascendente en SW0)
         if (sd_switch == 1 && last_sd_switch == 0) {
-            if (loop_length > 0) {
-                // Detener temporalmente el DMA para evitar corrupción de memoria mientras leemos
+            sd_length = 0; // Reiniciar contador de grabacion SD
+            xil_printf(">>> INICIANDO GRABACION PARA SD EN RAM...\r\n");
+        }
+
+        // Disparador de guardado SD (Flanco descendente en SW0)
+        if (sd_switch == 0 && last_sd_switch == 1) {
+            if (sd_length > 0) {
+                // Detener temporalmente el DMA para evitar corrupción de memoria mientras escribimos a la SD
                 if (dma_started) {
                     XAxiDma_Reset(&AxiDma);
                     while (!XAxiDma_ResetIsDone(&AxiDma)) {}
                     dma_started = 0;
                 }
-                Xil_Out32(GPIO_MIXER_BASE + 0x00, HW_MODE_IDLE);
                 
-                SaveWavToSD(LoopBuffer, loop_length);
+                SaveWavToSD(SdRecordBuffer, sd_length);
                 
-                // Restaurar estado
-                Xil_Out32(GPIO_MIXER_BASE + 0x00, hw_mode);
             } else {
-                xil_printf("ERROR: No hay ningun loop grabado para guardar.\r\n");
+                xil_printf("ERROR: No hay audio grabado para guardar.\r\n");
             }
         }
         last_sd_switch = sd_switch;
@@ -348,17 +359,11 @@ int main() {
 
         // --- MANEJO DEL DMA SEGÚN EL MODO ---
         
-        if (hw_mode == HW_MODE_IDLE) {
-            // En BYPASS, el hardware no intercambia datos con el DMA.
-            if (dma_started) {
-                XAxiDma_Reset(&AxiDma);
-                while (!XAxiDma_ResetIsDone(&AxiDma)) {}
-                dma_started = 0;
-            }
-            continue;
-        }
-
-        // Si entramos a RECORD, PLAY o OVERDUB, necesitamos el DMA circulando
+        // El DMA corre SIEMPRE. Es la forma más segura de evitar que las FIFOs de hardware 
+        // se llenen y bloqueen el flujo de audio I2S.
+        // Si no necesitamos los datos (IDLE), simplemente los descartamos.
+        
+        // Si entramos a un modo activo, necesitamos el DMA circulando
         if (!dma_started) {
             // Cargar la primera rafaga de TX si vamos a PLAY/OVERDUB directo
             if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
@@ -399,14 +404,25 @@ int main() {
         // 2. Procesar PING
         Xil_DCacheInvalidateRange((UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32));
 
-
+        // Procesamiento Looper
         if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
             for(int i=0; i<PACKET_SIZE; i++) {
                 if (loop_index + i < MAX_SAMPLES) LoopBuffer[loop_index + i] = rx_ping[i];
             }
         }
         
-        // 3. Avanzar tiempo
+        // Procesamiento Grabacion SD (Independiente del Looper)
+        if (sd_switch == 1) {
+            for(int i=0; i<PACKET_SIZE; i++) {
+                if (sd_length + i < MAX_SD_SAMPLES) SdRecordBuffer[sd_length + i] = rx_ping[i];
+            }
+            sd_length += PACKET_SIZE;
+            if (sd_length >= MAX_SD_SAMPLES) {
+                xil_printf("AVISO: Memoria RAM de grabacion SD LLENA (5 minutos limite).\r\n");
+            }
+        }
+        
+        // 3. Avanzar tiempo Looper
         loop_index += PACKET_SIZE;
         if (hw_mode == HW_MODE_RECORD && loop_index >= MAX_SAMPLES - PACKET_SIZE) {
             loop_length = loop_index;
@@ -448,13 +464,26 @@ int main() {
 
         // 2. Procesar PONG
         Xil_DCacheInvalidateRange((UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32));
+        
+        // Procesamiento Looper
         if (hw_mode == HW_MODE_RECORD || hw_mode == HW_MODE_OVERDUB) {
             for(int i=0; i<PACKET_SIZE; i++) {
                 if (loop_index + i < MAX_SAMPLES) LoopBuffer[loop_index + i] = rx_pong[i];
             }
         }
         
-        // 3. Avanzar tiempo
+        // Procesamiento Grabacion SD (Independiente del Looper)
+        if (sd_switch == 1) {
+            for(int i=0; i<PACKET_SIZE; i++) {
+                if (sd_length + i < MAX_SD_SAMPLES) SdRecordBuffer[sd_length + i] = rx_pong[i];
+            }
+            sd_length += PACKET_SIZE;
+            if (sd_length >= MAX_SD_SAMPLES) {
+                xil_printf("AVISO: Memoria RAM de grabacion SD LLENA (5 minutos limite).\r\n");
+            }
+        }
+        
+        // 3. Avanzar tiempo Looper
         loop_index += PACKET_SIZE;
         if (hw_mode == HW_MODE_RECORD && loop_index >= MAX_SAMPLES - PACKET_SIZE) {
             loop_length = loop_index;

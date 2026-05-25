@@ -2,7 +2,7 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-// Date        : Mon May 18 20:08:00 2026
+// Date        : Sun May 24 13:15:02 2026
 // Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               e:/Tesis/Passthrough_v1/Passthrough_v1.gen/sources_1/bd/design_1/ip/design_1_axi_stream_looper_mi_0_0/design_1_axi_stream_looper_mi_0_0_sim_netlist.v
@@ -73,9 +73,7 @@ module design_1_axi_stream_looper_mi_0_0
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_dma_axis TREADY" *) input m_dma_axis_tready;
 
   wire clk;
-  wire [31:0]m_dma_axis_tdata;
-  wire m_dma_axis_tvalid;
-  wire [31:4]\^m_i2s_axis_tdata ;
+  wire [31:4]\^m_dma_axis_tdata ;
   wire m_i2s_axis_tready;
   wire [1:0]mode;
   wire resetn;
@@ -88,12 +86,17 @@ module design_1_axi_stream_looper_mi_0_0
   wire s1_axis_tready;
   wire s1_axis_tvalid;
 
+  assign m_dma_axis_tdata[31] = \^m_dma_axis_tdata [31];
+  assign m_dma_axis_tdata[30:28] = s0_axis_tdata[30:28];
+  assign m_dma_axis_tdata[27:4] = \^m_dma_axis_tdata [27:4];
+  assign m_dma_axis_tdata[3:0] = s0_axis_tdata[3:0];
   assign m_dma_axis_tid[2:0] = s0_axis_tid;
   assign m_dma_axis_tkeep[3:0] = s0_axis_tkeep;
   assign m_dma_axis_tlast = s0_axis_tlast;
-  assign m_i2s_axis_tdata[31] = \^m_i2s_axis_tdata [31];
+  assign m_dma_axis_tvalid = s0_axis_tvalid;
+  assign m_i2s_axis_tdata[31] = \^m_dma_axis_tdata [31];
   assign m_i2s_axis_tdata[30:28] = s0_axis_tdata[30:28];
-  assign m_i2s_axis_tdata[27:4] = \^m_i2s_axis_tdata [27:4];
+  assign m_i2s_axis_tdata[27:4] = \^m_dma_axis_tdata [27:4];
   assign m_i2s_axis_tdata[3:0] = s0_axis_tdata[3:0];
   assign m_i2s_axis_tid[2:0] = s0_axis_tid;
   assign m_i2s_axis_tkeep[3:0] = s0_axis_tkeep;
@@ -102,11 +105,9 @@ module design_1_axi_stream_looper_mi_0_0
   assign s0_axis_tready = m_i2s_axis_tready;
   design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer inst
        (.clk(clk),
-        .m_dma_axis_tdata(m_dma_axis_tdata),
-        .m_dma_axis_tvalid(m_dma_axis_tvalid),
-        .m_i2s_axis_tdata({\^m_i2s_axis_tdata [31],\^m_i2s_axis_tdata [27:4]}),
+        .m_dma_axis_tdata({\^m_dma_axis_tdata [31],\^m_dma_axis_tdata [27:4]}),
         .m_i2s_axis_tready(m_i2s_axis_tready),
-        .mode(mode),
+        .mode(mode[1]),
         .resetn(resetn),
         .s0_axis_tdata(s0_axis_tdata),
         .s0_axis_tid(s0_axis_tid),
@@ -118,29 +119,25 @@ endmodule
 
 (* ORIG_REF_NAME = "axi_stream_looper_mixer" *) 
 module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
-   (m_dma_axis_tvalid,
+   (s1_axis_tready,
     m_dma_axis_tdata,
-    s1_axis_tready,
-    m_i2s_axis_tdata,
     s0_axis_tdata,
     s1_axis_tvalid,
     s1_axis_tdata,
-    s0_axis_tvalid,
     mode,
     clk,
+    s0_axis_tvalid,
     s0_axis_tid,
     m_i2s_axis_tready,
     resetn);
-  output m_dma_axis_tvalid;
-  output [31:0]m_dma_axis_tdata;
   output s1_axis_tready;
-  output [24:0]m_i2s_axis_tdata;
+  output [24:0]m_dma_axis_tdata;
   input [31:0]s0_axis_tdata;
   input s1_axis_tvalid;
   input [23:0]s1_axis_tdata;
-  input s0_axis_tvalid;
-  input [1:0]mode;
+  input [0:0]mode;
   input clk;
+  input s0_axis_tvalid;
   input [2:0]s0_axis_tid;
   input m_i2s_axis_tready;
   input resetn;
@@ -150,18 +147,16 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   wire i__carry_i_2_n_0;
   wire [23:0]last_ram_audio;
   wire last_ram_audio0;
-  wire [31:0]m_dma_axis_tdata;
-  wire m_dma_axis_tvalid;
-  wire [24:0]m_i2s_axis_tdata;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_1_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_2_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_3_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_4_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_5_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_6_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_7_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_8_n_0 ;
-  wire \m_i2s_axis_tdata[31]_INST_0_i_9_n_0 ;
+  wire [24:0]m_dma_axis_tdata;
+  wire \m_dma_axis_tdata[31]_INST_0_i_1_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_2_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_3_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_4_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_5_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_6_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_7_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_8_n_0 ;
+  wire \m_dma_axis_tdata[31]_INST_0_i_9_n_0 ;
   wire m_i2s_axis_tready;
   wire mixed_audio1;
   wire mixed_audio10_in;
@@ -169,11 +164,10 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
   wire mixed_audio1_carry_i_3_n_0;
   wire mixed_audio1_carry_n_3;
   wire \mixed_audio1_inferred__0/i__carry_n_3 ;
-  wire [1:0]mode;
-  wire [1:0]mode_sync_1;
+  wire [0:0]mode;
+  wire [1:1]mode_sync_1;
   wire \mode_sync_1[1]_i_1_n_0 ;
-  wire [1:0]mode_sync_2;
-  wire \mode_sync_2[0]_i_1_n_0 ;
+  wire [1:1]mode_sync_2;
   wire \mode_sync_2[1]_i_1_n_0 ;
   wire [24:0]p_0_in;
   wire resetn;
@@ -258,7 +252,7 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
        (.I0(s1_axis_tvalid),
         .I1(m_i2s_axis_tready),
         .I2(s0_axis_tvalid),
-        .I3(mode_sync_2[1]),
+        .I3(mode_sync_2),
         .O(last_ram_audio0));
   FDCE \last_ram_audio_reg[0] 
        (.C(clk),
@@ -404,625 +398,316 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
         .CLR(\mode_sync_1[1]_i_1_n_0 ),
         .D(s1_axis_tdata[9]),
         .Q(last_ram_audio[9]));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[0]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[0]),
-        .O(m_dma_axis_tdata[0]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[10]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[10]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[6]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[10]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[11]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[11]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[7]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[11]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[12]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[12]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[8]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[12]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[13]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[13]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[9]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[13]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[14]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[14]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[10]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[14]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[15]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[15]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[11]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[15]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[16]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[16]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[12]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[16]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[17]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[17]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[13]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[17]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[18]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[18]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[14]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[18]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[19]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[19]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[15]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[19]));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[1]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[1]),
-        .O(m_dma_axis_tdata[1]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[20]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[20]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[16]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[20]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[21]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[21]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[17]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[21]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[22]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[22]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[18]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[22]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[23]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[23]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[19]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[23]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[24]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[24]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[20]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[24]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[25]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[25]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[21]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[25]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[26]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[26]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[22]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[26]));
-  LUT6 #(
-    .INIT(64'h08A808A808A80808)) 
-    \m_dma_axis_tdata[27]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[27]),
-        .I2(mode_sync_2[1]),
-        .I3(mixed_audio10_in),
-        .I4(mixed_audio1),
-        .I5(p_0_in[23]),
-        .O(m_dma_axis_tdata[27]));
-  (* SOFT_HLUTNM = "soft_lutpair4" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[28]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[28]),
-        .O(m_dma_axis_tdata[28]));
-  (* SOFT_HLUTNM = "soft_lutpair5" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[29]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[29]),
-        .O(m_dma_axis_tdata[29]));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[2]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[2]),
-        .O(m_dma_axis_tdata[2]));
-  (* SOFT_HLUTNM = "soft_lutpair5" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[30]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[30]),
-        .O(m_dma_axis_tdata[30]));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
-  LUT5 #(
-    .INIT(32'h08A8A808)) 
-    \m_dma_axis_tdata[31]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[31]),
-        .I2(mode_sync_2[1]),
-        .I3(\m_i2s_axis_tdata[31]_INST_0_i_1_n_0 ),
-        .I4(\m_i2s_axis_tdata[31]_INST_0_i_2_n_0 ),
-        .O(m_dma_axis_tdata[31]));
-  (* SOFT_HLUTNM = "soft_lutpair4" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \m_dma_axis_tdata[3]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[3]),
-        .O(m_dma_axis_tdata[3]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[4]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[4]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[0]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[4]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[5]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[5]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[1]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[5]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[6]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[6]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[2]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[6]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[7]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[7]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[3]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[7]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[8]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[8]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[4]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[8]));
-  LUT6 #(
-    .INIT(64'hA8A8A8A80808A808)) 
-    \m_dma_axis_tdata[9]_INST_0 
-       (.I0(mode_sync_2[0]),
-        .I1(s0_axis_tdata[9]),
-        .I2(mode_sync_2[1]),
-        .I3(p_0_in[5]),
-        .I4(mixed_audio1),
-        .I5(mixed_audio10_in),
-        .O(m_dma_axis_tdata[9]));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    m_dma_axis_tvalid_INST_0
-       (.I0(s0_axis_tvalid),
-        .I1(mode_sync_2[1]),
-        .I2(mode_sync_2[0]),
-        .O(m_dma_axis_tvalid));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[10]_INST_0 
+    \m_dma_axis_tdata[10]_INST_0 
        (.I0(s0_axis_tdata[10]),
         .I1(p_0_in[6]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[6]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[6]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[11]_INST_0 
+    \m_dma_axis_tdata[11]_INST_0 
        (.I0(s0_axis_tdata[11]),
         .I1(p_0_in[7]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[7]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[7]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[12]_INST_0 
+    \m_dma_axis_tdata[12]_INST_0 
        (.I0(s0_axis_tdata[12]),
         .I1(p_0_in[8]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[8]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[8]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[13]_INST_0 
+    \m_dma_axis_tdata[13]_INST_0 
        (.I0(s0_axis_tdata[13]),
         .I1(p_0_in[9]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[9]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[9]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[14]_INST_0 
+    \m_dma_axis_tdata[14]_INST_0 
        (.I0(s0_axis_tdata[14]),
         .I1(p_0_in[10]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[10]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[10]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[15]_INST_0 
+    \m_dma_axis_tdata[15]_INST_0 
        (.I0(s0_axis_tdata[15]),
         .I1(p_0_in[11]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[11]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[11]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[16]_INST_0 
+    \m_dma_axis_tdata[16]_INST_0 
        (.I0(s0_axis_tdata[16]),
         .I1(p_0_in[12]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[12]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[12]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[17]_INST_0 
+    \m_dma_axis_tdata[17]_INST_0 
        (.I0(s0_axis_tdata[17]),
         .I1(p_0_in[13]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[13]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[13]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[18]_INST_0 
+    \m_dma_axis_tdata[18]_INST_0 
        (.I0(s0_axis_tdata[18]),
         .I1(p_0_in[14]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[14]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[14]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[19]_INST_0 
+    \m_dma_axis_tdata[19]_INST_0 
        (.I0(s0_axis_tdata[19]),
         .I1(p_0_in[15]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[15]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[15]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[20]_INST_0 
+    \m_dma_axis_tdata[20]_INST_0 
        (.I0(s0_axis_tdata[20]),
         .I1(p_0_in[16]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[16]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[16]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[21]_INST_0 
+    \m_dma_axis_tdata[21]_INST_0 
        (.I0(s0_axis_tdata[21]),
         .I1(p_0_in[17]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[17]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[17]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[22]_INST_0 
+    \m_dma_axis_tdata[22]_INST_0 
        (.I0(s0_axis_tdata[22]),
         .I1(p_0_in[18]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[18]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[18]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[23]_INST_0 
+    \m_dma_axis_tdata[23]_INST_0 
        (.I0(s0_axis_tdata[23]),
         .I1(p_0_in[19]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[19]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[19]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[24]_INST_0 
+    \m_dma_axis_tdata[24]_INST_0 
        (.I0(s0_axis_tdata[24]),
         .I1(p_0_in[20]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[20]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[20]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[25]_INST_0 
+    \m_dma_axis_tdata[25]_INST_0 
        (.I0(s0_axis_tdata[25]),
         .I1(p_0_in[21]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[21]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[21]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[26]_INST_0 
+    \m_dma_axis_tdata[26]_INST_0 
        (.I0(s0_axis_tdata[26]),
         .I1(p_0_in[22]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[22]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[22]));
   LUT5 #(
     .INIT(32'h3330AAAA)) 
-    \m_i2s_axis_tdata[27]_INST_0 
+    \m_dma_axis_tdata[27]_INST_0 
        (.I0(s0_axis_tdata[27]),
         .I1(mixed_audio10_in),
         .I2(mixed_audio1),
         .I3(p_0_in[23]),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[23]));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[23]));
   LUT4 #(
     .INIT(16'h3CAA)) 
-    \m_i2s_axis_tdata[31]_INST_0 
+    \m_dma_axis_tdata[31]_INST_0 
        (.I0(s0_axis_tdata[31]),
-        .I1(\m_i2s_axis_tdata[31]_INST_0_i_1_n_0 ),
-        .I2(\m_i2s_axis_tdata[31]_INST_0_i_2_n_0 ),
-        .I3(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[24]));
+        .I1(\m_dma_axis_tdata[31]_INST_0_i_1_n_0 ),
+        .I2(\m_dma_axis_tdata[31]_INST_0_i_2_n_0 ),
+        .I3(mode_sync_2),
+        .O(m_dma_axis_tdata[24]));
   LUT4 #(
     .INIT(16'h6996)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_1 
-       (.I0(\m_i2s_axis_tdata[31]_INST_0_i_3_n_0 ),
-        .I1(\m_i2s_axis_tdata[31]_INST_0_i_4_n_0 ),
-        .I2(\m_i2s_axis_tdata[31]_INST_0_i_5_n_0 ),
-        .I3(\m_i2s_axis_tdata[31]_INST_0_i_6_n_0 ),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_1_n_0 ));
+    \m_dma_axis_tdata[31]_INST_0_i_1 
+       (.I0(\m_dma_axis_tdata[31]_INST_0_i_3_n_0 ),
+        .I1(\m_dma_axis_tdata[31]_INST_0_i_4_n_0 ),
+        .I2(\m_dma_axis_tdata[31]_INST_0_i_5_n_0 ),
+        .I3(\m_dma_axis_tdata[31]_INST_0_i_6_n_0 ),
+        .O(\m_dma_axis_tdata[31]_INST_0_i_1_n_0 ));
   LUT6 #(
     .INIT(64'h6996966996696996)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_2 
-       (.I0(\m_i2s_axis_tdata[31]_INST_0_i_7_n_0 ),
+    \m_dma_axis_tdata[31]_INST_0_i_2 
+       (.I0(\m_dma_axis_tdata[31]_INST_0_i_7_n_0 ),
         .I1(s0_axis_tdata[30]),
         .I2(s0_axis_tdata[28]),
         .I3(s0_axis_tdata[29]),
-        .I4(\m_i2s_axis_tdata[31]_INST_0_i_8_n_0 ),
-        .I5(\m_i2s_axis_tdata[31]_INST_0_i_9_n_0 ),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_2_n_0 ));
+        .I4(\m_dma_axis_tdata[31]_INST_0_i_8_n_0 ),
+        .I5(\m_dma_axis_tdata[31]_INST_0_i_9_n_0 ),
+        .O(\m_dma_axis_tdata[31]_INST_0_i_2_n_0 ));
   LUT6 #(
     .INIT(64'h0006000900090006)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_3 
+    \m_dma_axis_tdata[31]_INST_0_i_3 
        (.I0(p_0_in[6]),
         .I1(p_0_in[7]),
         .I2(mixed_audio10_in),
         .I3(mixed_audio1),
         .I4(p_0_in[4]),
         .I5(p_0_in[5]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_3_n_0 ));
+        .O(\m_dma_axis_tdata[31]_INST_0_i_3_n_0 ));
   LUT6 #(
     .INIT(64'h0006000900090006)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_4 
+    \m_dma_axis_tdata[31]_INST_0_i_4 
        (.I0(p_0_in[10]),
         .I1(p_0_in[11]),
         .I2(mixed_audio10_in),
         .I3(mixed_audio1),
         .I4(p_0_in[8]),
         .I5(p_0_in[9]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+        .O(\m_dma_axis_tdata[31]_INST_0_i_4_n_0 ));
   LUT4 #(
     .INIT(16'h6996)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_5 
+    \m_dma_axis_tdata[31]_INST_0_i_5 
        (.I0(s0_axis_tdata[2]),
         .I1(s0_axis_tdata[3]),
         .I2(s0_axis_tdata[0]),
         .I3(s0_axis_tdata[1]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_5_n_0 ));
+        .O(\m_dma_axis_tdata[31]_INST_0_i_5_n_0 ));
   LUT6 #(
     .INIT(64'h0006000900090006)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_6 
+    \m_dma_axis_tdata[31]_INST_0_i_6 
        (.I0(p_0_in[2]),
         .I1(p_0_in[3]),
         .I2(mixed_audio10_in),
         .I3(mixed_audio1),
         .I4(p_0_in[0]),
         .I5(p_0_in[1]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_6_n_0 ));
+        .O(\m_dma_axis_tdata[31]_INST_0_i_6_n_0 ));
   LUT6 #(
     .INIT(64'hFFF6FFF9FFF9FFF6)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_7 
+    \m_dma_axis_tdata[31]_INST_0_i_7 
        (.I0(p_0_in[22]),
         .I1(p_0_in[23]),
         .I2(mixed_audio10_in),
         .I3(mixed_audio1),
         .I4(p_0_in[20]),
         .I5(p_0_in[21]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_7_n_0 ));
+        .O(\m_dma_axis_tdata[31]_INST_0_i_7_n_0 ));
   LUT6 #(
     .INIT(64'h0006000900090006)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_8 
+    \m_dma_axis_tdata[31]_INST_0_i_8 
        (.I0(p_0_in[14]),
         .I1(p_0_in[15]),
         .I2(mixed_audio10_in),
         .I3(mixed_audio1),
         .I4(p_0_in[12]),
         .I5(p_0_in[13]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_8_n_0 ));
+        .O(\m_dma_axis_tdata[31]_INST_0_i_8_n_0 ));
   LUT6 #(
     .INIT(64'h0006000900090006)) 
-    \m_i2s_axis_tdata[31]_INST_0_i_9 
+    \m_dma_axis_tdata[31]_INST_0_i_9 
        (.I0(p_0_in[18]),
         .I1(p_0_in[19]),
         .I2(mixed_audio10_in),
         .I3(mixed_audio1),
         .I4(p_0_in[16]),
         .I5(p_0_in[17]),
-        .O(\m_i2s_axis_tdata[31]_INST_0_i_9_n_0 ));
+        .O(\m_dma_axis_tdata[31]_INST_0_i_9_n_0 ));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[4]_INST_0 
+    \m_dma_axis_tdata[4]_INST_0 
        (.I0(s0_axis_tdata[4]),
         .I1(p_0_in[0]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[0]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[0]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[5]_INST_0 
+    \m_dma_axis_tdata[5]_INST_0 
        (.I0(s0_axis_tdata[5]),
         .I1(p_0_in[1]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[1]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[1]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[6]_INST_0 
+    \m_dma_axis_tdata[6]_INST_0 
        (.I0(s0_axis_tdata[6]),
         .I1(p_0_in[2]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[2]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[2]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[7]_INST_0 
+    \m_dma_axis_tdata[7]_INST_0 
        (.I0(s0_axis_tdata[7]),
         .I1(p_0_in[3]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[3]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[3]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[8]_INST_0 
+    \m_dma_axis_tdata[8]_INST_0 
        (.I0(s0_axis_tdata[8]),
         .I1(p_0_in[4]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[4]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[4]));
   LUT5 #(
     .INIT(32'hFF0CAAAA)) 
-    \m_i2s_axis_tdata[9]_INST_0 
+    \m_dma_axis_tdata[9]_INST_0 
        (.I0(s0_axis_tdata[9]),
         .I1(p_0_in[5]),
         .I2(mixed_audio1),
         .I3(mixed_audio10_in),
-        .I4(mode_sync_2[1]),
-        .O(m_i2s_axis_tdata[5]));
+        .I4(mode_sync_2),
+        .O(m_dma_axis_tdata[5]));
   (* COMPARATOR_THRESHOLD = "11" *) 
   CARRY4 mixed_audio1_carry
        (.CI(1'b0),
@@ -1060,55 +745,32 @@ module design_1_axi_stream_looper_mi_0_0_axi_stream_looper_mixer
     \mode_sync_1[1]_i_1 
        (.I0(resetn),
         .O(\mode_sync_1[1]_i_1_n_0 ));
-  FDCE \mode_sync_1_reg[0] 
-       (.C(clk),
-        .CE(1'b1),
-        .CLR(\mode_sync_1[1]_i_1_n_0 ),
-        .D(mode[0]),
-        .Q(mode_sync_1[0]));
   FDCE \mode_sync_1_reg[1] 
        (.C(clk),
         .CE(1'b1),
         .CLR(\mode_sync_1[1]_i_1_n_0 ),
-        .D(mode[1]),
-        .Q(mode_sync_1[1]));
-  LUT6 #(
-    .INIT(64'hFFFFFFFB00000008)) 
-    \mode_sync_2[0]_i_1 
-       (.I0(mode_sync_1[0]),
-        .I1(s0_axis_tvalid),
-        .I2(s0_axis_tid[2]),
-        .I3(s0_axis_tid[0]),
-        .I4(s0_axis_tid[1]),
-        .I5(mode_sync_2[0]),
-        .O(\mode_sync_2[0]_i_1_n_0 ));
+        .D(mode),
+        .Q(mode_sync_1));
   LUT6 #(
     .INIT(64'hFFFFFFFB00000008)) 
     \mode_sync_2[1]_i_1 
-       (.I0(mode_sync_1[1]),
+       (.I0(mode_sync_1),
         .I1(s0_axis_tvalid),
         .I2(s0_axis_tid[2]),
         .I3(s0_axis_tid[0]),
         .I4(s0_axis_tid[1]),
-        .I5(mode_sync_2[1]),
+        .I5(mode_sync_2),
         .O(\mode_sync_2[1]_i_1_n_0 ));
-  FDCE \mode_sync_2_reg[0] 
-       (.C(clk),
-        .CE(1'b1),
-        .CLR(\mode_sync_1[1]_i_1_n_0 ),
-        .D(\mode_sync_2[0]_i_1_n_0 ),
-        .Q(mode_sync_2[0]));
   FDCE \mode_sync_2_reg[1] 
        (.C(clk),
         .CE(1'b1),
         .CLR(\mode_sync_1[1]_i_1_n_0 ),
         .D(\mode_sync_2[1]_i_1_n_0 ),
-        .Q(mode_sync_2[1]));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+        .Q(mode_sync_2));
   LUT3 #(
     .INIT(8'h80)) 
     s1_axis_tready_INST_0
-       (.I0(mode_sync_2[1]),
+       (.I0(mode_sync_2),
         .I1(s0_axis_tvalid),
         .I2(m_i2s_axis_tready),
         .O(s1_axis_tready));

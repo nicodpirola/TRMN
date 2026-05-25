@@ -154,23 +154,16 @@ module axi_stream_looper_mixer (
 
     always @(*) begin
         case(mode_sync_2)
-            2'b00: begin // IDLE: Passthrough directo (frame original intacto)
-                i2s_out_data = live_frame;
-                dma_out_data = 32'd0;
-            end
-            2'b01: begin // RECORD: Passthrough + guardar en RAM
-                i2s_out_data = live_frame;
-                dma_out_data = live_frame;
-            end
-            2'b10: begin // PLAY: Mezcla en vivo + RAM (solo a parlante)
-                i2s_out_data = mixed_frame;
-                dma_out_data = 32'd0;       // No se graba en PLAY
-            end
-            2'b11: begin // OVERDUB: Mezcla en vivo + RAM (parlante y grabación)
-                i2s_out_data = mixed_frame;
-                dma_out_data = mixed_frame;
-            end
+            2'b00: i2s_out_data = live_frame;
+            2'b01: i2s_out_data = live_frame;
+            2'b10: i2s_out_data = mixed_frame;
+            2'b11: i2s_out_data = mixed_frame;
         endcase
+    end
+    
+    // DMA siempre recibe lo que suena en el parlante para grabacion SD
+    always @(*) begin
+        dma_out_data = i2s_out_data;
     end
 
     assign m_i2s_axis_tdata = i2s_out_data;
@@ -188,15 +181,10 @@ module axi_stream_looper_mixer (
     assign m_dma_axis_tid   = s0_axis_tid;
     assign m_dma_axis_tkeep = s0_axis_tkeep;
 
-    // Indicador interno: ¿El DMA está activo en este modo?
-    // Activo en RECORD, PLAY y OVERDUB (todo excepto IDLE)
-    wire dma_active = (mode_sync_2 != 2'b00);
-
-    // I2S TX siempre recibe datos. DMA S2MM recibe datos solo si está activo.
-    // IMPORTANTE: Si apagamos tvalid al DMA en IDLE, evitamos que el sistema 
-    // se cuelgue cuando apagamos el DMA S2MM desde C.
+    // I2S TX y DMA S2MM siempre reciben datos.
+    // El software en C se encarga de ignorarlos o guardarlos segun sea necesario.
     assign m_i2s_axis_tvalid = s0_axis_tvalid;
-    assign m_dma_axis_tvalid = s0_axis_tvalid && dma_active;
+    assign m_dma_axis_tvalid = s0_axis_tvalid;
 
     // ¿Cuándo estamos listos para recibir una nueva muestra del I2S RX (s0)?
     // Para garantizar que el flujo de audio en vivo NUNCA se congele ni pierda muestras
