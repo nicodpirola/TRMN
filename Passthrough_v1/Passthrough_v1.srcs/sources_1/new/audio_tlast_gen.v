@@ -22,12 +22,12 @@ module axis_tlast_gen_transparent (
     input  wire        clk,
     input  wire        resetn,
     
-    // Entrada de Audio (viene del Broadcaster)
+    // Entrada de Audio (viene del adder)
     input  wire [31:0] s_axis_tdata,
     input  wire        s_axis_tvalid,
     output wire        s_axis_tready,
     
-    // Salida hacia el FIFO de grabación
+    // Salida hacia el FIFO de entrada
     output wire [31:0] m_axis_tdata,
     output wire        m_axis_tvalid,
     output wire        m_axis_tlast,
@@ -38,8 +38,7 @@ module axis_tlast_gen_transparent (
     parameter integer PKT_SIZE = 1024;
     reg [15:0] count_reg;
 
-    // PASSTHROUGH TOTAL: Los datos y el control fluyen sin registros
-    // Esto garantiza CERO ciclos de delay adicionales.
+    // PASSTHROUGH (CERO ciclos de delay)
     assign m_axis_tdata  = s_axis_tdata;
     assign m_axis_tvalid = s_axis_tvalid;
     assign s_axis_tready = m_axis_tready;

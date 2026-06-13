@@ -37,7 +37,7 @@
 #define I2S_TX_BASE     0x43C10000
 #define GPIO_MIXER_BASE 0x41200000
 
-// Modos del Hardware Mixer (axi_stream_looper_mixer.v)
+// Modos del Loop (axi_stream_looper_mixer.v)
 #define HW_MODE_IDLE    0  // Bypass puro en hardware
 #define HW_MODE_RECORD  1  // Guarda en RAM, TX DMA apagado
 #define HW_MODE_PLAY    2  // Mezcla hardware, guarda en RAM lo mismo
@@ -73,12 +73,8 @@ typedef struct {
 
 // Buffer gigante independiente para grabar en la MicroSD (5 minutos)
 #define SD_RECORD_BASEADDR    0x11000000
-#define MAX_SD_SAMPLES        (48000 * 2 * 60 * 5) // 5 minutos a 48kHz (57.6 MB)
+#define MAX_SD_SAMPLES        (48000 * 2 * 60 * 5) // 5 minutos a 48kHz Estereo (109.8 MB)
 
-// TEST: Descomentar UNO para diagnosticar
-//#define TEST_SILENCE     // DMA envia ceros (ya probado: sin ruido)
-//#define TEST_OFFSET1     // DMA desfasa 1 muestra
-//#define TEST_SYNTH         // Genera onda senoidal por software (bypassa grabacion)
 
 #define PRESIONADO            1
 #define SOLTADO               0
@@ -151,7 +147,7 @@ void SaveWavToSD(u32* buffer, u32 num_frames) {
         // Extraer audio 24-bit del formato I2S: (buffer[i] >> 4) & 0xFFFFFF
         u32 sample = (buffer[i] >> 4) & 0xFFFFFF;
         
-        // Empaquetar en 3 bytes Little-Endian
+        // Empaquetar en 3 bytes
         pcm_buffer[pcm_idx++] = (u8)(sample & 0xFF);
         pcm_buffer[pcm_idx++] = (u8)((sample >> 8) & 0xFF);
         pcm_buffer[pcm_idx++] = (u8)((sample >> 16) & 0xFF);
@@ -225,18 +221,10 @@ int main() {
     int last_sd_switch = 0;
     u32 loop_length = 0;
     u32 loop_index = 0;
-    u32 sd_length = 0; // Cantidad de muestras grabadas para la SD
+    u32 sd_length = 0;
     int dma_started = 0;
 
-    // Control de volumen por software para la pista grabada
-    // Expresado como shift derecho: 0 = volumen completo (x1), 1 = mitad (x0.5), 2 = cuarto (x0.25)
-    // IMPORTANTE: NO usar float. Un float tiene solo 24 bits de mantisa, lo cual destruye
-    // los 8 bits inferiores de muestras de 32 bits, generando ruido de cuantización audible.
-    int volume_shift = 0;
-
-
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
-    xil_printf("Usa las teclas '+' y '-' para ajustar el volumen del loop.\r\n");
 
     while(1) {
         // --- LECTURA DE SWITCHES FÍSICOS ---
@@ -292,16 +280,8 @@ int main() {
                     // PRE-CARGA DE TRANSICIÓN:
                     if (loop_length > 0) {
                         for(int i=0; i<PACKET_SIZE; i++) {
-#ifdef TEST_SILENCE
-                            tx_ping[i] = 0;
-                            tx_pong[i] = 0;
-#elif defined(TEST_OFFSET1)
-                            tx_ping[i] = LoopBuffer[(i + 1) % loop_length];
-                            tx_pong[i] = LoopBuffer[(PACKET_SIZE + i + 1) % loop_length];
-#else
                             tx_ping[i] = LoopBuffer[i % loop_length];
                             tx_pong[i] = LoopBuffer[(PACKET_SIZE + i) % loop_length];
-#endif
                         }
                         Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
                         Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
@@ -312,43 +292,6 @@ int main() {
                     
                     // Ahora sí, cambiamos el modo en hardware de forma segura
                     hw_mode = HW_MODE_PLAY;
-
-#ifdef TEST_SYNTH
-                    // Generar onda senoidal perfecta por software (1kHz @ 48kHz = periodo 48 muestras estéreo = 96 words)
-                    // Tabla seno 48 puntos, amplitud = 0x600000 (~75% de 24-bit full scale)
-                    {
-                        // Seno pre-calculado: 48 puntos, escalado a 24-bit signed (max ±0x600000)
-                        static const int32_t sine48[48] = {
-                            0x000000, 0x0C8BD3, 0x18F8B8, 0x251EB1, 0x30FBC5, 0x3C56BA,
-                            0x471CEC, 0x5133CC, 0x5A8279, 0x62F201, 0x6A6D98, 0x70E2C5,
-                            0x7641AF, 0x7A7D05, 0x7D8A5E, 0x7F6213, 0x7FFFFF, 0x7F6213,
-                            0x7D8A5E, 0x7A7D05, 0x7641AF, 0x70E2C5, 0x6A6D98, 0x62F201,
-                            0x5A8279, 0x5133CC, 0x471CEC, 0x3C56BA, 0x30FBC5, 0x251EB1,
-                            0x18F8B8, 0x0C8BD3, 0x000000,-0x0C8BD3,-0x18F8B8,-0x251EB1,
-                           -0x30FBC5,-0x3C56BA,-0x471CEC,-0x5133CC,-0x5A8279,-0x62F201,
-                           -0x6A6D98,-0x70E2C5,-0x7641AF,-0x7A7D05,-0x7D8A5E,-0x7F6213
-                        };
-                        int period = 96; // 48 muestras estéreo = 96 words (L,R,L,R,...)
-                        loop_length = period * 100; // ~200ms de loop
-                        for(int i = 0; i < loop_length; i++) {
-                            int phase = (i / 2) % 48; // L y R usan la misma fase
-                            int32_t audio = sine48[phase] >> 1; // Reducir a ~37% de full scale
-                            u32 preamble = (i & 1) ? 0x2 : 0x3; // R=2, L=3
-                            // Formato: [31]=P, [30:28]=CUV=000, [27:4]=audio, [3:0]=preamble
-                            u32 frame = ((audio & 0xFFFFFF) << 4) | preamble;
-                            frame |= (__builtin_parity(frame) << 31); // P = paridad
-                            LoopBuffer[i] = frame;
-                        }
-                        // Re-cargar tx buffers con datos sintéticos
-                        for(int i=0; i<PACKET_SIZE; i++) {
-                            tx_ping[i] = LoopBuffer[i % loop_length];
-                            tx_pong[i] = LoopBuffer[(PACKET_SIZE + i) % loop_length];
-                        }
-                        Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
-                        Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
-                        xil_printf("TEST_SYNTH: Onda sintetica 1kHz cargada (%d muestras)\r\n", (int)loop_length);
-                    }
-#endif
                 }
             }
         
@@ -368,16 +311,8 @@ int main() {
             // Cargar la primera rafaga de TX si vamos a PLAY/OVERDUB directo
             if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
                 for(int i=0; i<PACKET_SIZE; i++) {
-#ifdef TEST_SILENCE
-                    tx_ping[i] = 0;
-                    tx_pong[i] = 0;
-#elif defined(TEST_OFFSET1)
-                    tx_ping[i] = LoopBuffer[(loop_index + i + 1) % loop_length];
-                    tx_pong[i] = LoopBuffer[(loop_index + PACKET_SIZE + i + 1) % loop_length];
-#else
                     tx_ping[i] = LoopBuffer[(loop_index + i) % loop_length];
                     tx_pong[i] = LoopBuffer[(loop_index + PACKET_SIZE + i) % loop_length];
-#endif
                 }
                 Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
                 Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
@@ -391,7 +326,7 @@ int main() {
         // ==========================================================
         // MITAD PING
         // ==========================================================
-        // 1. Esperar PING RX y lanzar PONG RX
+        // 1a. Esperar PING RX y lanzar PONG RX
         while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
@@ -437,13 +372,7 @@ int main() {
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
             int tx_idx = (loop_index + PACKET_SIZE) % loop_length;
             for(int i=0; i<PACKET_SIZE; i++) {
-#ifdef TEST_SILENCE
-                tx_ping[i] = 0;
-#elif defined(TEST_OFFSET1)
-                tx_ping[i] = LoopBuffer[((tx_idx + 1) >= loop_length ? 0 : tx_idx + 1)];
-#else
                 tx_ping[i] = LoopBuffer[tx_idx++];
-#endif
                 if (tx_idx >= loop_length) tx_idx = 0;
             }
             Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
@@ -498,18 +427,11 @@ int main() {
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
             int tx_idx = (loop_index + PACKET_SIZE) % loop_length;
             for(int i=0; i<PACKET_SIZE; i++) {
-#ifdef TEST_SILENCE
-                tx_pong[i] = 0;
-#elif defined(TEST_OFFSET1)
-                tx_pong[i] = LoopBuffer[((tx_idx + 1) >= loop_length ? 0 : tx_idx + 1)];
-#else
                 tx_pong[i] = LoopBuffer[tx_idx++];
-#endif
                 if (tx_idx >= loop_length) tx_idx = 0;
             }
             Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
         }
     }
-
     return XST_SUCCESS;
 }

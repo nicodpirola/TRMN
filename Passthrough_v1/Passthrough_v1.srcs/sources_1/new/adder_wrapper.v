@@ -62,10 +62,9 @@ module axi_stream_looper_mixer (
 );
 
     // ==========================================
-    // 0. SINCRONIZADOR DE RELOJ (CDC) PARA 'MODE'
+    // 1. SINCRONIZADOR DE RELOJ (CDC) PARA 'MODE'
     // ==========================================
-    // Captura la señal 'mode' (dominio 50MHz) y la sincroniza al reloj
-    // local del audio (dominio 12.288MHz) evitando metaestabilidad.
+    // Sincronizamos clk del GPIO de los modos (50MHz) con el de auido (12.288MHz))
     reg [1:0] mode_sync_1, mode_sync_2;
     always @(posedge clk or negedge resetn) begin
         if (!resetn) begin
@@ -73,10 +72,8 @@ module axi_stream_looper_mixer (
             mode_sync_2 <= 2'b00;
         end else begin
             mode_sync_1 <= mode;
-            // SINCRONIZACIÓN DE CANAL (FIX RUIDO BLANCO/STEREO):
-            // Solo aplicamos el cambio de modo cuando estamos exactamente en la muestra
-            // del canal Izquierdo (tid == 0). Esto garantiza que el primer dato que
-            // entra/sale del DMA sea siempre Left, manteniendo la alineación L/R perfecta.
+            // Solo aplicamos el cambio de modo cuando estamos 
+            // exactamente en la muestra del canal izquierdo (tid == 0)
             if (s0_axis_tvalid && s0_axis_tid == 3'd0) begin
                 mode_sync_2 <= mode_sync_1;
             end
@@ -84,7 +81,7 @@ module axi_stream_looper_mixer (
     end
 
     // ==========================================
-    // 1. LOGICA DE DATOS Y MEZCLA
+    // 2. LOGICA DE DATOS
     // ==========================================
     // FORMATO I2S SUB-FRAME (32 bits):
     //   [31]    P  - Parity
@@ -93,41 +90,25 @@ module axi_stream_looper_mixer (
     //   [28]    V  - Validity (0=valido)
     //   [27:4]  Audio Sample (24-bit signed)
     //   [3:0]   Preamble code (identifica L/R y bloques)
-    //
-    // CRITICO: Solo bits [27:4] son audio. Los demas son metadata del protocolo.
-    // Toda aritmetica debe hacerse SOLO sobre los bits de audio.
-    // La metadata de salida se toma del I2S RX (s0), que siempre tiene el timing correcto.
 
-    // Metadata del I2S RX en vivo (siempre correcta para el frame actual)
+    // Se usa la metadata del I2S RX en vivo
     wire [3:0]  live_meta_hi  = s0_axis_tdata[31:28]; // P, C, U, V
     wire [3:0]  live_preamble = s0_axis_tdata[3:0];   // Preamble
-
-    // Extraer audio limpio (24-bit signed) del I2S RX
-    wire signed [23:0] live_audio = s0_axis_tdata[27:4];
-
-    // SAMPLE-AND-HOLD para audio de RAM (solo bits de audio [27:4]):
-    reg signed [23:0] last_ram_audio;
+    wire signed [23:0] live_audio = s0_axis_tdata[27:4];//audio limpio
+    reg signed [23:0] last_ram_audio; // "Sample & hold" (solo audio de la ram):
     always @(posedge clk or negedge resetn) begin
         if (!resetn)
             last_ram_audio <= 24'd0;
         else if (s1_axis_tvalid && s1_axis_tready)
             last_ram_audio <= s1_axis_tdata[27:4];
     end
+    
+    // ==========================================
+    // 3. MEZCLA
+    // ==========================================
+    
     wire signed [23:0] ram_audio = s1_axis_tvalid ? s1_axis_tdata[27:4] : last_ram_audio;
-
-    // RAW DMA PASSTHROUGH (32-bit completo, sin extraccion ni reconstruccion)
-    reg [31:0] last_raw_ram;
-    always @(posedge clk or negedge resetn) begin
-        if (!resetn)
-            last_raw_ram <= 32'd0;
-        else if (s1_axis_tvalid && s1_axis_tready)
-            last_raw_ram <= s1_axis_tdata;
-    end
-    wire [31:0] raw_ram = s1_axis_tvalid ? s1_axis_tdata : last_raw_ram;
-
-    // MEZCLA CON SATURACION (solo audio limpio 24-bit, sin metadata)
-    wire signed [24:0] sum = $signed(live_audio) + $signed(ram_audio);
-
+    wire signed [24:0] sum = $signed(live_audio) + $signed(ram_audio);  // MEZCLA CON SATURACION
     reg signed [23:0] mixed_audio;
     always @(*) begin
         if (sum > 25'sh7FFFFF)
@@ -137,14 +118,9 @@ module axi_stream_looper_mixer (
         else
             mixed_audio = sum[23:0];
     end
-
-    // Reconstruir frames completos: audio procesado + metadata correcta del I2S RX
+    // Reconstrucción de muestra audio procesado + metadata correcta del I2S RX
     // P (parity) se RECALCULA para cada frame: P = XOR de bits [30:0] (paridad par)
     wire [31:0] live_frame  = s0_axis_tdata; // Passthrough: frame original intacto
-
-    wire [30:0] ram_bits   = {live_meta_hi[2:0], ram_audio,   live_preamble};
-    wire [31:0] ram_frame  = {^ram_bits, ram_bits};
-
     wire [30:0] mix_bits   = {live_meta_hi[2:0], mixed_audio, live_preamble};
     wire [31:0] mixed_frame = {^mix_bits, mix_bits};
 
@@ -170,9 +146,9 @@ module axi_stream_looper_mixer (
     assign m_dma_axis_tdata = dma_out_data;
 
     // ==========================================
-    // 2. LOGICA DE CONTROL (HANDSHAKE AXI-STREAM)
+    // 4. LOGICA DE CONTROL (HANDSHAKE AXI-STREAM)
     // ==========================================
-    // TLAST es marcado por la entrada en vivo (I2S marca el tamaño del paquete/frame)
+    // Passthrough para todas los demás datos de control
     assign m_i2s_axis_tlast = s0_axis_tlast;
     assign m_i2s_axis_tid   = s0_axis_tid;
     assign m_i2s_axis_tkeep = s0_axis_tkeep;
@@ -181,19 +157,15 @@ module axi_stream_looper_mixer (
     assign m_dma_axis_tid   = s0_axis_tid;
     assign m_dma_axis_tkeep = s0_axis_tkeep;
 
-    // I2S TX y DMA S2MM siempre reciben datos.
-    // El software en C se encarga de ignorarlos o guardarlos segun sea necesario.
+    // I2S TX y DMA S2MM siempre reciben datos, el software en C 
+    // se encarga de ignorarlos o guardarlos segun sea necesario.
     assign m_i2s_axis_tvalid = s0_axis_tvalid;
     assign m_dma_axis_tvalid = s0_axis_tvalid;
 
-    // ¿Cuándo estamos listos para recibir una nueva muestra del I2S RX (s0)?
-    // Para garantizar que el flujo de audio en vivo NUNCA se congele ni pierda muestras
-    // (lo cual causa desalineación L/R y ruido blanco), hacemos que el tready de entrada
-    // dependa EXCLUSIVAMENTE del parlante (I2S TX). El DMA capturará los datos a su ritmo.
+    // usamos el TREADY del TX de adelante para atrás, para llamar a la siguiente muestra desde el RX
     assign s0_axis_tready = m_i2s_axis_tready;
 
-    // ¿Cuándo pedimos y consumimos una muestra de la RAM (s1)?
-    // Solo en los modos donde leemos de la RAM (PLAY y OVERDUB) y al ritmo del I2S.
+    // Solo se llaman muestras desde la RAM en modo PLAY y OVERDUB
     assign ram_active = (mode_sync_2 == 2'b10 || mode_sync_2 == 2'b11);
     assign s1_axis_tready = ram_active && s0_axis_tvalid && s0_axis_tready;
 
