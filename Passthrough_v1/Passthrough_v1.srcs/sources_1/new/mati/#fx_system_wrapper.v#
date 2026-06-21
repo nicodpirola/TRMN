@@ -1,0 +1,48 @@
+module fx_system_wrapper (
+  input wire         clk,
+  input wire         rst_n,
+  input wire         fx_enable,
+  //AXI4LITE
+  input  logic [31:0] s_axi_awaddr,
+  input  logic        s_axi_awvalid,
+  output logic        s_axi_awready,
+  input  logic [31:0] s_axi_wdata,
+  input  logic [3:0]  s_axi_wstrb,
+  input  logic        s_axi_wvalid,
+  output logic        s_axi_wready,
+  output logic [1:0]  s_axi_bresp,
+  output logic        s_axi_bvalid,
+  input  logic        s_axi_bready,
+  input  logic [31:0] s_axi_araddr,
+  input  logic        s_axi_arvalid,
+  output logic        s_axi_arready,
+  output logic [31:0] s_axi_rdata,
+  output logic [1:0]  s_axi_rresp,
+  output logic        s_axi_rvalid,
+  input  logic        s_axi_rready,
+  
+  //AXI STREAM
+  input wire [31:0]  s_axis_tdata,
+  input wire [2:0]   s_axis_tid,
+  input wire         s_axis_tvalid,
+  output wire        s_axis_tready,
+
+  output wire [31:0] m_axis_tdata,
+  output wire [2:0]  m_axis_tid,
+  output wire        m_axis_tvalid,
+  input wire         m_axis_tready
+);
+
+  fx_core u_core (
+    .clk(clk), .rst_n(rst_n), .fx_enable(fx_enable),
+    .s_axis_tdata(s_axis_tdata),
+    .s_axis_tid(s_axis_tid),
+    .s_axis_tvalid(s_axis_tvalid),
+    .s_axis_tready(s_axis_tready),
+    .m_axis_tdata(m_axis_tdata),
+    .m_axis_tid(m_axis_tid),
+    .m_axis_tvalid(m_axis_tvalid),
+    .m_axis_tready(m_axis_tready)
+  );
+
+endmodule

@@ -46,6 +46,38 @@ set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33 } [get_ports { lrclk_
 #set_property -dict { PACKAGE_PIN V12   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_out_0 }]; #IO_L4P_T0_34 Sch=JB4_P (Pin 9) sdata_0_out_0
 #set_property -dict { PACKAGE_PIN W13   IOSTANDARD LVCMOS33 } [get_ports { jb_n[4] }]; #IO_L4N_T0_34 Sch=JB4_N (Pin 10)
 
+## Switches
+#set_property -dict { PACKAGE_PIN M20    IOSTANDARD LVCMOS33 } [get_ports { fx_enable_0 }]; #IO_L7N_T1_AD2N_35 Sch=SW0 NOS QUEDAMOS SIN SWITCHES PARA EL FX ENABLE
+#set_property -dict { PACKAGE_PIN M19    IOSTANDARD LVCMOS33 } [get_ports { sw[1] }]; #IO_L7P_T1_AD2P_35 Sch=SW1
+
+## ChipKit Outer Digital Header
+set_property -dict { PACKAGE_PIN T14   IOSTANDARD LVCMOS33 } [get_ports { ck_io0_SCK   }];  #IO_L5P_T0_34            Sch=CK_IO0
+set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { ck_io1_MOSI }]; #IO_L2N_T0_34            Sch=CK_IO1
+set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { ck_io2_DC }]; #IO_L3P_T0_DQS_PUDC_B_34 Sch=CK_IO2
+set_property -dict { PACKAGE_PIN V13   IOSTANDARD LVCMOS33 } [get_ports { ck_io3_RST }]; #IO_L3N_T0_DQS_34        Sch=CK_IO3
+set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { ck_io4_CS  }]; #IO_L10P_T1_34           Sch=CK_IO4
+##Encoders rotativos 
+set_property -dict { PACKAGE_PIN T15   IOSTANDARD LVCMOS33 } [get_ports { enc_a_0[0]}]; # Sch=CK_IO5
+set_property -dict { PACKAGE_PIN R16   IOSTANDARD LVCMOS33 } [get_ports { enc_b_0[0]}]; #Sch=CK_IO6
+set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports { enc_a_0[1]}]; #Sch=CK_IO7
+set_property -dict { PACKAGE_PIN V17   IOSTANDARD LVCMOS33 } [get_ports { enc_b_0[1]}]; #Sch=CK_IO8
+set_property -dict { PACKAGE_PIN V18   IOSTANDARD LVCMOS33 } [get_ports { enc_a_0[2]}]; #Sch=CK_IO9
+set_property -dict { PACKAGE_PIN T16   IOSTANDARD LVCMOS33 } [get_ports { enc_b_0[2]}]; #Sch=CK_IO10
+
+## --- Reservados (3, 4, 5): sin cablear todavía, PULLUP para dejarlos en reposo
+set_property -dict { PACKAGE_PIN R17  IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_a_0[3]}] ;# CK_IO11
+set_property -dict { PACKAGE_PIN P18  IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_b_0[3]}] ;# CK_IO12
+set_property -dict { PACKAGE_PIN N17  IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_a_0[4]}] ;# CK_IO13
+
+set_false_path -from [get_ports {enc_a_0[*] enc_b_0[*]}]
+
+## ChipKit Inner Digital Header
+set_property -dict { PACKAGE_PIN U5   IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_b_0[4]}] ;# CK_IO26
+set_property -dict { PACKAGE_PIN V5   IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_a_0[5]}] ;# CK_IO27
+set_property -dict { PACKAGE_PIN V6   IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_b_0[5]}] ;# CK_IO28
+
+
+
 ## Audio Out
 #set_property -dict { PACKAGE_PIN R18   IOSTANDARD LVCMOS33 } [get_ports { aud_pwm }]; #IO_L20N_T3_34 Sch=AUD_PWM
 #set_property -dict { PACKAGE_PIN T17   IOSTANDARD LVCMOS33 } [get_ports { aud_sd }]; #IO_L20P_T3_34 Sch=AUD_SD
@@ -82,7 +114,7 @@ set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33 } [get_ports { lrclk_
 #set_property -dict { PACKAGE_PIN M18   IOSTANDARD LVCMOS33 } [get_ports { hdmi_tx_sda }]; #IO_L8N_T1_AD10N_35 Sch=HDMI_TX_SDA
 
 ## ChipKit Outer Digital Header
-set_property -dict { PACKAGE_PIN T14   IOSTANDARD LVCMOS33 } [get_ports { pedal_in_0  }]; #IO_L5P_T0_34            Sch=CK_IO0
+#set_property -dict { PACKAGE_PIN T14   IOSTANDARD LVCMOS33 } [get_ports { pedal_in_0  }]; #IO_L5P_T0_34            Sch=CK_IO0
 #set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { ck_io1  }]; #IO_L2N_T0_34            Sch=CK_IO1
 #set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { ck_io2  }]; #IO_L3P_T0_DQS_PUDC_B_34 Sch=CK_IO2
 #set_property -dict { PACKAGE_PIN V13   IOSTANDARD LVCMOS33 } [get_ports { ck_io3  }]; #IO_L3N_T0_DQS_34        Sch=CK_IO3

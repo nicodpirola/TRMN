@@ -1,5 +1,6 @@
 # --- No versionar (pedido explícito) ---
 Passthrough_v1.rar
+artyz7-theremin-display-encoders/
 
 # Vivado / Xilinx: artefactos regenerables
 *.jou

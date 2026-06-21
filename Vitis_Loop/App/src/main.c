@@ -7,6 +7,16 @@
 #include "xil_types.h"
 #include "xil_io.h"
 
+// LVGL & UI
+#include "ili9341.h"
+#include "lvgl/lvgl.h"
+#include "lvgl/src/core/lv_init.h"
+#include "lvgl/src/core/lv_timer.h"
+#include "lvgl/src/display/lv_display.h"
+#include "lvgl/src/tick/lv_tick.h"
+#include "ui.h"
+#include "xiltimer.h"
+
 // ==========================================================
 // DEFINICIONES DE HARDWARE
 // ==========================================================
@@ -42,6 +52,30 @@
 #define HW_MODE_RECORD  1  // Guarda en RAM, TX DMA apagado
 #define HW_MODE_PLAY    2  // Mezcla hardware, guarda en RAM lo mismo
 #define HW_MODE_OVERDUB 3  // Mezcla hardware, guarda en RAM la mezcla
+
+// Direcciones Base Adicionales
+#define FX_BASE     0x60000000 // Base del fx_system_wrapper
+#define REG_ENC(n)  (0x40 + (n)*4)
+
+// Funciones para LVGL y Encoders
+static int16_t enc_prev[3] = {0, 0, 0};
+static int16_t enc_delta(int n) {
+    int16_t now = (int16_t)(Xil_In32(FX_BASE + REG_ENC(n)) & 0xFFFF);
+    int16_t d   = (int16_t)(now - enc_prev[n]);
+    enc_prev[n] = now;
+    return d;
+}
+
+uint32_t lvgl_time_get(void){
+    XTime t;
+    XTime_GetTime(&t);
+    return (uint32_t)((t * 1000)/ COUNTS_PER_SECOND); 
+}
+
+void my_flush_cb(lv_display_t * display, const lv_area_t * area, uint8_t * px_map) {
+    ili9341_flush_region(area->x1, area->y1, area->x2, area->y2, px_map);
+    lv_display_flush_ready(display);
+}
 
 // ==========================================================
 // ESTRUCTURA WAV HEADER
@@ -216,6 +250,24 @@ int main() {
     xil_printf("Limpiando memoria RAM...\r\n");
     memset(LoopBuffer, 0, MAX_SAMPLES * sizeof(u32));
 
+    // Inicializar Pantalla y LVGL
+    xil_printf("Inicializando Pantalla SPI...\r\n");
+    if (ili9341_init() != XST_SUCCESS) {
+        xil_printf("[X] Init Pantalla fallido\r\n");
+    } else {
+        lv_init();
+        lv_tick_set_cb(lvgl_time_get);
+        
+        // Chunking Extremo: Búfer muy pequeño (1/24 de la pantalla)
+        lv_display_t * display1 = lv_display_create(ILI9341_WIDTH, ILI9341_HEIGHT);
+        static uint8_t buf1[ILI9341_WIDTH * 10 * 2] __attribute__((aligned(8))); 
+        lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+        lv_display_set_flush_cb(display1, my_flush_cb);
+        
+        ui_init();
+        xil_printf("LVGL UI Inicializada (Modo Chunking)\r\n");
+    }
+
     int hw_mode = HW_MODE_IDLE;
     int last_pedal = SOLTADO;
     int last_sd_switch = 0;
@@ -227,6 +279,15 @@ int main() {
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
 
     while(1) {
+        // --- PROCESAMIENTO DE ENCODERS (FUERA DEL TIEMPO CRÍTICO) ---
+        for (int n = 0; n < 3; n++) {
+            int16_t d = enc_delta(n);
+            if (d != 0) {
+                // Aqui puedes asignar los encoders a variables del looper
+                xil_printf("Encoder %d movido: %+d\r\n", n, d);
+            }
+        }
+
         // --- LECTURA DE SWITCHES FÍSICOS ---
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
         int sd_switch = (switches & 0x01); // SW0: Switch para guardar SD
@@ -327,12 +388,12 @@ int main() {
         // MITAD PING
         // ==========================================================
         // 1a. Esperar PING RX y lanzar PONG RX
-        while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
+        while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) { lv_timer_handler(); }
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
         // 1b. Esperar PING TX y lanzar PONG TX
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
-            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
+            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) { lv_timer_handler(); }
             XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
         }
 
@@ -382,12 +443,12 @@ int main() {
         // MITAD PONG
         // ==========================================================
         // 1. Esperar PONG RX y lanzar PING RX
-        while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) {}
+        while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA)) { lv_timer_handler(); }
         XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
 
         // 1b. Esperar PONG TX y lanzar PING TX
         if (hw_mode == HW_MODE_PLAY || hw_mode == HW_MODE_OVERDUB) {
-            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) {}
+            while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE)) { lv_timer_handler(); }
             XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
         }
 
