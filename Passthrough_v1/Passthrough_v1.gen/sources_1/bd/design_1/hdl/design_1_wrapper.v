@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Sat Jun 13 17:44:09 2026
+//Date        : Tue Jun 23 21:03:37 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -32,14 +32,20 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
+    GPIO_tri_io,
+    enc_a_0,
+    enc_b_0,
+    io0_o_0,
     lrclk_out_0,
     lrclk_out_1,
     mclk_out_adc,
     mclk_out_dac,
+    sck_o_0,
     sclk_out_0,
     sclk_out_1,
     sdata_0_in_0,
     sdata_0_out_0,
+    ss_o_0,
     sw);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
@@ -62,14 +68,20 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
+  inout [1:0]GPIO_tri_io;
+  input [5:0]enc_a_0;
+  input [5:0]enc_b_0;
+  output io0_o_0;
   output lrclk_out_0;
   output lrclk_out_1;
   output mclk_out_adc;
   output mclk_out_dac;
+  output sck_o_0;
   output sclk_out_0;
   output sclk_out_1;
   input sdata_0_in_0;
   output sdata_0_out_0;
+  output [0:0]ss_o_0;
   input [1:0]sw;
 
   wire [14:0]DDR_addr;
@@ -93,16 +105,39 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
+  wire [0:0]GPIO_tri_i_0;
+  wire [1:1]GPIO_tri_i_1;
+  wire [0:0]GPIO_tri_io_0;
+  wire [1:1]GPIO_tri_io_1;
+  wire [0:0]GPIO_tri_o_0;
+  wire [1:1]GPIO_tri_o_1;
+  wire [0:0]GPIO_tri_t_0;
+  wire [1:1]GPIO_tri_t_1;
+  wire [5:0]enc_a_0;
+  wire [5:0]enc_b_0;
+  wire io0_o_0;
   wire lrclk_out_0;
   wire lrclk_out_1;
   wire mclk_out_adc;
   wire mclk_out_dac;
+  wire sck_o_0;
   wire sclk_out_0;
   wire sclk_out_1;
   wire sdata_0_in_0;
   wire sdata_0_out_0;
+  wire [0:0]ss_o_0;
   wire [1:0]sw;
 
+  IOBUF GPIO_tri_iobuf_0
+       (.I(GPIO_tri_o_0),
+        .IO(GPIO_tri_io[0]),
+        .O(GPIO_tri_i_0),
+        .T(GPIO_tri_t_0));
+  IOBUF GPIO_tri_iobuf_1
+       (.I(GPIO_tri_o_1),
+        .IO(GPIO_tri_io[1]),
+        .O(GPIO_tri_i_1),
+        .T(GPIO_tri_t_1));
   design_1 design_1_i
        (.DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
@@ -125,13 +160,21 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
+        .GPIO_tri_i({GPIO_tri_i_1,GPIO_tri_i_0}),
+        .GPIO_tri_o({GPIO_tri_o_1,GPIO_tri_o_0}),
+        .GPIO_tri_t({GPIO_tri_t_1,GPIO_tri_t_0}),
+        .enc_a_0(enc_a_0),
+        .enc_b_0(enc_b_0),
+        .io0_o_0(io0_o_0),
         .lrclk_out_0(lrclk_out_0),
         .lrclk_out_1(lrclk_out_1),
         .mclk_out_adc(mclk_out_adc),
         .mclk_out_dac(mclk_out_dac),
+        .sck_o_0(sck_o_0),
         .sclk_out_0(sclk_out_0),
         .sclk_out_1(sclk_out_1),
         .sdata_0_in_0(sdata_0_in_0),
         .sdata_0_out_0(sdata_0_out_0),
+        .ss_o_0(ss_o_0),
         .sw(sw));
 endmodule

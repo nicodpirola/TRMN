@@ -7,6 +7,12 @@ axi_gpio_0:
 axi_gpio_1:
 - axi_gpio
 - gpio
+axi_quad_spi_0:
+- axi_quad_spi
+- spi
+fx_system_wrapper_0:
+- fx_system_wrapper
+- None
 i2s_receiver_0:
 - i2s_receiver
 - i2srx

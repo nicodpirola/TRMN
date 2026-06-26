@@ -10,10 +10,10 @@
 // LVGL & UI
 #include "ili9341.h"
 #include "lvgl/lvgl.h"
-#include "lvgl/src/core/lv_init.h"
-#include "lvgl/src/core/lv_timer.h"
-#include "lvgl/src/display/lv_display.h"
-#include "lvgl/src/tick/lv_tick.h"
+#include "lvgl/include/lvgl/core/lv_init.h"
+#include "lvgl/include/lvgl/core/lv_timer.h"
+#include "lvgl/include/lvgl/display/lv_display.h"
+#include "lvgl/include/lvgl/tick/lv_tick.h"
 #include "ui.h"
 #include "xiltimer.h"
 
@@ -255,6 +255,11 @@ int main() {
     if (ili9341_init() != XST_SUCCESS) {
         xil_printf("[X] Init Pantalla fallido\r\n");
     } else {
+        // --- PRUEBA DE FUEGO HARDWARE ---
+        // Ya comprobamos que el hardware funciona, pasamos el control a LVGL directo.
+        
+        xil_printf("Enviando comandos ST7789...\r\n");
+
         lv_init();
         lv_tick_set_cb(lvgl_time_get);
         
@@ -493,6 +498,11 @@ int main() {
             }
             Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
         }
-    }
+
+        // 5. Garantizar que LVGL siempre se actualice, incluso si el DMA es muy rápido
+        lv_timer_handler();
+
+    } // Fin while(1)
+
     return XST_SUCCESS;
 }

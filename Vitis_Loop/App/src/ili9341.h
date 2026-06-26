@@ -8,9 +8,9 @@
 #define ILI9341_SPI_BASEADDR    XPAR_AXI_QUAD_SPI_0_BASEADDR
 #define ILI9341_GPIO_DEVICE_ID  0
 
-// EMIO GPIO pins (ajustar a tu BD)
-#define ILI9341_DC_PIN          55   // EMIO[1]
-#define ILI9341_RST_PIN         54   // EMIO[0]
+// EMIO GPIO pins (Intercambiados para probar si los cables están invertidos)
+#define ILI9341_DC_PIN          54   // Era 55, ahora prueba con EMIO[0] (Pin IO3)
+#define ILI9341_RST_PIN         55   // Era 54, ahora prueba con EMIO[1] (Pin IO2)
 
 // ── Dimensiones ─────────────────────────────────────────────
 #define ILI9341_WIDTH           320
@@ -40,6 +40,7 @@
 
 // ── API ─────────────────────────────────────────────────────
 int  ili9341_init(void);
+void ili9341_test_gpio(void);
 void ili9341_fill_screen(u16 color);
 void ili9341_fill_rect(u16 x, u16 y, u16 w, u16 h, u16 color);
 void ili9341_draw_pixel(u16 x, u16 y, u16 color);

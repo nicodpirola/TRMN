@@ -20,6 +20,18 @@ static inline void dc_data(void) { gpio_sync(ILI9341_DC_PIN, 1); }
 static inline void rst_lo(void)  { gpio_sync(ILI9341_RST_PIN, 0); }
 static inline void rst_hi(void)  { gpio_sync(ILI9341_RST_PIN, 1); }
 
+void ili9341_test_gpio(void) {
+    while(1) {
+        gpio_sync(ILI9341_DC_PIN, 0);
+        gpio_sync(ILI9341_RST_PIN, 0);
+        usleep(500000);
+        
+        gpio_sync(ILI9341_DC_PIN, 1);
+        gpio_sync(ILI9341_RST_PIN, 1);
+        usleep(500000);
+    }
+}
+
 // SPI (AXI Quad SPI) Control de Chip Select
 static inline void cs_low(void) {
     // Escribir 0xFFFFFFFE selecciona el Slave 0 físicamente
@@ -34,83 +46,59 @@ static inline void cs_high(void) {
 // ── Función core de envío de datos (Estilo Repositorio) ─────
 static void spi_send(const u8 *data, u32 len) {
     u32 NumBytesSent = 0;
-    u32 TransactionLen;
+    u32 NumBytesReceived = 0;
     u32 BaseAddr = SpiInstance.BaseAddr;
     
-    // Obtenemos la profundidad de la FIFO desde la configuración
-    u32 FifoDepth = SpiInstance.FifosDepth;
-    if (FifoDepth == 0) FifoDepth = 16; // Failsafe típico
-
-    while (NumBytesSent < len) {
-        /* Llenamos la FIFO de TX hasta su máxima capacidad o con los datos restantes */
-        if (len - NumBytesSent > FifoDepth) {
-            TransactionLen = FifoDepth;
-        } else {
-            TransactionLen = len - NumBytesSent;
-        }
-
-        /* Escribimos la ráfaga completa directamente en el registro DTR */
-        for (u32 i = 0; i < TransactionLen; i++) {
-            XSpi_WriteReg(BaseAddr, XSP_DTR_OFFSET, data[NumBytesSent + i]);
-        }
-
-        NumBytesSent += TransactionLen;
-
-        /* Esperamos a que la FIFO de transmisión se vacíe (transferencia completada) */
-        while (!(XSpi_ReadReg(BaseAddr, XSP_SR_OFFSET) & XSP_SR_TX_EMPTY_MASK));
-
-        /* DRENADO DE SEGURIDAD: 
-         * El autor del repo ignoraba el RX, pero en algunos IP de Xilinx, si la FIFO 
-         * de RX se llena, bloquea la transmisión. Vaciamos RX por precaución. */
-        while (!(XSpi_ReadReg(BaseAddr, XSP_SR_OFFSET) & XSP_SR_RX_EMPTY_MASK)) {
+    while (NumBytesSent < len || NumBytesReceived < len) {
+        // 1. Vaciar RX FIFO siempre primero para evitar Overrun
+        while (NumBytesReceived < NumBytesSent && !(XSpi_ReadReg(BaseAddr, XSP_SR_OFFSET) & XSP_SR_RX_EMPTY_MASK)) {
             XSpi_ReadReg(BaseAddr, XSP_DRR_OFFSET);
+            NumBytesReceived++;
+        }
+
+        // 2. Llenar TX FIFO, pero NUNCA permitir que haya más de 128 bytes "en vuelo"
+        // Esto garantiza que el RX FIFO (que suele ser de 256) jamás se desborde
+        while (NumBytesSent < len && 
+               !(XSpi_ReadReg(BaseAddr, XSP_SR_OFFSET) & XSP_SR_TX_FULL_MASK) &&
+               (NumBytesSent - NumBytesReceived < 128)) {
+            XSpi_WriteReg(BaseAddr, XSP_DTR_OFFSET, data[NumBytesSent]);
+            NumBytesSent++;
         }
     }
 }
 
 // ILI9341
 static void ili9341_cmd(u8 cmd, const u8 *params, u32 nparams) {
+    dc_cmd();       // DC a Comando ANTES de CS
     cs_low();
-    dc_cmd();
     spi_send(&cmd, 1);
+    cs_high();      // Adafruit levanta CS entre comandos y datos
+
     if (nparams > 0) {
-        dc_data();
+        dc_data();  // DC a Datos
+        cs_low();   // Vuelve a bajar CS para enviar los datos
         spi_send(params, nparams);
+        cs_high();
     }
-    cs_high();
 }
 
 //Window setup para writes a GRAM 
 static void ili9341_begin_write(u16 x0, u16 y0, u16 x1, u16 y1) {
-    u8 cmd;
     u8 buf[4];
 
-    cs_low();
-
-    dc_cmd();
-    cmd = ILI9341_CASET; 
-    spi_send(&cmd, 1);
-    
-    dc_data();
     buf[0] = x0 >> 8; buf[1] = x0 & 0xFF;
     buf[2] = x1 >> 8; buf[3] = x1 & 0xFF;
-    spi_send(buf, 4);
-
-    dc_cmd();
-    cmd = ILI9341_PASET; 
-    spi_send(&cmd, 1);
+    ili9341_cmd(ILI9341_CASET, buf, 4);
     
-    dc_data();
     buf[0] = y0 >> 8; buf[1] = y0 & 0xFF;
     buf[2] = y1 >> 8; buf[3] = y1 & 0xFF;
-    spi_send(buf, 4);
+    ili9341_cmd(ILI9341_PASET, buf, 4);
 
-    dc_cmd();
-    cmd = ILI9341_RAMWR; 
-    spi_send(&cmd, 1);
+    ili9341_cmd(ILI9341_RAMWR, NULL, 0);
     
+    // Dejar listo para el envío continuo de datos (Píxeles)
     dc_data();
-    // CS sigue bajo; el caller envía los píxeles y luego debe llamar cs_high()
+    cs_low();
 }
 
 // Init 
@@ -159,7 +147,7 @@ int ili9341_init(void) {
     rst_lo(); usleep(20000);
     rst_hi(); usleep(150000);
 
-    // Secuencia de inicialización
+    // Secuencia de inicialización ILI9341
     ili9341_cmd(ILI9341_SWRESET, NULL, 0); usleep(120000);
     ili9341_cmd(ILI9341_SLPOUT,  NULL, 0); usleep(120000);
 
@@ -173,7 +161,11 @@ int ili9341_init(void) {
     ili9341_cmd(0xC1, (u8[]){0x10}, 1);
     ili9341_cmd(0xC5, (u8[]){0x3E, 0x28}, 2);
     ili9341_cmd(0xC7, (u8[]){0x86}, 1);
-    ili9341_cmd(ILI9341_MADCTL, (u8[]){0x40}, 1);
+    
+    // MADCTL: Memory Access Control
+    // 0x28 = 0010 1000 = MV (Row/Col Exchange para Landscape) + BGR
+    ili9341_cmd(0x36, (u8[]){0x28}, 1);
+    
     ili9341_cmd(ILI9341_PIXFMT, (u8[]){0x55}, 1);
     ili9341_cmd(0xB1, (u8[]){0x00, 0x18}, 2);
     ili9341_cmd(ILI9341_DFUNCTR, (u8[]){0x08, 0x82, 0x27}, 3);

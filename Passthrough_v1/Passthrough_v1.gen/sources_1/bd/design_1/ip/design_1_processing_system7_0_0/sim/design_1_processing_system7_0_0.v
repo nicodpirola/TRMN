@@ -56,6 +56,9 @@
 `timescale 1ns/1ps
 
 module design_1_processing_system7_0_0 (
+GPIO_I, 
+GPIO_O, 
+GPIO_T, 
 USB0_PORT_INDCTL, 
 USB0_VBUS_PWRSELECT, 
 USB0_VBUS_PWRFAULT, 
@@ -168,6 +171,9 @@ PS_SRSTB,
 PS_CLK, 
 PS_PORB 
 );
+input [1 : 0] GPIO_I;
+output [1 : 0] GPIO_O;
+output [1 : 0] GPIO_T;
 output [1 : 0] USB0_PORT_INDCTL;
 output USB0_VBUS_PWRSELECT;
 input USB0_VBUS_PWRFAULT;

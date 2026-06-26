@@ -51,11 +51,11 @@ set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33 } [get_ports { lrclk_
 #set_property -dict { PACKAGE_PIN M19    IOSTANDARD LVCMOS33 } [get_ports { sw[1] }]; #IO_L7P_T1_AD2P_35 Sch=SW1
 
 ## ChipKit Outer Digital Header
-set_property -dict { PACKAGE_PIN T14   IOSTANDARD LVCMOS33 } [get_ports { ck_io0_SCK   }];  #IO_L5P_T0_34            Sch=CK_IO0
-set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { ck_io1_MOSI }]; #IO_L2N_T0_34            Sch=CK_IO1
-set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { ck_io2_DC }]; #IO_L3P_T0_DQS_PUDC_B_34 Sch=CK_IO2
-set_property -dict { PACKAGE_PIN V13   IOSTANDARD LVCMOS33 } [get_ports { ck_io3_RST }]; #IO_L3N_T0_DQS_34        Sch=CK_IO3
-set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { ck_io4_CS  }]; #IO_L10P_T1_34           Sch=CK_IO4
+set_property -dict { PACKAGE_PIN T14   IOSTANDARD LVCMOS33 } [get_ports { sck_o_0   }];  #IO_L5P_T0_34            Sch=CK_IO0
+set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { io0_o_0 }]; #IO_L2N_T0_34            Sch=CK_IO1 
+set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { GPIO_tri_io[0] }]; #IO_L3P_T0_DQS_PUDC_B_34 Sch=CK_IO2 SD
+set_property -dict { PACKAGE_PIN V13   IOSTANDARD LVCMOS33 } [get_ports { GPIO_tri_io[1] }]; #IO_L3N_T0_DQS_34        Sch=CK_IO3 RST
+set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { ss_o_0[0]  }]; #IO_L10P_T1_34           Sch=CK_IO4
 ##Encoders rotativos 
 set_property -dict { PACKAGE_PIN T15   IOSTANDARD LVCMOS33 } [get_ports { enc_a_0[0]}]; # Sch=CK_IO5
 set_property -dict { PACKAGE_PIN R16   IOSTANDARD LVCMOS33 } [get_ports { enc_b_0[0]}]; #Sch=CK_IO6

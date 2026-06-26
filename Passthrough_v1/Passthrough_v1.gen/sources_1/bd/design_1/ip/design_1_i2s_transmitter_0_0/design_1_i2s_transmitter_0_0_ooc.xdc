@@ -52,7 +52,7 @@
 # #########################################################
 
 
-create_clock -period 81.393 -name s_axis_aud_aclk [get_ports s_axis_aud_aclk]
+create_clock -period 20 -name s_axis_aud_aclk [get_ports s_axis_aud_aclk]
 
 create_clock -period 20 -name s_axi_ctrl_aclk [get_ports s_axi_ctrl_aclk]
 

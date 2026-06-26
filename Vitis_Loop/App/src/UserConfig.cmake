@@ -26,10 +26,15 @@ set(USER_UNDEFINED_SYMBOLS
 # Example 2: Adding ../../common/include will consider the path as relative to this component directory.
 # Example 3: Adding ${CMAKE_SOURCE_DIR}/data/include to add data/include from this project.
 
+file(GLOB_RECURSE LVGL_SOURCES "lvgl/src/*.c")
 set(USER_INCLUDE_DIRECTORIES
+"lvgl"
 )
 set(USER_COMPILE_SOURCES
 "main.c"
+"ili9341.c"
+"ui.c"
+${LVGL_SOURCES}
 )
 
 # -----------------------------------------

@@ -3,7 +3,7 @@
   "type": "PLATFORM",
   "configuration": {
     "description": "",
-    "xsa": "E:\\Tesis\\Vitis_Loop\\design_1_wrapper.xsa",
+    "xsa": "E:\\Tesis\\design_1_wrapper.xsa",
     "xsaPathInPlatform": "platform\\hw\\design_1_wrapper.xsa",
     "emulationXsa": "",
     "emulationXsaPathInPlatform": "",
