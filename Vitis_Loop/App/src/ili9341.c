@@ -44,6 +44,7 @@ static inline void cs_high(void) {
 }
 
 // ── Función core de envío de datos (Estilo Repositorio) ─────
+
 static void spi_send(const u8 *data, u32 len) {
     u32 NumBytesSent = 0;
     u32 NumBytesReceived = 0;

@@ -241,10 +241,7 @@ int main() {
     Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
     Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
 
-    // 5. Encender modulos I2S
-    xil_printf("Encendiendo modulos I2S...\r\n");
-    Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
-    Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
+    // (El encendido del I2S se movió al final de la inicialización para evitar desbordes)
 
     // Limpiar toda la memoria RAM para evitar ruido blanco (basura de DDR) al final del loop
     xil_printf("Limpiando memoria RAM...\r\n");
@@ -274,12 +271,23 @@ int main() {
     }
 
     int hw_mode = HW_MODE_IDLE;
-    int last_pedal = SOLTADO;
-    int last_sd_switch = 0;
     u32 loop_length = 0;
     u32 loop_index = 0;
     u32 sd_length = 0;
     int dma_started = 0;
+    u32 debounce_counter = 0;
+
+    int initial_switches = XGpio_DiscreteRead(&GpioPedal, 1);
+    int last_sd_switch = (initial_switches & 0x01);
+    int last_pedal = (initial_switches & 0x02) ? PRESIONADO : SOLTADO;
+    int debounced_pedal = last_pedal;
+    int debounced_sd = last_sd_switch;
+    u32 sd_debounce_counter = 0;
+
+    // 5. Encender modulos I2S AHORA (Evita que llenen el DMA mientras la pantalla cargaba)
+    xil_printf("Encendiendo modulos I2S...\r\n");
+    Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
+    Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
 
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
 
@@ -295,8 +303,27 @@ int main() {
 
         // --- LECTURA DE SWITCHES FÍSICOS ---
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
-        int sd_switch = (switches & 0x01); // SW0: Switch para guardar SD
-        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // SW1: Pedal Looper
+        
+        int raw_sd = (switches & 0x01); // SW0: Switch para guardar SD
+        int raw_pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // SW1: Pedal Looper
+
+        if (debounce_counter > 0) debounce_counter--;
+        if (sd_debounce_counter > 0) sd_debounce_counter--;
+
+        // Anti-rebote para el Pedal (SW1)
+        if (raw_pedal != debounced_pedal && debounce_counter == 0) {
+            debounced_pedal = raw_pedal;
+            debounce_counter = 50; 
+        }
+
+        // Anti-rebote para la SD (SW0)
+        if (raw_sd != debounced_sd && sd_debounce_counter == 0) {
+            debounced_sd = raw_sd;
+            sd_debounce_counter = 50; 
+        }
+
+        int pedal = debounced_pedal; // Usar estado limpio para la maquina de estados
+        int sd_switch = debounced_sd;
 
         // Disparador de inicio de grabación SD (Flanco ascendente en SW0)
         if (sd_switch == 1 && last_sd_switch == 0) {
@@ -327,7 +354,7 @@ int main() {
                 if (hw_mode == HW_MODE_IDLE) {
                     hw_mode = HW_MODE_RECORD;
                     loop_index = 0; // Iniciar grabacion
-                    memset(LoopBuffer, 0, MAX_SAMPLES * sizeof(u32)); // Limpiar basura anterior
+                    // ELIMINADO PARA EVITAR LAG: memset(LoopBuffer, 0, MAX_SAMPLES * sizeof(u32));
                     xil_printf(">>> RECORDING... (Pedal Pisado)\r\n");
                 } else if (hw_mode == HW_MODE_PLAY) {
                     hw_mode = HW_MODE_OVERDUB;
