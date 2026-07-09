@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Tue Jun 23 21:03:37 2026
+//Date        : Thu Jul  9 15:53:59 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -49,7 +49,7 @@ module design_1
     sdata_0_in_0,
     sdata_0_out_0,
     ss_o_0,
-    sw);
+    sys_input);
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_MODE = "Master" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -87,7 +87,7 @@ module design_1
   input sdata_0_in_0;
   output sdata_0_out_0;
   output [0:0]ss_o_0;
-  input [1:0]sw;
+  input [4:0]sys_input;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -388,7 +388,7 @@ module design_1
   wire sdata_0_in_0;
   wire sdata_0_out_0;
   wire [0:0]ss_o_0;
-  wire [1:0]sw;
+  wire [4:0]sys_input;
   wire [0:0]xlconstant_0_dout;
 
   assign mclk_out_dac = mclk_out_adc;
@@ -474,7 +474,7 @@ module design_1
         .s_axi_wstrb(axi_smc_M03_AXI_WSTRB),
         .s_axi_wvalid(axi_smc_M03_AXI_WVALID));
   design_1_axi_gpio_1_1 axi_gpio_1
-       (.gpio_io_i(sw),
+       (.gpio_io_i(sys_input),
         .s_axi_aclk(processing_system7_0_FCLK_CLK0),
         .s_axi_araddr(axi_smc_M04_AXI_ARADDR),
         .s_axi_aresetn(rst_ps7_0_100M_peripheral_aresetn),

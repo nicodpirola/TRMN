@@ -6,6 +6,7 @@
 #include "ff.h"
 #include "xil_types.h"
 #include "xil_io.h"
+#include "sleep.h"
 
 // LVGL & UI
 #include "ili9341.h"
@@ -58,6 +59,8 @@
 #define REG_ENC(n)  (0x40 + (n)*4)
 
 // Funciones para LVGL y Encoders
+extern XGpio GpioPedal; // Declaración adelantada para poder leer los botones
+
 static int16_t enc_prev[3] = {0, 0, 0};
 static int16_t enc_delta(int n) {
     int16_t now = (int16_t)(Xil_In32(FX_BASE + REG_ENC(n)) & 0xFFFF);
@@ -65,6 +68,31 @@ static int16_t enc_delta(int n) {
     enc_prev[n] = now;
     return d;
 }
+
+//leer pulsadores (con Anti-Rebote)
+static int enc_button_clicked(int n) {
+    static int btn_prev[3] = {0,0,0};
+    static int btn_debounce[3] = {0,0,0};
+    // Si el contador de rebote está activo, descontar y no hacer nada
+    if (btn_debounce[n] > 0) {
+        btn_debounce[n]--;
+        return 0; 
+    }
+    // Leemos todo el bloque GPIO (el mismo del pedal)
+    int switches = XGpio_DiscreteRead(&GpioPedal, 1);
+    
+    // Extraer el bit (n=0 es bit 2, n=1 es bit 3, n=2 es bit 4)
+    int current = ((switches & (1 << (n + 2))) == 0) ? 1 : 0;
+    int clicked = 0;
+    // Detección de flanco (solo dispara en el momento exacto que se aprieta)
+    if (current == 1 && btn_prev[n] == 0) {
+        clicked = 1;
+        btn_debounce[n] = 40; // ~200ms de inmunidad anti-rebote por hardware
+    }
+    btn_prev[n] = current;
+    return clicked;
+}
+
 
 uint32_t lvgl_time_get(void){
     XTime t;
@@ -292,12 +320,25 @@ int main() {
     xil_printf("Hardware Inicializado. Sistema en BYPASS PERFECTO.\r\n");
 
     while(1) {
-        // --- PROCESAMIENTO DE ENCODERS (FUERA DEL TIEMPO CRÍTICO) ---
-        for (int n = 0; n < 3; n++) {
-            int16_t d = enc_delta(n);
-            if (d != 0) {
-                // Aqui puedes asignar los encoders a variables del looper
-                xil_printf("Encoder %d movido: %+d\r\n", n, d);
+        // --- PROCESAMIENTO DE ENCODERS PARA LA UI ---
+        int d0 = enc_delta(0);
+        int c0 = enc_button_clicked(0);
+        int d1 = enc_delta(1);
+        int c1 = enc_button_clicked(1);
+        int d2 = enc_delta(2);
+        int c2 = enc_button_clicked(2);
+        
+        // El encoder 0 y 1 navegan y editan la UI.
+        ui_handle_input(d0, c0, d1, c1);
+        
+        // El encoder 2 (Click) se usa para disparar el guardado SD manualmente si se desea, 
+        // emulando la caida del viejo SW0
+        if (c2) {
+            // Engañamos a la maquina de estados de la SD simulando que el SW0 bajó
+            // Solo lo hacemos si estábamos grabando en la SD
+            if (sd_length > 0) {
+                last_sd_switch = 1; 
+                debounced_sd = 0;
             }
         }
 
@@ -392,6 +433,10 @@ int main() {
 
         // Actualizar el modo en el Mixer de Hardware (Crucial!)
         Xil_Out32(GPIO_MIXER_BASE + 0x00, hw_mode);
+
+        // Actualizar UI con estados actuales
+        ui_update_status(hw_mode, (sd_switch == 1));
+        ui_update_progress(loop_index, loop_length);
 
         // --- MANEJO DEL DMA SEGÚN EL MODO ---
         

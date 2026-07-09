@@ -1,4 +1,4 @@
-# 2026-07-09T17:13:49.744318400
+# 2026-07-09T13:37:05.890167700
 import vitis
 
 client = vitis.create_client()
@@ -10,11 +10,7 @@ status = platform.build()
 comp = client.get_component(name="App")
 comp.build()
 
-status = platform.build()
+status = platform.update_hw(hw_design = "$COMPONENT_LOCATION/../../design_1_wrapper.xsa")
 
-comp.build()
-
-status = platform.build()
-
-comp.build()
+vitis.dispose()
 

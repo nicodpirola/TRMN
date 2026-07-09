@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x58B8611B05743DF5",
+      "boundary_crc": "0xC322FD38CA8E2876",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../Passthrough_v1.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -309,9 +309,9 @@
           }
         }
       },
-      "sw": {
+      "sys_input": {
         "direction": "I",
-        "left": "1",
+        "left": "4",
         "right": "0"
       },
       "sdata_0_in_0": {
@@ -3854,7 +3854,7 @@
             "value": "1"
           },
           "C_GPIO_WIDTH": {
-            "value": "2"
+            "value": "5"
           }
         }
       },
@@ -4492,7 +4492,7 @@
       },
       "gpio_io_i_0_1": {
         "ports": [
-          "sw",
+          "sys_input",
           "axi_gpio_1/gpio_io_i"
         ]
       },

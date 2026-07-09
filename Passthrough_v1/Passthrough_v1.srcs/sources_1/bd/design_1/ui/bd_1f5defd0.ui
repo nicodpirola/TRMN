@@ -4,7 +4,7 @@
    "Color Coded_TopLeft":"-135,-290",
    "Default View_Layers":"/clk_wiz_0_clk_aud:true|/proc_sys_reset_0_peripheral_aresetn:true|/processing_system7_0_FCLK_CLK0:true|/processing_system7_0_FCLK_RESET0_N:true|/proc_sys_reset_0_peripheral_reset:true|/rst_ps7_0_100M_peripheral_aresetn:true|",
    "Default View_ScaleFactor":"1.01531",
-   "Default View_TopLeft":"1966,-164",
+   "Default View_TopLeft":"-242,-152",
    "Display-IntfAXI3":"true",
    "Display-IntfAXI4Lite":"true",
    "Display-IntfAXIStream":"true",
@@ -88,6 +88,7 @@ pagesize -pg 1 -db -bbox -sgen -170 -190 2660 1440
 preplace port DDR -pg 1 -lvl 4 -x 1830 -y -390 -defaultsOSRD -top
 preplace port FIXED_IO -pg 1 -lvl 4 -x 1810 -y -390 -defaultsOSRD -top
 preplace port btns_4bits -pg 1 -lvl 7 -x 2860 -y -180 -defaultsOSRD
+preplace port GPIO -pg 1 -lvl 7 -x 2860 -y 50 -defaultsOSRD
 preplace port port-id_sclk_out_0 -pg 1 -lvl 4 -x 1910 -y -390 -defaultsOSRD -top
 preplace port port-id_lrclk_out_0 -pg 1 -lvl 4 -x 1790 -y -390 -defaultsOSRD -top
 preplace port port-id_sdata_0_out_0 -pg 1 -lvl 4 -x 1850 -y -390 -defaultsOSRD -top
@@ -98,8 +99,7 @@ preplace port port-id_mclk_out_adc -pg 1 -lvl 7 -x 2860 -y 620 -defaultsOSRD
 preplace port port-id_sdata_0_in_0 -pg 1 -lvl 0 -x -70 -y 480 -defaultsOSRD
 preplace port port-id_io0_o_0 -pg 1 -lvl 7 -x 2860 -y 940 -defaultsOSRD
 preplace port port-id_sck_o_0 -pg 1 -lvl 7 -x 2860 -y 1060 -defaultsOSRD
-preplace port GPIO -pg 1 -lvl 7 -x 2860 -y 50 -defaultsOSRD
-preplace portBus sw -pg 1 -lvl 0 -x -70 -y 40 -defaultsOSRD
+preplace portBus sys_input -pg 1 -lvl 0 -x -70 -y 40 -defaultsOSRD
 preplace portBus enc_a_0 -pg 1 -lvl 0 -x -70 -y 730 -defaultsOSRD
 preplace portBus enc_b_0 -pg 1 -lvl 0 -x -70 -y 750 -defaultsOSRD
 preplace portBus ss_o_0 -pg 1 -lvl 7 -x 2860 -y 1120 -defaultsOSRD
@@ -141,7 +141,7 @@ preplace netloc ilconstant_0_dout 1 0 2 240 180 550
 preplace netloc ilconstant_1_dout 1 4 2 2170 1030 2480
 preplace netloc proc_sys_reset_0_peripheral_aresetn 1 3 2 1650 950 2120
 preplace netloc proc_sys_reset_0_peripheral_reset 1 1 4 660 420 1090 590 1630 910 2150
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 6 260 450 630 410 1060 300 1550 310 2190 530 N
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 6 260 450 630 410 1060 300 1550 280 2190 530 N
 preplace netloc processing_system7_0_FCLK_RESET0_N 1 3 2 1640 890 2130
 preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 0 6 270 500 610 1000 1070 620 1600 900 2150 570 N
 preplace netloc sdata_0_in_0_1 1 0 2 N 480 620
@@ -166,8 +166,8 @@ preplace netloc fx_system_wrapper_0_M_AXIS 1 2 2 1120 700 1470
 preplace netloc i2s_receiver_0_m_axis_aud 1 2 1 980 710n
 preplace netloc processing_system7_0_DDR 1 4 1 2130 -340n
 preplace netloc processing_system7_0_FIXED_IO 1 4 1 2150 -330n
-preplace netloc processing_system7_0_M_AXI_GP0 1 4 2 N 190 2480
-preplace netloc processing_system7_0_GPIO_0 1 4 3 NJ 50 NJ 50 NJ
+preplace netloc processing_system7_0_GPIO_0 1 4 3 2190J 50 NJ 50 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 4 2 N 160 2480
 levelinfo -pg 1 -70 410 830 1300 1890 2400 2630 2860
 pagesize -pg 1 -db -bbox -sgen -280 -530 4630 2600
 "

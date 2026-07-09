@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Tue Jun 23 21:03:37 2026
+//Date        : Thu Jul  9 15:54:00 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -46,7 +46,7 @@ module design_1_wrapper
     sdata_0_in_0,
     sdata_0_out_0,
     ss_o_0,
-    sw);
+    sys_input);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -82,7 +82,7 @@ module design_1_wrapper
   input sdata_0_in_0;
   output sdata_0_out_0;
   output [0:0]ss_o_0;
-  input [1:0]sw;
+  input [4:0]sys_input;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -126,7 +126,7 @@ module design_1_wrapper
   wire sdata_0_in_0;
   wire sdata_0_out_0;
   wire [0:0]ss_o_0;
-  wire [1:0]sw;
+  wire [4:0]sys_input;
 
   IOBUF GPIO_tri_iobuf_0
        (.I(GPIO_tri_o_0),
@@ -176,5 +176,5 @@ module design_1_wrapper
         .sdata_0_in_0(sdata_0_in_0),
         .sdata_0_out_0(sdata_0_out_0),
         .ss_o_0(ss_o_0),
-        .sw(sw));
+        .sys_input(sys_input));
 endmodule

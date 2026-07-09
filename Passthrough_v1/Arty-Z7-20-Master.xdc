@@ -8,8 +8,8 @@ set_property -dict { PACKAGE_PIN H16    IOSTANDARD LVCMOS33 } [get_ports { sys_c
 create_clock -add -name sys_clk_pin -period 8.00 -waveform {0 4} [get_ports { sys_clock }];#set
 
 ## Switches
-set_property -dict { PACKAGE_PIN M20    IOSTANDARD LVCMOS33 } [get_ports { sw[0] }]; #IO_L7N_T1_AD2N_35 Sch=SW0
-set_property -dict { PACKAGE_PIN M19    IOSTANDARD LVCMOS33 } [get_ports { sw[1] }]; #IO_L7P_T1_AD2P_35 Sch=SW1
+set_property -dict { PACKAGE_PIN M20    IOSTANDARD LVCMOS33 } [get_ports { sys_input[0] }]; #IO_L7N_T1_AD2N_35 Sch=SW0
+set_property -dict { PACKAGE_PIN M19    IOSTANDARD LVCMOS33 } [get_ports { sys_input[1] }]; #IO_L7P_T1_AD2P_35 Sch=SW1
 
 ## RGB LEDs
 #set_property -dict { PACKAGE_PIN L15    IOSTANDARD LVCMOS33 } [get_ports { led4_b }]; #IO_L22N_T3_AD7P_35 Sch=LED4_B
@@ -63,6 +63,19 @@ set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports { enc_a_
 set_property -dict { PACKAGE_PIN V17   IOSTANDARD LVCMOS33 } [get_ports { enc_b_0[1]}]; #Sch=CK_IO8
 set_property -dict { PACKAGE_PIN V18   IOSTANDARD LVCMOS33 } [get_ports { enc_a_0[2]}]; #Sch=CK_IO9
 set_property -dict { PACKAGE_PIN T16   IOSTANDARD LVCMOS33 } [get_ports { enc_b_0[2]}]; #Sch=CK_IO10
+
+# Encoder 0 Button
+set_property PACKAGE_PIN V8 [get_ports {sys_input[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sys_input[2]}]
+set_property PULLUP true [get_ports {sys_input[2]}]
+# Encoder 1 Button
+set_property PACKAGE_PIN W10 [get_ports {sys_input[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sys_input[3]}]
+set_property PULLUP true [get_ports {sys_input[3]}]
+# Encoder 2 Button
+set_property PACKAGE_PIN Y6 [get_ports {sys_input[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sys_input[4]}]
+set_property PULLUP true [get_ports {sys_input[4]}]
 
 ## --- Reservados (3, 4, 5): sin cablear todavía, PULLUP para dejarlos en reposo
 set_property -dict { PACKAGE_PIN R17  IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [get_ports {enc_a_0[3]}] ;# CK_IO11
@@ -136,11 +149,11 @@ set_property -dict { PACKAGE_PIN V6   IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [ge
 #set_property -dict { PACKAGE_PIN U7    IOSTANDARD LVCMOS33 } [get_ports { ck_io29 }]; #IO_L11P_T1_SRCC_13  Sch=CK_IO29
 #set_property -dict { PACKAGE_PIN V7    IOSTANDARD LVCMOS33 } [get_ports { ck_io30 }]; #IO_L11N_T1_SRCC_13  Sch=CK_IO30
 #set_property -dict { PACKAGE_PIN U8    IOSTANDARD LVCMOS33 } [get_ports { ck_io31 }]; #IO_L17N_T2_13       Sch=CK_IO31
-#set_property -dict { PACKAGE_PIN V8    IOSTANDARD LVCMOS33 } [get_ports { ck_io32 }]; #IO_L15P_T2_DQS_13   Sch=CK_IO32
+#set_property -dict { PACKAGE_PIN V8    IOSTANDARD LVCMOS33 PULLUP } [get_ports {sys_input[2]}]; #IO_L15P_T2_DQS_13   Sch=CK_IO32
 #set_property -dict { PACKAGE_PIN V10   IOSTANDARD LVCMOS33 } [get_ports { ck_io33 }]; #IO_L21N_T3_DQS_13   Sch=CK_IO33
-#set_property -dict { PACKAGE_PIN W10   IOSTANDARD LVCMOS33 } [get_ports { ck_io34 }]; #IO_L16P_T2_13       Sch=CK_IO34
+#set_property -dict { PACKAGE_PIN W10   IOSTANDARD LVCMOS33 PULLUP} [get_ports {sys_input[3]}]; #IO_L16P_T2_13       Sch=CK_IO34
 #set_property -dict { PACKAGE_PIN W6    IOSTANDARD LVCMOS33 } [get_ports { ck_io35 }]; #IO_L22N_T3_13       Sch=CK_IO35
-#set_property -dict { PACKAGE_PIN Y6    IOSTANDARD LVCMOS33 } [get_ports { ck_io36 }]; #IO_L13N_T2_MRCC_13  Sch=CK_IO36
+#set_property -dict { PACKAGE_PIN Y6    IOSTANDARD LVCMOS33 PULLUP} [get_ports {sys_input[4]}]; #IO_L13N_T2_MRCC_13  Sch=CK_IO36
 #set_property -dict { PACKAGE_PIN Y7    IOSTANDARD LVCMOS33 } [get_ports { ck_io37 }]; #IO_L13P_T2_MRCC_13  Sch=cCK_IO37
 #set_property -dict { PACKAGE_PIN W8    IOSTANDARD LVCMOS33 } [get_ports { ck_io38 }]; #IO_L15N_T2_DQS_13   Sch=CK_IO38
 #set_property -dict { PACKAGE_PIN Y8    IOSTANDARD LVCMOS33 } [get_ports { ck_io39 }]; #IO_L14N_T2_SRCC_13  Sch=CK_IO39

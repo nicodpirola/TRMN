@@ -115,7 +115,7 @@
 			compatible = "xlnx,axi-gpio-2.0" , "xlnx,xps-gpio-1.00.a";
 			xlnx,all-outputs = <0>;
 			#gpio-cells = <2>;
-			xlnx,gpio-width = <2>;
+			xlnx,gpio-width = <5>;
 			xlnx,dout-default = <0x0>;
 			xlnx,is-dual = <0>;
 			xlnx,ip-name = "axi_gpio";
