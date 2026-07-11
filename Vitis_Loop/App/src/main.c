@@ -467,23 +467,21 @@ int main(void) {
         if (sd_button != last_sd_button && (now - sd_debounce_time > 200)) {
             sd_debounce_time = now;
             
-            if (sd_button == 1) {
-                if (sd_recording == 0) {
-                    xil_printf("Iniciando Grabacion SD...\r\n");
-                    sd_length = 0;
-                    sd_recording = 1;
-                } else {
-                    sd_recording = 0;
-                    xil_printf("Deteniendo y Guardando en SD...\r\n");
-                    
-                    // Detener temporalmente interrupciones DMA para que el guardado lento en SD no sea interrumpido
-                    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
-                    SaveWavToSD(SdRecordBuffer, sd_length);
-                    XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DEVICE_TO_DMA);
-                    
-                    // Volvemos a cebar el DMA porque el AXI DMA internamente se frena sin servicio
-                    XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
-                }
+            if (sd_button == 1 && sd_recording == 0) {
+                xil_printf("Iniciando Grabacion SD...\r\n");
+                sd_length = 0;
+                sd_recording = 1;
+            } else if (sd_button == 0 && sd_recording == 1) {
+                sd_recording = 0;
+                xil_printf("Deteniendo y Guardando en SD...\r\n");
+                
+                // Detener temporalmente interrupciones DMA para que el guardado lento en SD no sea interrumpido
+                XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+                SaveWavToSD(SdRecordBuffer, sd_length);
+                XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DEVICE_TO_DMA);
+                
+                // Volvemos a cebar el DMA porque el AXI DMA internamente se frena sin servicio
+                XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
             }
             last_sd_button = sd_button;
         }
