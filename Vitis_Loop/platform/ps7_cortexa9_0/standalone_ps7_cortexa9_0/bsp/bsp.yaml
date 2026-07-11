@@ -5,7 +5,7 @@ config: None
 os: standalone
 os_info:
   standalone:
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\lib\bsp\standalone_v9_3
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\lib\bsp\standalone_v9_3
 os_config:
   standalone:
     standalone_enable_sw_intrusive_profiling:
@@ -155,28 +155,28 @@ drv_info:
   axi_dma_0:
     driver: axidma
     ip_name: axi_dma
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\axidma_v9_19
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\axidma_v9_19
   axi_gpio_0:
     driver: gpio
     ip_name: axi_gpio
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpio_v4_12
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpio_v4_12
   axi_gpio_1:
     driver: gpio
     ip_name: axi_gpio
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpio_v4_12
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpio_v4_12
   axi_quad_spi_0:
     driver: spi
     ip_name: axi_quad_spi
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\spi_v4_14
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\spi_v4_14
   fx_system_wrapper_0: None
   i2s_receiver_0:
     driver: i2srx
     ip_name: i2s_receiver
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\i2srx_v2_4
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\i2srx_v2_4
   i2s_transmitter_0:
     driver: i2stx
     ip_name: i2s_transmitter
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\i2stx_v2_3
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\i2stx_v2_3
   ps7_afi_0: None
   ps7_afi_1: None
   ps7_afi_2: None
@@ -184,31 +184,31 @@ drv_info:
   ps7_coresight_comp_0:
     driver: coresightps_dcc
     ip_name: ps7_coresight_comp
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\coresightps_dcc_v1_12
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\coresightps_dcc_v1_12
   ps7_ddrc_0: None
   ps7_dev_cfg_0:
     driver: devcfg
     ip_name: ps7_dev_cfg
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\devcfg_v3_8
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\devcfg_v3_8
   ps7_dma_ns: None
   ps7_dma_s:
     driver: dmaps
     ip_name: ps7_dma
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\dmaps_v2_11
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\dmaps_v2_11
   ps7_ethernet_0:
     driver: emacps
     ip_name: ps7_ethernet
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\emacps_v3_22
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\emacps_v3_22
   ps7_globaltimer_0: None
   ps7_gpio_0:
     driver: gpiops
     ip_name: ps7_gpio
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpiops_v3_14
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\gpiops_v3_14
   ps7_gpv_0: None
   ps7_intc_dist_0:
     driver: scugic
     ip_name: ps7_intc_dist
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\scugic_v5_5
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\scugic_v5_5
   ps7_iop_bus_config_0: None
   ps7_ocmc_0: None
   ps7_pl310_0: None
@@ -216,38 +216,38 @@ drv_info:
   ps7_qspi_0:
     driver: qspips
     ip_name: ps7_qspi
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\qspips_v3_14
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\qspips_v3_14
   ps7_scuc_0: None
   ps7_scutimer_0:
     driver: scutimer
     ip_name: ps7_scutimer
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\scutimer_v2_7
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\scutimer_v2_7
   ps7_scuwdt_0:
     driver: scuwdt
     ip_name: ps7_scuwdt
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\scuwdt_v2_6
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\scuwdt_v2_6
   ps7_sd_0:
     driver: sdps
     ip_name: ps7_sdio
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\sdps_v4_4
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\sdps_v4_4
   ps7_slcr_0: None
   ps7_uart_0:
     driver: uartps
     ip_name: ps7_uart
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\uartps_v3_16
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\uartps_v3_16
   ps7_usb_0:
     driver: usbps
     ip_name: ps7_usb
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\usbps_v2_9
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\usbps_v2_9
   ps7_xadc_0:
     driver: xadcps
     ip_name: ps7_xadc
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\xadcps_v2_7
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\XilinxProcessorIPLib\drivers\xadcps_v2_7
 lib_info:
   xiltimer:
     path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\lib\sw_services\xiltimer_v2_2
   xilffs:
-    path: E:\Xilinx\2025.1\Vitis\data\embeddedsw\lib\sw_services\xilffs_v5_4
+    path: X:\Xilinx\2025.1\Vitis\data\embeddedsw\lib\sw_services\xilffs_v5_4
     examples:
       xilffs_polled_example.c: []
 lib_config:

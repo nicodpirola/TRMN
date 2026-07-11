@@ -9,6 +9,8 @@
 #include "sleep.h"
 #include "xscugic.h"
 #include "xil_exception.h"
+#include "xinterrupt_wrap.h"
+#include "xscutimer.h" // NUEVO: SCU Timer (Temporizador Privado)
 
 // LVGL & UI
 #include "ili9341.h"
@@ -47,7 +49,6 @@
 #define DMA_DEV_ID          XPAR_AXIDMA_0_DEVICE_ID
 #define INTC_DEVICE_ID      XPAR_SCUGIC_SINGLE_DEVICE_ID
 #endif
-#define RX_INTR_ID          XPAR_FABRIC_AXI_DMA_0_INTR_1 // S2MM Interrupt
 
 #define PACKET_SIZE         512     // Muestras por paquete DMA
 #define MAX_SAMPLES         1440000 // Memoria Looper (30s aprox)
@@ -58,7 +59,7 @@
 
 XAxiDma AxiDma;     
 XGpio GpioPedal;    
-XScuGic Intc;       
+XScuTimer ScuTimer; // Instancia global del temporizador privado
 
 u32 rx_ping[PACKET_SIZE] __attribute__((aligned(32)));
 u32 rx_pong[PACKET_SIZE] __attribute__((aligned(32)));
@@ -193,6 +194,12 @@ static void dma_rx_isr(void *CallbackRef) {
     static int ping_pong_state = 0; // 0 = Ping, 1 = Pong
     XAxiDma *AxiDmaInst = (XAxiDma *)CallbackRef;
 
+    // Limpiar posibles interrupciones del canal TX (por si se disparó esta línea)
+    u32 TxIrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DMA_TO_DEVICE);
+    if (TxIrqStatus) {
+        XAxiDma_IntrAckIrq(AxiDmaInst, TxIrqStatus, XAXIDMA_DMA_TO_DEVICE);
+    }
+
     u32 IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
     XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
     if (!(IrqStatus & XAXIDMA_IRQ_IOC_MASK)) return;
@@ -276,32 +283,49 @@ static void dma_rx_isr(void *CallbackRef) {
 }
 
 // ---------------------------------------------------------
-// CONFIGURACIÓN DE INTERRUPCIONES
+// RUTINA DE SERVICIO DEL TEMPORIZADOR PRIVADO (1 kHz)
 // ---------------------------------------------------------
-int SetupInterruptSystem(XScuGic *IntcInstancePtr, XAxiDma *AxiDmaPtr, u16 RxIntrId) {
+static void scu_timer_isr(void *CallBackRef) {
+    XScuTimer *TimerInstancePtr = (XScuTimer *)CallBackRef;
+    
+    // Limpiar flag de interrupción del timer para que vuelva a disparar
+    XScuTimer_ClearInterruptStatus(TimerInstancePtr);
+    
+    // Polling del DMA (Ultra-rápido, no bloqueante, pero con PREEMPTION gracias al timer)
+    u32 rx_sr = XAxiDma_IntrGetIrq(&AxiDma, XAXIDMA_DEVICE_TO_DMA);
+    if (rx_sr & XAXIDMA_IRQ_IOC_MASK) {
+        dma_rx_isr(&AxiDma); 
+    }
+}
+
+// ---------------------------------------------------------
+// CONFIGURACIÓN DE INTERRUPCIONES (VIA SCU TIMER - BULLETPROOF)
+// ---------------------------------------------------------
+int SetupInterruptSystem(XAxiDma *AxiDmaPtr) {
     int Status;
-    XScuGic_Config *IntcConfig;
 
-    Xil_ExceptionInit();
-    IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);
-    if (NULL == IntcConfig) return XST_FAILURE;
-
-    Status = XScuGic_CfgInitialize(IntcInstancePtr, IntcConfig, IntcConfig->CpuBaseAddress);
+    // Inicializar SCU Timer
+    XScuTimer_Config *TMRConfigPtr = XScuTimer_LookupConfig(XPAR_XSCUTIMER_0_BASEADDR);
+    if (TMRConfigPtr == NULL) return XST_FAILURE;
+    
+    Status = XScuTimer_CfgInitialize(&ScuTimer, TMRConfigPtr, TMRConfigPtr->BaseAddr);
     if (Status != XST_SUCCESS) return XST_FAILURE;
 
-    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, 
-                                 (Xil_ExceptionHandler)XScuGic_InterruptHandler, 
-                                 IntcInstancePtr);
-
-    Status = XScuGic_Connect(IntcInstancePtr, RxIntrId, 
-                             (Xil_InterruptHandler)dma_rx_isr, AxiDmaPtr);
+    // Conectar el SCU Timer al GIC (usando SDT wrapper)
+    Status = XSetupInterruptSystem(&ScuTimer, (void *)scu_timer_isr, 
+                                   XPAR_XSCUTIMER_0_INTERRUPTS, 
+                                   XPAR_XSCUTIMER_0_INTERRUPT_PARENT, 0xA0);
     if (Status != XST_SUCCESS) return XST_FAILURE;
 
-    XScuGic_Enable(IntcInstancePtr, RxIntrId);
-    Xil_ExceptionEnable();
+    // Cargar 1 milisegundo (CPU_CLOCK / 2 / 1000)
+    XScuTimer_LoadTimer(&ScuTimer, XPAR_CPU_CORE_CLOCK_FREQ_HZ / 2000);
+    XScuTimer_EnableAutoReload(&ScuTimer);
+    XScuTimer_EnableInterrupt(&ScuTimer);
+    XScuTimer_Start(&ScuTimer);
 
-    // Habilitar interrupción de RX en el DMA
-    XAxiDma_IntrEnable(AxiDmaPtr, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
+    // Habilitar interrupción de RX y TX en el DMA (para que el bit IOC se levante)
+    XAxiDma_IntrEnable(AxiDmaPtr, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DEVICE_TO_DMA);
+    XAxiDma_IntrEnable(AxiDmaPtr, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DMA_TO_DEVICE);
 
     return XST_SUCCESS;
 }
@@ -359,13 +383,13 @@ int main(void) {
         xil_printf("SD Montada OK!\r\n");
     }
 
-    // --- 6. Init Interrupciones ---
-    Status = SetupInterruptSystem(&Intc, &AxiDma, RX_INTR_ID);
+    // --- 6. Init DMA Interrupts (Via SCU Timer Dummy-Proof) ---
+    Status = SetupInterruptSystem(&AxiDma);
     if (Status != XST_SUCCESS) {
-        xil_printf("Fallo setup de interrupciones\r\n");
+        xil_printf("Fallo setup de interrupciones del Timer\r\n");
         return XST_FAILURE;
     }
-    xil_printf("SISTEMA DE INTERRUPCIONES ACTIVO\r\n");
+    xil_printf("SISTEMA DE INTERRUPCIONES ACTIVO (Timer Aislado)\r\n");
 
     // --- 7. Arrancar flujo de DMA Inicial e I2S ---
     // Inicia el primer paquete RX para detonar la cadena infinita de interrupciones
@@ -378,96 +402,91 @@ int main(void) {
 
     int switches_init = XGpio_DiscreteRead(&GpioPedal, 1);
     int last_pedal = (switches_init & 0x02) ? PRESIONADO : SOLTADO;
-    int debounced_pedal = last_pedal;
-    int debounce_counter = 0;
-    
-    int last_sd_button = (switches_init & 0x01);
+    int last_sd_button = (switches_init & 0x01) ? 1 : 0;
     int debounced_sd = last_sd_button;
     int sd_debounce_counter = 0;
     
     // ==========================================================
     // BUCLE PRINCIPAL (SUPER LIVIANO)
     // ==========================================================
+    static uint32_t pedal_debounce_time = 0;
+    static uint32_t sd_debounce_time = 0;
+
     while (1) {
         
+        uint32_t now = lvgl_time_get();
+
         // --- LECTURA DE HARDWARE ---
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
-        int raw_pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Bit 1
-        int raw_sd    = (switches & 0x01) ? 1 : 0; // Bit 0
+        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Bit 1
+        int sd_button = (switches & 0x01) ? 1 : 0; // Bit 0
 
-        // Anti-rebote
-        if (debounce_counter > 0) debounce_counter--;
-        if (raw_pedal != debounced_pedal && debounce_counter == 0) {
-            debounced_pedal = raw_pedal;
-            debounce_counter = 20; // Aproximadamente 20 loops de gracia
-        }
-        if (sd_debounce_counter > 0) sd_debounce_counter--;
-        if (raw_sd != debounced_sd && sd_debounce_counter == 0) {
-            debounced_sd = raw_sd;
-            sd_debounce_counter = 20;
-        }
-
-        int pedal = debounced_pedal;
-        int sd_button = debounced_sd;
-
-        // Maquina de estados del pedal (SW1) - CON PROTECCIÓN ATÓMICA
-        if (pedal == PRESIONADO && last_pedal == SOLTADO) {
-            XScuGic_Disable(&Intc, RX_INTR_ID); 
-            if (hw_mode == 0) { // IDLE -> REC
-                hw_mode = 1;
-                loop_index = 0; 
-                xil_printf(">>> RECORDING... (Pedal Pisado)\r\n");
-            } else if (hw_mode == 2) { // PLAY -> OVERDUB
-                hw_mode = 3;
-                xil_printf(">>> OVERDUBBING... (Pedal Pisado)\r\n");
-            } else if (hw_mode == 3) { // OVERDUB -> PLAY
-                hw_mode = 2;
-                xil_printf("<<< PLAYING... (Pedal Pisado)\r\n");
-            }
-            XScuGic_Enable(&Intc, RX_INTR_ID);
-        } else if (pedal == SOLTADO && last_pedal == PRESIONADO) {
-            if (hw_mode == 1) { // REC -> PLAY
-                XScuGic_Disable(&Intc, RX_INTR_ID); 
-                loop_length = loop_index; 
-                loop_index = 0; 
-                xil_printf("<<< PLAYING... [Loop: %d muestras]\r\n", (int)loop_length);
-
-                // Pre-carga inmediata
-                if (loop_length > 0) {
-                    for(int i=0; i<PACKET_SIZE; i++) {
-                        tx_ping[i] = LoopBuffer[i % loop_length];
-                        tx_pong[i] = LoopBuffer[(PACKET_SIZE + i) % loop_length];
-                    }
-                    Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
-                    Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
-                    XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+        // Maquina de estados del pedal (SW1) - CON PROTECCIÓN ATÓMICA Y ANTI-REBOTE TEMPORAL
+        if (pedal != last_pedal && (now - pedal_debounce_time > 200)) { // 200ms de gracia
+            pedal_debounce_time = now;
+            
+            if (pedal == PRESIONADO) {
+                XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA); 
+                if (hw_mode == 0) { // IDLE -> REC
+                    hw_mode = 1;
+                    loop_index = 0; 
+                    xil_printf(">>> RECORDING... (Pedal Pisado)\r\n");
+                } else if (hw_mode == 2) { // PLAY -> OVERDUB
+                    hw_mode = 3;
+                    xil_printf(">>> OVERDUBBING... (Pedal Pisado)\r\n");
+                } else if (hw_mode == 3) { // OVERDUB -> PLAY
+                    hw_mode = 2;
+                    xil_printf("<<< PLAYING... (Pedal Pisado)\r\n");
                 }
-                hw_mode = 2;
-                XScuGic_Enable(&Intc, RX_INTR_ID);
-            }
-        }
-        last_pedal = pedal;
+                XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DEVICE_TO_DMA);
+            } else { // SOLTADO
+                if (hw_mode == 1) { // REC -> PLAY
+                    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA); 
+                    loop_length = loop_index; 
+                    loop_index = 0; 
+                    xil_printf("<<< PLAYING... [Loop: %d muestras]\r\n", (int)loop_length);
 
-        // --- Grabar a SD activado por Switch físico ---
-        if (sd_button == 1 && last_sd_button == 0) {
-            if (sd_recording == 0) {
-                xil_printf("Iniciando Grabacion SD...\r\n");
-                sd_length = 0;
-                sd_recording = 1;
-            } else {
-                sd_recording = 0;
-                xil_printf("Deteniendo y Guardando en SD...\r\n");
-                
-                // Detener temporalmente interrupciones DMA para que el guardado lento en SD no sea interrumpido
-                XScuGic_Disable(&Intc, RX_INTR_ID);
-                SaveWavToSD(SdRecordBuffer, sd_length);
-                XScuGic_Enable(&Intc, RX_INTR_ID);
-                
-                // Volvemos a cebar el DMA porque el AXI DMA internamente se frena sin servicio
-                XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
+                    // Pre-carga inmediata
+                    if (loop_length > 0) {
+                        for(int i=0; i<PACKET_SIZE; i++) {
+                            tx_ping[i] = LoopBuffer[i % loop_length];
+                            tx_pong[i] = LoopBuffer[(PACKET_SIZE + i) % loop_length];
+                        }
+                        Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+                        Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
+                        XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
+                    }
+                    hw_mode = 2;
+                    XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DEVICE_TO_DMA);
+                }
             }
+            last_pedal = pedal;
         }
-        last_sd_button = sd_button;
+
+        // --- Grabar a SD activado por Switch físico (CON ANTI-REBOTE TEMPORAL) ---
+        if (sd_button != last_sd_button && (now - sd_debounce_time > 200)) {
+            sd_debounce_time = now;
+            
+            if (sd_button == 1) {
+                if (sd_recording == 0) {
+                    xil_printf("Iniciando Grabacion SD...\r\n");
+                    sd_length = 0;
+                    sd_recording = 1;
+                } else {
+                    sd_recording = 0;
+                    xil_printf("Deteniendo y Guardando en SD...\r\n");
+                    
+                    // Detener temporalmente interrupciones DMA para que el guardado lento en SD no sea interrumpido
+                    XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+                    SaveWavToSD(SdRecordBuffer, sd_length);
+                    XAxiDma_IntrEnable(&AxiDma, XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_ERROR_MASK, XAXIDMA_DEVICE_TO_DMA);
+                    
+                    // Volvemos a cebar el DMA porque el AXI DMA internamente se frena sin servicio
+                    XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
+                }
+            }
+            last_sd_button = sd_button;
+        }
 
         // Actualizar hardware (Crucial!)
         Xil_Out32(GPIO_MIXER_BASE + 0x00, hw_mode);
@@ -478,7 +497,7 @@ int main(void) {
 
         int e0_d = enc_delta(0); int e0_c = enc_button_clicked(0);
         int e1_d = enc_delta(1); int e1_c = enc_button_clicked(1);
-        int e2_d = enc_delta(2); int e2_c = enc_button_clicked(2);
+        // int e2_d = enc_delta(2); int e2_c = enc_button_clicked(2);
         ui_handle_input(e0_d, e0_c, e1_d, e1_c);
         
         // ¡El DMA y el procesador ya no compiten por el tiempo! 
