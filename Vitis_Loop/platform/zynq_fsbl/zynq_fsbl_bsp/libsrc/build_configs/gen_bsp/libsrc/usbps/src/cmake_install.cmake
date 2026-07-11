@@ -1,4 +1,4 @@
-# Install script for directory: E:/Tesis/Vitis_Loop/platform/zynq_fsbl/zynq_fsbl_bsp/libsrc/usbps/src
+# Install script for directory: X:/Tesis/Vitis_Loop/platform/zynq_fsbl/zynq_fsbl_bsp/libsrc/usbps/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,6 +34,6 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "E:/Xilinx/2025.1/Vitis/gnu/aarch32/nt/gcc-arm-none-eabi/bin/arm-none-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "X:/Xilinx/2025.1/Vitis/gnu/aarch32/nt/gcc-arm-none-eabi/bin/arm-none-eabi-objdump.exe")
 endif()
 

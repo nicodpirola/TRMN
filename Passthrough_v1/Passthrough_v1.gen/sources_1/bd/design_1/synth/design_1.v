@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Thu Jul  9 15:53:59 2026
+//Date        : Thu Jul  9 20:38:32 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=26,numReposBlks=21,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=3,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=15,da_board_cnt=7,da_clkrst_cnt=17,da_ps7_cnt=1,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=27,numReposBlks=22,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=3,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=15,da_board_cnt=7,da_clkrst_cnt=17,da_ps7_cnt=1,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -147,6 +147,8 @@ module design_1
   wire [0:0]axi_dma_0_M_AXI_S2MM_WREADY;
   wire [3:0]axi_dma_0_M_AXI_S2MM_WSTRB;
   wire axi_dma_0_M_AXI_S2MM_WVALID;
+  wire axi_dma_0_mm2s_introut;
+  wire axi_dma_0_s2mm_introut;
   wire [1:0]axi_gpio_0_gpio_io_o;
   wire [31:0]axi_mem_intercon_M00_AXI_ARADDR;
   wire [1:0]axi_mem_intercon_M00_AXI_ARBURST;
@@ -389,6 +391,7 @@ module design_1
   wire sdata_0_out_0;
   wire [0:0]ss_o_0;
   wire [4:0]sys_input;
+  wire [1:0]xlconcat_0_dout;
   wire [0:0]xlconstant_0_dout;
 
   assign mclk_out_dac = mclk_out_adc;
@@ -430,6 +433,8 @@ module design_1
         .m_axis_mm2s_tlast(axi_dma_0_M_AXIS_MM2S_TLAST),
         .m_axis_mm2s_tready(axi_dma_0_M_AXIS_MM2S_TREADY),
         .m_axis_mm2s_tvalid(axi_dma_0_M_AXIS_MM2S_TVALID),
+        .mm2s_introut(axi_dma_0_mm2s_introut),
+        .s2mm_introut(axi_dma_0_s2mm_introut),
         .s_axi_lite_aclk(processing_system7_0_FCLK_CLK0),
         .s_axi_lite_araddr(axi_smc_M02_AXI_ARADDR),
         .s_axi_lite_arready(axi_smc_M02_AXI_ARREADY),
@@ -970,6 +975,7 @@ module design_1
         .GPIO_I(GPIO_tri_i),
         .GPIO_O(GPIO_tri_o),
         .GPIO_T(GPIO_tri_t),
+        .IRQ_F2P(xlconcat_0_dout),
         .MIO(FIXED_IO_mio),
         .M_AXI_GP0_ACLK(processing_system7_0_FCLK_CLK0),
         .M_AXI_GP0_ARADDR(processing_system7_0_M_AXI_GP0_ARADDR),
@@ -1062,6 +1068,10 @@ module design_1
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(rst_ps7_0_100M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
+  design_1_xlconcat_0_0 xlconcat_0
+       (.In0(axi_dma_0_mm2s_introut),
+        .In1(axi_dma_0_s2mm_introut),
+        .dout(xlconcat_0_dout));
   design_1_xlconstant_0_0 xlconstant_0
        (.dout(xlconstant_0_dout));
 endmodule

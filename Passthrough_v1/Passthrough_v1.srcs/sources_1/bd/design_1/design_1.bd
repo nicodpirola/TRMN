@@ -39,7 +39,8 @@
       "fx_system_wrapper_0": "",
       "axi_quad_spi_0": "",
       "ilconstant_1": "",
-      "xlconstant_0": ""
+      "xlconstant_0": "",
+      "xlconcat_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -839,6 +840,9 @@
           },
           "PCW_INCLUDE_ACP_TRANS_CHECK": {
             "value": "0"
+          },
+          "PCW_IRQ_F2P_INTR": {
+            "value": "1"
           },
           "PCW_MIO_0_IOTYPE": {
             "value": "LVCMOS 3.3V"
@@ -1939,7 +1943,7 @@
             "value": "0"
           },
           "PCW_USE_FABRIC_INTERRUPT": {
-            "value": "0"
+            "value": "1"
           },
           "PCW_USE_HIGH_OCM": {
             "value": "0"
@@ -4298,6 +4302,14 @@
         "xci_path": "ip\\design_1_xlconstant_0_0\\design_1_xlconstant_0_0.xci",
         "inst_hier_path": "xlconstant_0",
         "has_run_ip_tcl": "true"
+      },
+      "xlconcat_0": {
+        "vlnv": "xilinx.com:ip:xlconcat:2.1",
+        "ip_revision": "7",
+        "xci_name": "design_1_xlconcat_0_0",
+        "xci_path": "ip\\design_1_xlconcat_0_0\\design_1_xlconcat_0_0.xci",
+        "inst_hier_path": "xlconcat_0",
+        "has_run_ip_tcl": "true"
       }
     },
     "interface_nets": {
@@ -4435,6 +4447,18 @@
       }
     },
     "nets": {
+      "axi_dma_0_mm2s_introut": {
+        "ports": [
+          "axi_dma_0/mm2s_introut",
+          "xlconcat_0/In0"
+        ]
+      },
+      "axi_dma_0_s2mm_introut": {
+        "ports": [
+          "axi_dma_0/s2mm_introut",
+          "xlconcat_0/In1"
+        ]
+      },
       "axi_gpio_0_gpio_io_o": {
         "ports": [
           "axi_gpio_0/gpio_io_o",
@@ -4617,6 +4641,12 @@
         "ports": [
           "sdata_0_in_0",
           "i2s_receiver_0/sdata_0_in"
+        ]
+      },
+      "xlconcat_0_dout": {
+        "ports": [
+          "xlconcat_0/dout",
+          "processing_system7_0/IRQ_F2P"
         ]
       },
       "xlconstant_0_dout": {

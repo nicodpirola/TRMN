@@ -23,7 +23,7 @@
 		processing_system7_0: processing_system7@0 {
 			xlnx,pcw-act-enet0-peripheral-freqmhz = <125>;
 			xlnx,pcw-nor-grp-sram-cs1-io = "<Select>";
-			xlnx,num-f2p-intr-inputs = <1>;
+			xlnx,num-f2p-intr-inputs = <2>;
 			reg = <0x00000000 0x20000000>;
 			xlnx,pcw-mio-18-direction = "out";
 			xlnx,pcw-nand-cycles-t-ar = <1>;
@@ -96,7 +96,7 @@
 			xlnx,pcw-nor-sram-cs0-we-time = <0>;
 			xlnx,pcw-uiparam-ddr-speed-bin = "DDR3_1066F";
 			xlnx,pcw-ddr-port3-hpr-enable = <0>;
-			xlnx,pcw-irq-f2p-intr = <0>;
+			xlnx,pcw-irq-f2p-intr = <1>;
 			xlnx,pcw-trace-peripheral-enable = <0>;
 			xlnx,pcw-enet0-grp-mdio-io = "MIO , 52 , .. , 53";
 			xlnx,pcw-mio-15-iotype = "LVCMOS , 3.3V";
@@ -484,7 +484,7 @@
 			xlnx,pcw-uiparam-ddr-dq-0-length-mm = <0xfbc520>;
 			xlnx,pcw-mio-27-slew = "slow";
 			xlnx,pcw-smc-peripheral-freqmhz = <100>;
-			xlnx,pcw-num-f2p-intr-inputs = <1>;
+			xlnx,pcw-num-f2p-intr-inputs = <2>;
 			xlnx,pcw-wdt-wdt-io = "<Select>";
 			xlnx,pcw-uiparam-ddr-dq-0-propogation-delay = <160>;
 			xlnx,pcw-mio-24-slew = "slow";
@@ -609,7 +609,7 @@
 			xlnx,pcw-mio-6-slew = "slow";
 			xlnx,pcw-mio-7-iotype = "LVCMOS , 3.3V";
 			xlnx,pcw-mio-44-iotype = "LVCMOS , 1.8V";
-			xlnx,pcw-use-fabric-interrupt = <0>;
+			xlnx,pcw-use-fabric-interrupt = <1>;
 			xlnx,pcw-act-ttc1-clk0-peripheral-freqmhz = <0x6750918>;
 			xlnx,pcw-mio-3-slew = "slow";
 			xlnx,pcw-sd1-grp-cd-io = "<Select>";
