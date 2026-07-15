@@ -1,0 +1,56 @@
+The USER performed the following action:
+Show the contents of file e:\Tesis\Vitis_Loop\App\src\main.c from lines 172 to 219
+File Path: `file:///e:/Tesis/Vitis_Loop/App/src/main.c`
+Total Lines: 506
+Total Bytes: 21440
+Showing lines 172 to 219
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+172: }
+173: 
+174: int main() {
+175:     int status;
+176:     xil_printf("\r\n--- Iniciando Sistema Looper (Hardware Mixer V2) ---\r\n");
+177: 
+178:     // 1. Configurar IP I2S
+179:     xil_printf("Configurando divisores I2S para ~48kHz...\r\n");
+180:     Xil_Out32(I2S_RX_BASE + 0x20, 0x00000002);
+181:     Xil_Out32(I2S_TX_BASE + 0x20, 0x00000002);
+182:     Xil_Out32(I2S_TX_BASE + 0x0C, 0x00000001); 
+183:     Xil_Out32(I2S_RX_BASE + 0x30, 0x00000001); 
+184:     Xil_Out32(I2S_TX_BASE + 0x30, 0x00000001); 
+185: 
+186:     // 2. Inicializar Hardware Mixer en IDLE (Bypass total)
+187:     Xil_Out32(GPIO_MIXER_BASE + 0x00, HW_MODE_IDLE);
+188: 
+189:     // 3. Inicializar GPIO del Pedal (El nuevo GPIO para leer los botones físicos)
+190:     status = XGpio_Initialize(&GpioPedal, GPIO_SW_INIT_VAL);
+191:     if (status != XST_SUCCESS) {
+192:         xil_printf("Advertencia: No se encontro el GPIO de los switches. Usando teclado como respaldo.\r\n");
+193:     } else {
+194:         XGpio_SetDataDirection(&GpioPedal, 1, 0xFFFFFFFF); // Todo entradas
+195:     }
+196: 
+197:     // 4. Inicializar DMA
+198:     XAxiDma_Config *CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
+199:     status = XAxiDma_CfgInitialize(&AxiDma, CfgPtr);
+200:     if (status != XST_SUCCESS) return XST_FAILURE;
+201:     
+202:     XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DEVICE_TO_DMA);
+203:     XAxiDma_IntrDisable(&AxiDma, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+204: 
+205:     // Llenar buffers TX con ceros por si acaso
+206:     for(int i = 0; i < PACKET_SIZE; i++) {
+207:         tx_ping[i] = 0;
+208:         tx_pong[i] = 0;
+209:     }
+210:     Xil_DCacheFlushRange((UINTPTR)tx_ping, PACKET_SIZE * sizeof(u32));
+211:     Xil_DCacheFlushRange((UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32));
+212: 
+213:     // 5. Encender modulos I2S
+214:     xil_printf("Encendiendo modulos I2S...\r\n");
+215:     Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
+216:     Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
+217: 
+218:     // Limpiar toda la memoria RAM para evitar ruido blanco (basura de DDR) al final del loop
+219:     xil_printf("Limpiando memoria RAM...\r\n");
+
