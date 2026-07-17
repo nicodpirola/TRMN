@@ -53,19 +53,22 @@ effect_module_t effects_list[MAX_EFFECTS] = {
 static void ui_refresh_selection(void) {
     lv_color_t color_bg_idle = lv_color_hex(0x222222);
     lv_color_t color_bg_focused = lv_color_hex(0x444444);
-    lv_color_t color_bg_active = lv_color_hex(0x00FF00); // Verde (Seleccionado, listo para editar)
-    lv_color_t color_bg_active_param = lv_color_hex(0xFF9900); // Naranja
+    lv_color_t color_bg_active = lv_color_hex(0xFFFFFF);
+    lv_color_t color_bg_active_param = lv_color_hex(0xFFFFFF);
 
     // Refrescar Lista Principal
     for(int i=0; i<num_effects; i++) {
         if (i == selected_fx_idx) {
             if (ui_focus == FOCUS_MAIN_MENU) {
                 lv_obj_set_style_bg_color(fx_items[i], color_bg_active, 0);
+                lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0x000000), 0); 
             } else {
-                lv_obj_set_style_bg_color(fx_items[i], color_bg_focused, 0); // Gris claro cuando el foco está en la derecha
+                lv_obj_set_style_bg_color(fx_items[i], color_bg_focused, 0); 
+                lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0);
             }
         } else {
             lv_obj_set_style_bg_color(fx_items[i], color_bg_idle, 0);
+            lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0); 
         }
     }
 
@@ -75,8 +78,16 @@ static void ui_refresh_selection(void) {
         if (i < param_count) {
             if (i == selected_param_idx && ui_focus == FOCUS_PARAM_MENU) {
                 lv_obj_set_style_bg_color(param_items[i], color_bg_active_param, 0);
+                lv_obj_set_style_text_color(param_items[i], lv_color_hex(0x000000), 0); 
+                // Colores de la barrita seleccionada: Fondo Gris Claro, Relleno Negro
+                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xDDDDDD), LV_PART_MAIN);
+                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x000000), LV_PART_INDICATOR);
             } else {
-                lv_obj_set_style_bg_color(param_items[i], lv_color_hex(0x333333), 0);
+                lv_obj_set_style_bg_color(param_items[i], color_bg_idle, 0);
+                lv_obj_set_style_text_color(param_items[i], lv_color_hex(0xFFFFFF), 0); 
+                // Colores de la barrita inactiva: Fondo Gris Oscuro, Relleno Plata
+                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x444444), LV_PART_MAIN);
+                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xAAAAAA), LV_PART_INDICATOR);
             }
             
             // Actualizar la barra visual
@@ -127,14 +138,15 @@ void ui_init(void) {
     label_sd = lv_label_create(header_cont);
     lv_obj_align(label_sd, LV_ALIGN_TOP_RIGHT, -5, 2);
     lv_label_set_text(label_sd, "SD: LISTA");
-    lv_obj_set_style_text_color(label_sd, lv_color_hex(0x00A0FF), 0);
+    lv_obj_set_style_text_color(label_sd, lv_color_hex(0x555555), 0);
     
     bar_progress = lv_bar_create(header_cont);
     lv_obj_set_size(bar_progress, 310, 10);
     lv_obj_align(bar_progress, LV_ALIGN_BOTTOM_MID, 0, -2);
     lv_bar_set_range(bar_progress, 0, 100);
     lv_bar_set_value(bar_progress, 0, LV_ANIM_OFF);
-    lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR);
+    lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0x333333), LV_PART_MAIN); // Fondo oscuro
+    lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR); // Progreso blanco
     
     // --- COLUMNA IZQUIERDA (MAIN MENU) ---
     col_left = lv_obj_create(screen);
@@ -157,8 +169,8 @@ void ui_init(void) {
         if (i < num_effects) {
             lv_label_set_text(lbl, effects_list[i].name);
         }
-        lv_obj_center(lbl);
-        
+        //lv_obj_center(lbl);
+        lv_obj_align(lbl, LV_ALIGN_LEFT_MID, 5, 0);
         if (i >= num_effects) {
             lv_obj_add_flag(fx_items[i], LV_OBJ_FLAG_HIDDEN);
         }
@@ -187,44 +199,40 @@ void ui_init(void) {
         param_bars[i] = lv_bar_create(param_items[i]);
         lv_obj_set_size(param_bars[i], 190, 8);
         lv_obj_align(param_bars[i], LV_ALIGN_BOTTOM_MID, 0, -4);
-        lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xFF9900), LV_PART_INDICATOR);
+        lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xFFFFFF), LV_PART_INDICATOR);
     }
     
     ui_refresh_param_panel();
     ui_refresh_selection();
 }
 
-void ui_update_status(int hw_mode, int sd_recording) {
+void ui_update_status(int hw_mode, int sd_recording) { 
     if (hw_mode == 0) {
         lv_label_set_text(label_status, "BYPASS");
         lv_obj_set_style_text_color(label_status, lv_color_hex(0xAAAAAA), 0);
-        lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0x555555), LV_PART_INDICATOR);
     } else if (hw_mode == 1) {
         lv_label_set_text(label_status, "RECORDING");
-        lv_obj_set_style_text_color(label_status, lv_color_hex(0xFF0000), 0);
-        lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0xFF0000), LV_PART_INDICATOR);
+        lv_obj_set_style_text_color(label_status, lv_color_hex(0xFF0000), 0); // Rojo
     } else if (hw_mode == 2) {
         lv_label_set_text(label_status, "PLAYING");
-        lv_obj_set_style_text_color(label_status, lv_color_hex(0x00FF00), 0);
-        lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0x00FF00), LV_PART_INDICATOR);
+        lv_obj_set_style_text_color(label_status, lv_color_hex(0x00FF00), 0); // Verde
     } else if (hw_mode == 3) {
         lv_label_set_text(label_status, "OVERDUB");
-        lv_obj_set_style_text_color(label_status, lv_color_hex(0xFFFF00), 0);
-        lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0xFFFF00), LV_PART_INDICATOR);
+        lv_obj_set_style_text_color(label_status, lv_color_hex(0xFF9900), 0); // Naranja
     }
 
     if (sd_recording) {
         lv_label_set_text(label_sd, "SD: REC...");
-        lv_obj_set_style_text_color(label_sd, lv_color_hex(0xFF0000), 0);
+        lv_obj_set_style_text_color(label_sd, lv_color_hex(0xFFFFFF), 0);
     } else {
         lv_label_set_text(label_sd, "SD: LISTA");
-        lv_obj_set_style_text_color(label_sd, lv_color_hex(0x00A0FF), 0);
+        lv_obj_set_style_text_color(label_sd, lv_color_hex(0xFFFFFF), 0);
     }
 }
 
 void ui_update_progress(uint32_t loop_index, uint32_t loop_length) {
     if (loop_length > 0) {
-        // Calcular porcentaje (0 - 100)
+        // Calcular porcentaje
         uint32_t pct = (loop_index * 100) / loop_length;
         if (pct > 100) pct = 100;
         lv_bar_set_value(bar_progress, pct, LV_ANIM_OFF);

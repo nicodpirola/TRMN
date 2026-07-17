@@ -55,8 +55,14 @@ uint32_t lvgl_time_get(void){
     XTime_GetTime(&t);
     return (uint32_t)((t * 1000)/ COUNTS_PER_SECOND); 
 }
-
-void my_flush_cb(lv_display_t * display, const lv_area_t * area, uint8_t * px_map) {
+//Corrección color y renderizado
+void my_flush_cb(lv_display_t * display, const lv_area_t * area, uint8_t * px_map) { 
+    uint32_t px_count = (area->x2 - area->x1 + 1) * (area->y2 - area->y1 + 1);
+    uint16_t * buf16 = (uint16_t *)px_map;
+    for(uint32_t i = 0; i < px_count; i++) {
+        buf16[i] = (buf16[i] << 8) | (buf16[i] >> 8);
+    }
+    
     ili9341_flush_region(area->x1, area->y1, area->x2, area->y2, px_map);
     lv_display_flush_ready(display);
 }
@@ -68,18 +74,12 @@ void my_flush_cb(lv_display_t * display, const lv_area_t * area, uint8_t * px_ma
 
 void WakeUpCore1() {
     xil_printf("CORE 0: Despertando al Nucleo 1...\r\n");
-    
-    // El Núcleo 1 arrancará ejecutando el código desde la dirección de su DDR (0x10000000)
-    Xil_Out32(A9_CPU1_START_ADDR, 0x10000000);
-    
-    // Instrucción en ensamblador: SEV (Send Event) para despertar el procesador dormido
-    __asm__("sev");
-    
-    // Esperar a que el Núcleo 1 avise por OCM que ya terminó de encender
-    while(IPC->core1_ready == 0) {
+    Xil_Out32(A9_CPU1_START_ADDR, 0x10000000);  // Dirección de arranque core 1 (0x10000000)
+    __asm__("sev"); // Instrucción en ensamblador SEV (Send Event)
+    while(IPC->core1_ready == 0) { // Esperar a que el Núcleo 1 avise por OCM que ya terminó de encender
         usleep(1000);
     }
-    xil_printf("CORE 0: Nucleo 1 Confirmado! El sistema Dual-Core esta vivo.\r\n");
+    xil_printf("CORE 0: Nucleo 1 prendido\r\n");
 }
 
 int main() {
@@ -136,28 +136,28 @@ int main() {
     while (1) {
         uint32_t now = lvgl_time_get();
 
-        // --- LECTURA DE BOTONES ---
+        //LECTURA DE BOTONES
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
         int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Bit 1
         int sd_button = (switches & 0x01) ? 1 : 0; // Bit 0
 
-        // Maquina de estados del pedal (SW1) - Actualiza memoria compartida
+        // Maquina de estados del pedal (memoria compartida)
         if (pedal != last_pedal && (now - pedal_debounce_time > 200)) { 
             pedal_debounce_time = now;
             
             if (pedal == PRESIONADO) {
-                if (IPC->hw_mode == 0) { // IDLE -> REC
+                if (IPC->hw_mode == 0) { //IDLE -> REC
                     IPC->hw_mode = 1;
                     xil_printf("CORE 0: [REC] Enviado al Nucleo 1\r\n");
-                } else if (IPC->hw_mode == 2) { // PLAY -> OVERDUB
+                } else if (IPC->hw_mode == 2) { //PLAY -> OVERDUB
                     IPC->hw_mode = 3;
                     xil_printf("CORE 0: [OVERDUB] Enviado al Nucleo 1\r\n");
-                } else if (IPC->hw_mode == 3) { // OVERDUB -> PLAY
+                } else if (IPC->hw_mode == 3) { //OVERDUB -> PLAY
                     IPC->hw_mode = 2;
                     xil_printf("CORE 0: [PLAY] Enviado al Nucleo 1\r\n");
                 }
             } else { // SOLTADO
-                if (IPC->hw_mode == 1) { // REC -> PLAY
+                if (IPC->hw_mode == 1) { //REC -> PLAY
                     IPC->hw_mode = 2;
                     xil_printf("CORE 0: [PLAY] Enviado al Nucleo 1\r\n");
                 }
@@ -178,9 +178,8 @@ int main() {
             last_sd_button = sd_button;
         }
 
-        // --- MANEJO DE LA INTERFAZ GRÁFICA ---
-        // Extraemos variables seguras desde la RAM compartida del Núcleo 1
-        ui_update_status(IPC->hw_mode, (IPC->sd_recording == 1));
+        //MANEJO DE LA INTERFAZ GRÁFICA
+        ui_update_status(IPC->hw_mode, (IPC->sd_recording == 1)); //Extrae variables seguras de la memoria compartida
         ui_update_progress(IPC->loop_index, IPC->loop_length);
 
         int e0_d = enc_delta(0); int e0_c = enc_button_clicked(0);
@@ -188,8 +187,6 @@ int main() {
         ui_handle_input(e0_d, e0_c, e1_d, e1_c);
         
         lv_timer_handler();
-
-    } // Fin while(1)
-
+    }
     return XST_SUCCESS;
 }
