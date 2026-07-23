@@ -9,7 +9,7 @@ create_clock -add -name sys_clk_pin -period 8.00 -waveform {0 4} [get_ports { sy
 
 ## Switches
 set_property -dict { PACKAGE_PIN M20    IOSTANDARD LVCMOS33 } [get_ports { sys_input[0] }]; #IO_L7N_T1_AD2N_35 Sch=SW0
-set_property -dict { PACKAGE_PIN M19    IOSTANDARD LVCMOS33 } [get_ports { sys_input[1] }]; #IO_L7P_T1_AD2P_35 Sch=SW1
+##set_property -dict { PACKAGE_PIN M19    IOSTANDARD LVCMOS33 } [get_ports { sys_input[1] }]; #IO_L7P_T1_AD2P_35 Sch=SW1
 
 ## RGB LEDs
 #set_property -dict { PACKAGE_PIN L15    IOSTANDARD LVCMOS33 } [get_ports { led4_b }]; #IO_L22N_T3_AD7P_35 Sch=LED4_B
@@ -158,7 +158,7 @@ set_property -dict { PACKAGE_PIN V6   IOSTANDARD LVCMOS33  PULLTYPE PULLUP } [ge
 #set_property -dict { PACKAGE_PIN W8    IOSTANDARD LVCMOS33 } [get_ports { ck_io38 }]; #IO_L15N_T2_DQS_13   Sch=CK_IO38
 #set_property -dict { PACKAGE_PIN Y8    IOSTANDARD LVCMOS33 } [get_ports { ck_io39 }]; #IO_L14N_T2_SRCC_13  Sch=CK_IO39
 #set_property -dict { PACKAGE_PIN W9    IOSTANDARD LVCMOS33 } [get_ports { ck_io40 }]; #IO_L16N_T2_13       Sch=CK_IO40
-#set_property -dict { PACKAGE_PIN Y9    IOSTANDARD LVCMOS33 } [get_ports { ck_io41 }]; #IO_L14P_T2_SRCC_13  Sch=CK_IO41
+set_property -dict { PACKAGE_PIN Y9    IOSTANDARD LVCMOS33 PULLDOWN TRUE} [get_ports { sys_input[1] }]; #IO_L14P_T2_SRCC_13  Sch=CK_IO41
 
 ## ChipKit Outer Analog Header - as Single-Ended Analog Inputs
 ## NOTE: These ports can be used as single-ended analog inputs with voltages from 0-3.3V (ChipKit analog pins A0-A5) or as digital I/O.

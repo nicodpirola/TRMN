@@ -1,0 +1,105 @@
+{
+    "versionMajor": "0",
+    "versionMinor": "0",
+    "usesPR": "false",
+    "platformState": "pre_synth",
+    "topModuleName": "design_1_wrapper",
+    "acceleratorBinaryFormat": "xclbin2",
+    "acceleratorBinaryContent": "bitstream",
+    "validAcceleratorBinaryContentValues": "dcp,bitstream",
+    "dcpFunctionStripped": "false",
+    "dcpEncrypted": "false",
+    "defaultOutputType": "sd_card",
+    "designIntent": {
+        "dataCenter": {
+            "value": "false",
+            "explicit": "true"
+        },
+        "embedded": {
+            "value": "true",
+            "explicit": "true"
+        },
+        "externalHost": {
+            "value": "false",
+            "explicit": "true"
+        },
+        "serverManaged": {
+            "value": "false",
+            "explicit": "true"
+        }
+    },
+    "board": {
+        "name": "digilentinc.com:arty-z7-20:1.1",
+        "vendor": "digilentinc.com",
+        "part": "xc7z020clg400-1",
+        "boardPart": "digilentinc.com:arty-z7-20:part0:1.1"
+    },
+    "devices": [
+        {
+            "name": "fpga0",
+            "type": "8",
+            "fpgaPart": "zynq:xc7z020:clg400:-1",
+            "part": {
+                "name": "xc7z020clg400-1",
+                "architecture": "zynq",
+                "device": "xc7z020",
+                "package": "clg400",
+                "speedGrade": "-1"
+            },
+            "numSLRs": "1",
+            "core": {
+                "name": "OCL_REGION_0",
+                "type": "clc_region",
+                "drBDName": "design_1.bd",
+                "numComputeUnits": "60",
+                "availableResources": {
+                    "bramCount": "97",
+                    "dspCount": "210",
+                    "lutCount": "47478",
+                    "registerCount": "98234"
+                }
+            }
+        }
+    ],
+    "files": [
+        {
+            "name": "design_1_wrapper1.bit",
+            "type": "FULL_BIT"
+        },
+        {
+            "name": "design_1_wrapper1.nts",
+            "type": "NOC_TRAFFIC"
+        }
+    ],
+    "vendor": "xilinx",
+    "boardId": "arty-z7-20",
+    "name": "TRMN",
+    "description": "Vivado generated Hardware Platform",
+    "uniqueName": "xilinx:arty-z7-20:TRMN:0.0",
+    "fpgaPart": "zynq",
+    "fpgaDevice": "xc7z020",
+    "unifiedPlatform": "true",
+    "expandablePlatform": "false",
+    "hardware": "true",
+    "softwareEmulation": "true",
+    "hardwareEmulation": "false",
+    "hardwareEmuPlatform": "false",
+    "usesNIFD": "false",
+    "generatedName": "Vivado",
+    "generatedVersion": "2025.1",
+    "generatedChangeList": "6140274",
+    "generatedIpChangeList": "6138677",
+    "generatedSharedDataChangeList": "6139179",
+    "generatedTimestamp": "Tue Jul 21 18:38:01 2026",
+    "idCode": "03727093",
+    "designIDs": {
+        "designID": "1582466695"
+    },
+    "resources": [
+        {
+            "type": "REG",
+            "count": "98234"
+        }
+    ]
+}
+
