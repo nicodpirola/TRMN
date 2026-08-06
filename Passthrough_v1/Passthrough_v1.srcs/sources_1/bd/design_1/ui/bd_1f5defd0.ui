@@ -4,7 +4,7 @@
    "Color Coded_TopLeft":"-135,-290",
    "Default View_Layers":"/clk_wiz_0_clk_aud:true|/proc_sys_reset_0_peripheral_aresetn:true|/processing_system7_0_FCLK_CLK0:true|/processing_system7_0_FCLK_RESET0_N:true|/proc_sys_reset_0_peripheral_reset:true|/rst_ps7_0_100M_peripheral_aresetn:true|",
    "Default View_ScaleFactor":"1.03719",
-   "Default View_TopLeft":"1197,24",
+   "Default View_TopLeft":"739,603",
    "Display-IntfAXI3":"true",
    "Display-IntfAXI4Lite":"true",
    "Display-IntfAXIStream":"true",
@@ -124,6 +124,8 @@ preplace inst axi_quad_spi_0 -pg 1 -lvl 5 -x 2160 -y 1090 -defaultsOSRD
 preplace inst ilconstant_1 -pg 1 -lvl 6 -x 2530 -y 920 -defaultsOSRD
 preplace inst xlconstant_0 -pg 1 -lvl 2 -x 830 -y 930 -defaultsOSRD
 preplace inst xlconcat_0 -pg 1 -lvl 4 -x 1700 -y 180 -defaultsOSRD
+preplace netloc axi_dma_0_mm2s_introut 1 3 1 1520 170n
+preplace netloc axi_dma_0_s2mm_introut 1 3 1 1540 190n
 preplace netloc axi_gpio_0_gpio_io_o 1 1 2 N 370 1110
 preplace netloc axi_quad_spi_0_io0_o 1 5 3 NJ 1050 NJ 1050 2960
 preplace netloc axi_quad_spi_0_sck_o 1 5 3 NJ 1110 NJ 1110 2920
@@ -146,10 +148,8 @@ preplace netloc processing_system7_0_FCLK_CLK0 1 0 7 240 480 620 390 1050 620 N 
 preplace netloc processing_system7_0_FCLK_RESET0_N 1 4 2 1920 890 2400
 preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 0 7 260 460 630 400 1060 650 N 650 1890 900 2420 570 N
 preplace netloc sdata_0_in_0_1 1 0 2 -50 490 560
-preplace netloc xlconstant_0_dout 1 2 1 1080 880n
-preplace netloc axi_dma_0_mm2s_introut 1 3 1 1520 170n
-preplace netloc axi_dma_0_s2mm_introut 1 3 1 1540 190n
 preplace netloc xlconcat_0_dout 1 4 1 1910 180n
+preplace netloc xlconstant_0_dout 1 2 1 1080 880n
 preplace netloc axi_dma_0_M_AXIS_MM2S 1 2 2 1130 740 1490
 preplace netloc axi_dma_0_M_AXI_MM2S 1 2 2 1130 -60 1500J
 preplace netloc axi_dma_0_M_AXI_S2MM 1 2 2 1130 300 1510

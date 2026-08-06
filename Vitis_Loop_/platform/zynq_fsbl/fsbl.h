@@ -299,9 +299,6 @@
 #ifndef XIL_FSBL_H
 #define XIL_FSBL_H
 
-// INYECTADO POR ANTIGRAVITY PARA SOPORTE DUAL CORE (BYPASS VITIS 2025.1)
-#define USE_AMP 1
-
 #ifdef __cplusplus
 extern "C" {
 #endif

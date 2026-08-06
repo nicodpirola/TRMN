@@ -4598,13 +4598,13 @@
           "rst_ps7_0_100M/slowest_sync_clk",
           "clk_wiz_0/clk_in1",
           "axi_gpio_1/s_axi_aclk",
-          "fx_system_wrapper_0/clk",
           "i2s_receiver_0/m_axis_aud_aclk",
           "i2s_transmitter_0/s_axis_aud_aclk",
           "axi_stream_looper_mi_0/clk",
           "axis_tlast_gen_trans_0/clk",
           "axis_data_fifo_1/s_axis_aclk",
-          "axi_gpio_0/s_axi_aclk"
+          "axi_gpio_0/s_axi_aclk",
+          "fx_system_wrapper_0/clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -4633,8 +4633,8 @@
           "axi_stream_looper_mi_0/resetn",
           "axis_tlast_gen_trans_0/resetn",
           "axis_data_fifo_1/s_axis_aresetn",
-          "fx_system_wrapper_0/rst_n",
-          "axi_gpio_0/s_axi_aresetn"
+          "axi_gpio_0/s_axi_aresetn",
+          "fx_system_wrapper_0/rst_n"
         ]
       },
       "sdata_0_in_0_1": {

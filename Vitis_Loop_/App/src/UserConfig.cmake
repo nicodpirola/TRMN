@@ -35,6 +35,7 @@ set(USER_COMPILE_SOURCES
 "ili9341.c"
 "ui.c"
 "fx_hardware.c"
+"synth_delay_control.c"
 ${LVGL_SOURCES}
 )
 
@@ -117,6 +118,7 @@ set(USER_LINK_OMIT_ALL_SYMBOL_INFO )
 # Add any libraries to be linked below, they will be added as extra libraries.
 # User needs to update USER_LINK_DIRECTORIES below with these library search paths.
 set(USER_LINK_LIBRARIES
+"m"
 )
 
 # Add any directories to look for the libraries to be linked.

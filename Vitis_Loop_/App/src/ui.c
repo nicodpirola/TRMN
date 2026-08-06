@@ -1,6 +1,9 @@
 #include "ui.h"
 #include <stdio.h>
 #include "fx_hardware.h"
+#include "synth_delay_control.h"
+
+#define FX_BASE 0x60000000
 
 // LVGL objects
 static lv_obj_t * header_cont;
@@ -22,31 +25,25 @@ static int selected_fx_idx = 0;
 static int selected_param_idx = 0;
 
 // Definición de Efectos y Parámetros Iniciales
-const int num_effects = 3;
+const int num_effects = 2;
 effect_module_t effects_list[MAX_EFFECTS] = {
     {
-        .name = "Delay",
+        .name = "Synth",
         .param_count = 3,
         .params = {
-            {"Time", 0, 100, 50},
-            {"Feedback", 0, 100, 30},
-            {"Mix", 0, 100, 40}
+            {"Status (0=OFF)", 0, 1, 1}, // 0:OFF, 1:ON
+            {"Dry (0=Muted)", 0, 1, 1}, // 0:Muted (Synth Only), 1:Active (Synth+Dry)
+            {"Patch", 0, 3, 0} // 0:Saw, 1:Minimoog, 2:3 Saws, 3:Sub
         }
     },
     {
-        .name = "Reverb",
-        .param_count = 2,
+        .name = "Eco (Delay)",
+        .param_count = 4,
         .params = {
-            {"Size", 0, 100, 80},
-            {"Mix", 0, 100, 50}
-        }
-    },
-    {
-        .name = "Chorus",
-        .param_count = 2,
-        .params = {
-            {"Rate", 0, 100, 20},
-            {"Depth", 0, 100, 60}
+            {"Status (0=OFF)", 0, 1, 0}, // 0:OFF, 1:ON
+            {"Time (ms)", 10, 680, 250},
+            {"Feedback (%)", 0, 90, 35},
+            {"Wet (%)", 0, 100, 25}
         }
     }
 };
@@ -268,19 +265,50 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
         }
         
         if (enc1_delta != 0) {
-            int val = effects_list[selected_fx_idx].params[selected_param_idx].current_val;
-            val += enc1_delta * 5; // Salto de 5 en 5 para edicion rapida
-            
             int min_val = effects_list[selected_fx_idx].params[selected_param_idx].min_val;
             int max_val = effects_list[selected_fx_idx].params[selected_param_idx].max_val;
+            
+            // Adaptar salto según el rango (si es un selector de opciones pequeño, salta de a 1)
+            int step = ((max_val - min_val) <= 10) ? 1 : 5;
+            
+            int val = effects_list[selected_fx_idx].params[selected_param_idx].current_val;
+            val += enc1_delta * step;
             
             if (val < min_val) val = min_val;
             if (val > max_val) val = max_val;
             effects_list[selected_fx_idx].params[selected_param_idx].current_val = val;
             
-            // --- NUEVO: Actualización de Hardware AXI (Solo Delay) ---
-            if (selected_fx_idx == 0) {
-                hw_dsp_update_delay(selected_param_idx, val);
+            // --- Actualización de Hardware AXI (Synth & Delay Desacoplados) ---
+            
+            // 1. Leemos el estado global de todos los parametros ON/OFF
+            int synth_on = effects_list[0].params[0].current_val;
+            int dry_on   = effects_list[0].params[1].current_val;
+            int delay_on = effects_list[1].params[0].current_val;
+            
+            // 2. Mapeamos a las banderas del hardware
+            int s_on = (synth_on == 1) ? 1 : 0;
+            int s_only = (dry_on == 0) ? 1 : 0;
+            int d_on = (delay_on == 1) ? 1 : 0;
+            
+            // Si el synth esta apagado, forzamos s_only a 0 para que pase el audio limpio (Bypass)
+            if (s_on == 0) s_only = 0; 
+            
+            // Enviamos el modo global
+            sd_set_mode(FX_BASE, s_on, s_only, d_on);
+            
+            // 3. Procesamos cambios especificos de cada bloque
+            if (selected_fx_idx == 0 && selected_param_idx == 2) {
+                // Cambió el parche del sintetizador
+                if (val == 0) sd_load_single_saw(FX_BASE);
+                else if (val == 1) sd_load_minimoog_patch(FX_BASE);
+                else if (val == 2) sd_load_three_saw_patch(FX_BASE);
+                else if (val == 3) sd_load_sub_patch(FX_BASE);
+            } else if (selected_fx_idx == 1) {
+                // Cambiaron los parametros del Eco (Time, Feedback o Wet)
+                float t = (float)effects_list[1].params[1].current_val;
+                float f = (float)effects_list[1].params[2].current_val / 100.0f;
+                float w = (float)effects_list[1].params[3].current_val / 100.0f;
+                sd_set_delay(FX_BASE, t, f, w);
             }
             
             // Refresco ultra-rápido solo del label y la barra seleccionada

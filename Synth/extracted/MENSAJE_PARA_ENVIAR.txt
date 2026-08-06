@@ -1,0 +1,34 @@
+Te paso una rama de prueba que conserva tu looper tal como está.
+
+La cadena queda:
+
+I²S RX → synth → delay simple → tu looper → I²S TX
+
+No cambié la interfaz externa del wrapper. El core tiene solamente el
+sintetizador y el delay; no incluye mis otros efectos.
+
+También cambié la forma de activar/desactivar bloques: las configuraciones se
+aplican únicamente cuando no hay una muestra en vuelo. La idea es evitar el
+cuelgue de handshake que a veces obliga a volver a programar la FPGA.
+
+Primero probalo por etapas:
+
+1. Dry, synth y delay apagados.
+2. Synth-only con un único saw.
+3. Patch de tres osciladores.
+4. Delay.
+5. Synth + delay.
+6. Alternar muchas veces los enables y el switch físico.
+7. Confirmar que el looper sigue funcionando.
+
+Durante la prueba del theremin necesito que anotes:
+
+- frecuencia mínima y máxima;
+- saltos de octava;
+- zonas donde pierde tracking;
+- sensación del glissando;
+- seguimiento de la antena de volumen;
+- si el audio se vuelve a colgar al cambiar enables.
+
+Hay registros de diagnóstico para leer gate, pitch lock, período y phase
+increment. En el README está el orden completo y una API pequeña de Vitis.

@@ -214,7 +214,7 @@ static void dma_rx_isr(void *CallbackRef) {
     }
 }
 
-// ELIMINADO: SetupInterruptSystem y scu_timer_isr
+// ELIMINADO: SetupInterruptSystem y scu_timer_isr .
 
 int main() {
     // Deshabilitar caché para la región OCM (0xFFFF0000) - 0x14de2 = Strongly Ordered / Non-Cacheable

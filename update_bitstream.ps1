@@ -10,12 +10,19 @@ Write-Host "=========================================="
 if (Test-Path $vivado_bit) {
     Write-Host "[+] Archivo .bit de Vivado encontrado."
     
-    # Inyectar en el System Project (El que usa el boton Run)
+    # Inyectar en el System Project original (theremin_dual_core)
     if (Test-Path "X:\Tesis\Vitis_Loop_\theremin_dual_core\_ide\bitstream\") {
         Copy-Item -Path $vivado_bit -Destination $vitis_sys_bit -Force
         Write-Host "[OK] Bitstream inyectado en System Project (theremin_dual_core)."
+    }
+
+    # Inyectar en el nuevo proyecto de la Aplicacion (App) para que JTAG lo use
+    if (Test-Path "X:\Tesis\Vitis_Loop_\App\_ide\bitstream\") {
+        $app_bit = "X:\Tesis\Vitis_Loop_\App\_ide\bitstream\design_1_wrapper.bit"
+        Copy-Item -Path $vivado_bit -Destination $app_bit -Force
+        Write-Host "[OK] Bitstream inyectado en Proyecto App (usado por JTAG)."
     } else {
-        Write-Host "[!] No se encontro la carpeta oculta del System Project."
+        Write-Host "[!] No se encontro la carpeta oculta del proyecto App."
     }
 
     # Inyectar en la Plataforma

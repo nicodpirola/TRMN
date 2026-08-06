@@ -7,6 +7,9 @@
 #include "xil_mmu.h"
 #include "ipc.h"
 #include "fx_hardware.h"
+#include "synth_delay_control.h"
+
+#define FX_BASE 0x60000000
 
 // LVGL & UI
 #include "ili9341.h"
@@ -27,7 +30,7 @@ XGpio GpioPedal;
 // Funciones para LVGL y Encoders
 static int16_t enc_prev[3] = {0, 0, 0};
 static int16_t enc_delta(int n) {
-    int16_t now = (int16_t)(Xil_In32(0x60000000 + 0x40 + (n)*4) & 0xFFFF);
+    int16_t now = (int16_t)(Xil_In32(0x60000000 + 0x100 + (n)*4) & 0xFFFF);
     int16_t d   = (int16_t)(now - enc_prev[n]);
     enc_prev[n] = now;
     return d;
@@ -91,7 +94,7 @@ void WakeUpCore1() {
     dmb();
     
     __asm__("sev"); // Instrucción en ensamblador SEV (Send Event)
-    while(IPC->core1_ready == 0) { // Esperar a que el Núcleo 1 avise por OCM que ya terminó de encender
+    while(IPC->core1_ready == 0) { // Esperar a que el Núcleo 1 avise por OCM que ya terminó de encender .
         usleep(1000);
     }
     xil_printf("CORE 0: Nucleo 1 prendido\r\n");
@@ -142,6 +145,13 @@ int main() {
     ui_init();
     xil_printf("UI Lista.\r\n");
 
+    // --- 6. INICIALIZAR SINTETIZADOR ---
+    xil_printf("Encendiendo Sintetizador...\r\n");
+    sd_master_enable(FX_BASE, 1);
+    sd_load_single_saw(FX_BASE);
+    sd_set_delay(FX_BASE, 250.0f, 0.35f, 0.25f);
+    sd_set_mode(FX_BASE, 1, 0, 0); // Arranca en modo Synth + Dry (Coincide con UI)
+
     // ==========================================================
     // BUCLE PRINCIPAL CORE 0 (EXCLUSIVO PARA LA INTERFAZ)
     // ==========================================================
@@ -160,7 +170,7 @@ int main() {
 
         // LECTURA DE BOTONES
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
-        xil_printf("Valor RAW de switches: %d\r\n", switches);
+        // xil_printf("Valor RAW de switches: %d\r\n", switches);
         
         int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Bit 1
         int enc2_raw = ((switches & (1 << 4)) == 0) ? 1 : 0; // Bit 4 es el Encoder 2 (Active Low)
@@ -216,14 +226,33 @@ int main() {
         ui_update_status(IPC->hw_mode, (IPC->sd_recording == 1)); 
         ui_update_progress(IPC->loop_index, IPC->loop_length);
 
-        xil_printf("DEBUG: Leyendo encoders...\r\n");
+        // xil_printf("DEBUG: Leyendo encoders...\r\n");
         int e0_d = enc_delta(0); int e0_c = enc_button_clicked(0);
         int e1_d = enc_delta(1); int e1_c = enc_button_clicked(1);
+        
+        static int debug_tick = 0;
+        if (debug_tick++ % 150000 == 0) { // Imprime aprox cada un segundo (depende de los usleeps)
+            uint32_t raw_enc0 = Xil_In32(0x60000100);
+            uint32_t raw_enc1 = Xil_In32(0x60000104);
+            xil_printf("AXI RAW ENC0: %08X, ENC1: %08X\r\n", raw_enc0, raw_enc1);
+        }
+
         ui_handle_input(e0_d, e0_c, e1_d, e1_c);
         
-        xil_printf("DEBUG: Entrando a lv_timer_handler()...\r\n");
+        // xil_printf("DEBUG: Entrando a lv_timer_handler()...\r\n");
         lv_timer_handler();
-        xil_printf("DEBUG: Saliendo de lv_timer_handler()...\r\n");
+        // xil_printf("DEBUG: Saliendo de lv_timer_handler()...\r\n");
+        
+        // --- DIAGNÓSTICO DEL HARDWARE AXI ---
+        static uint32_t last_diag_time = 0;
+        if (now - last_diag_time >= 3000) { // Cada 3 segundos
+            last_diag_time = now;
+            xil_printf("\r\n--- REPORTE DE DIAGNOSTICO (Cada 3s) ---\r\n");
+            sd_print_status(FX_BASE);
+            xil_printf("----------------------------------------\r\n\r\n");
+        }
+        
+        usleep(5000); // 5 ms de respiro para no ahogar la CPU
     }
     return XST_SUCCESS;
 }

@@ -233,14 +233,6 @@ int main(void)
 	u32 HandoffAddress = 0;
 	u32 Status = XST_SUCCESS;
 	u32 RegVal;
-	/* INYECCION ANTIGRAVITY: Bucle WFE en OCM para proteger Core 1 ANTES del remap de memoria */
-	Xil_Out32(0xFFFFFFF0, 0xFFFFFF00); /* Deja la direccion del refugio en el buzon de BootROM */
-	Xil_Out32(0xFFFFFF00, 0xE320F002); /* WFE */
-	Xil_Out32(0xFFFFFF04, 0xE320F002); /* WFE */
-	Xil_Out32(0xFFFFFF08, 0xE320F002); /* WFE */
-	Xil_Out32(0xFFFFFF0C, 0xEAFFFFFA); /* Branch a -0x10 */
-	__asm__("sev"); /* Envia señal al Core 1 */
-
 	/*
 	 * PCW initialization for MIO,PLL,CLK and DDR
 	 */

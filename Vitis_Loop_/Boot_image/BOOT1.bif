@@ -1,0 +1,8 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]X:\Tesis\Vitis_Loop_\platform\export\platform\sw\boot\fsbl.elf
+	X:\Tesis\Vitis_Loop_\theremin_dual_core\_ide\bitstream\design_1_wrapper3.bit
+	X:\Tesis\Vitis_Loop_\App\build\App.elf
+	X:\Tesis\Vitis_Loop_\Loop_y_SD\build\Loop_y_SD.elf
+}

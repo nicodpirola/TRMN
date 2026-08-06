@@ -3,8 +3,8 @@
   "type": "PLATFORM",
   "configuration": {
     "description": "",
-    "xsa": "X:\\Tesis\\bits\\design_1_wrapper2.xsa",
-    "xsaPathInPlatform": "platform\\hw\\design_1_wrapper2.xsa",
+    "xsa": "X:\\Tesis\\bits\\design_1_wrapper3.xsa",
+    "xsaPathInPlatform": "platform\\hw\\design_1_wrapper3.xsa",
     "emulationXsa": "",
     "emulationXsaPathInPlatform": "",
     "isCustomFSBL": false,
