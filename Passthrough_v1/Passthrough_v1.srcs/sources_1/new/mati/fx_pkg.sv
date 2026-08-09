@@ -1,4 +1,4 @@
-apackage fx_pkg;
+package fx_pkg;
   parameter int NUM_SLOTS = 3;
 
   typedef struct packed {

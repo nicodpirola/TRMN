@@ -21,8 +21,8 @@ void ui_update_progress(uint32_t loop_index, uint32_t loop_length);
 void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_click);
 
 // --- ESTRUCTURAS DE DATOS DE EFECTOS ---
-#define MAX_FX_PARAMS 5
-#define MAX_EFFECTS 5
+#define MAX_FX_PARAMS 6
+#define MAX_EFFECTS 8
 
 typedef struct {
     const char * name;

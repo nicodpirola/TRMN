@@ -36,6 +36,7 @@ set(USER_COMPILE_SOURCES
 "ui.c"
 "fx_hardware.c"
 "synth_delay_control.c"
+"params.c"
 ${LVGL_SOURCES}
 )
 

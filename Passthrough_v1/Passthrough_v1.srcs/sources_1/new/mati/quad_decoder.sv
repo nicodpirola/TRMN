@@ -49,7 +49,9 @@ module quad_decoder #(
       if (state == 2'b11 && state_d != 2'b11) begin
         if      (state_d == 2'b01) begin count <= count + 1'b1; step <= 1'b1; end // forward
         else if (state_d == 2'b10) begin count <= count - 1'b1; step <= 1'b1; end // reverse
-        // state_d == 2'b00 => salto de detent, no contamos
+      end else if (state == 2'b00 && state_d != 2'b00) begin
+        if      (state_d == 2'b10) begin count <= count + 1'b1; step <= 1'b1; end // forward
+        else if (state_d == 2'b01) begin count <= count - 1'b1; step <= 1'b1; end // reverse
       end
     end
   end

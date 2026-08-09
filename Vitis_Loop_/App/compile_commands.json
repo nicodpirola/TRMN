@@ -26,6 +26,11 @@
 },
 {
   "directory": "X:/Tesis/Vitis_Loop_/App/build",
+  "command": "X:\\Xilinx\\2025.1\\Vitis\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\bin\\arm-none-eabi-gcc.exe -IX:/Tesis/Vitis_Loop_/App/src/lvgl -isystem X:/Tesis/Vitis_Loop_/platform/export/platform/sw/standalone_ps7_cortexa9_0/include -isystem X:/Xilinx/2025.1/gnu/aarch32/nt/gcc-arm-none-eabi/x86_64-oesdk-mingw32/usr/lib/arm-xilinx-eabi/gcc/arm-xilinx-eabi/13.3.0/include -isystem X:/Xilinx/2025.1/gnu/aarch32/nt/gcc-arm-none-eabi/x86_64-oesdk-mingw32/usr/lib/arm-xilinx-eabi/gcc/arm-xilinx-eabi/13.3.0/include-fixed -isystem X:/Xilinx/2025.1/Vitis/gnu/aarch32/nt/gcc-arm-none-eabi/aarch32-xilinx-eabi/usr/include  -DSDT -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard  -MMD -MP -specs=X:/Tesis/Vitis_Loop_/platform/export/platform/sw/standalone_ps7_cortexa9_0/Xilinx.spec -IX:/Tesis/Vitis_Loop_/platform/export/platform/sw/standalone_ps7_cortexa9_0/include -Wall -Wextra      -O0  -g3     -U__clang__ -o CMakeFiles\\App.elf.dir\\params.c.obj -c X:\\Tesis\\Vitis_Loop_\\App\\src\\params.c",
+  "file": "X:\\Tesis\\Vitis_Loop_\\App\\src\\params.c"
+},
+{
+  "directory": "X:/Tesis/Vitis_Loop_/App/build",
   "command": "X:\\Xilinx\\2025.1\\Vitis\\gnu\\aarch32\\nt\\gcc-arm-none-eabi\\bin\\arm-none-eabi-gcc.exe -IX:/Tesis/Vitis_Loop_/App/src/lvgl -isystem X:/Tesis/Vitis_Loop_/platform/export/platform/sw/standalone_ps7_cortexa9_0/include -isystem X:/Xilinx/2025.1/gnu/aarch32/nt/gcc-arm-none-eabi/x86_64-oesdk-mingw32/usr/lib/arm-xilinx-eabi/gcc/arm-xilinx-eabi/13.3.0/include -isystem X:/Xilinx/2025.1/gnu/aarch32/nt/gcc-arm-none-eabi/x86_64-oesdk-mingw32/usr/lib/arm-xilinx-eabi/gcc/arm-xilinx-eabi/13.3.0/include-fixed -isystem X:/Xilinx/2025.1/Vitis/gnu/aarch32/nt/gcc-arm-none-eabi/aarch32-xilinx-eabi/usr/include  -DSDT -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard  -MMD -MP -specs=X:/Tesis/Vitis_Loop_/platform/export/platform/sw/standalone_ps7_cortexa9_0/Xilinx.spec -IX:/Tesis/Vitis_Loop_/platform/export/platform/sw/standalone_ps7_cortexa9_0/include -Wall -Wextra      -O0  -g3     -U__clang__ -o CMakeFiles\\App.elf.dir\\lvgl\\src\\core\\lv_group.c.obj -c X:\\Tesis\\Vitis_Loop_\\App\\src\\lvgl\\src\\core\\lv_group.c",
   "file": "X:\\Tesis\\Vitis_Loop_\\App\\src\\lvgl\\src\\core\\lv_group.c"
 },

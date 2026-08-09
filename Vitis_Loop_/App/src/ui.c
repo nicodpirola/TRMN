@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "fx_hardware.h"
 #include "synth_delay_control.h"
+#include "params.h"
+#include "xil_io.h"
 
 #define FX_BASE 0x60000000
 
@@ -25,7 +27,7 @@ static int selected_fx_idx = 0;
 static int selected_param_idx = 0;
 
 // Definición de Efectos y Parámetros Iniciales
-const int num_effects = 2;
+const int num_effects = 6;
 effect_module_t effects_list[MAX_EFFECTS] = {
     {
         .name = "Synth",
@@ -37,13 +39,52 @@ effect_module_t effects_list[MAX_EFFECTS] = {
         }
     },
     {
-        .name = "Eco (Delay)",
+        .name = "Delay",
         .param_count = 4,
         .params = {
-            {"Status (0=OFF)", 0, 1, 0}, // 0:OFF, 1:ON
-            {"Time (ms)", 10, 680, 250},
-            {"Feedback (%)", 0, 90, 35},
-            {"Wet (%)", 0, 100, 25}
+            {"Status", 0, 1, 0},
+            {"Time(ms)", 10, 680, 250},
+            {"FB(%)", 0, 90, 35},
+            {"Wet(%)", 0, 100, 25}
+        }
+    },
+    {
+        .name = "Chorus",
+        .param_count = 4,
+        .params = {
+            {"Status", 0, 1, 0},
+            {"Depth(ms)", 0, 20, 2},
+            {"Rate(Hz*10)", 1, 50, 4},
+            {"Wet(%)", 0, 100, 50}
+        }
+    },
+    {
+        .name = "Flanger",
+        .param_count = 4,
+        .params = {
+            {"Status", 0, 1, 0},
+            {"Depth(ms)", 0, 10, 2},
+            {"Rate(Hz*10)", 1, 50, 4},
+            {"FB(%)", 0, 90, 50}
+        }
+    },
+    {
+        .name = "Tremolo",
+        .param_count = 3,
+        .params = {
+            {"Status", 0, 1, 0},
+            {"Depth(%)", 0, 100, 50},
+            {"Rate(Hz*10)", 1, 100, 50}
+        }
+    },
+    {
+        .name = "Distorsion",
+        .param_count = 4,
+        .params = {
+            {"Status", 0, 1, 0},
+            {"Drive", 1, 20, 5},
+            {"Tone(%)", 0, 100, 50},
+            {"Level(%)", 0, 100, 20}
         }
     }
 };
@@ -64,6 +105,8 @@ static void ui_refresh_selection(void) {
                 lv_obj_set_style_bg_color(fx_items[i], color_bg_focused, 0); 
                 lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0);
             }
+            // Obligar a la columna a scrollear para mostrar este elemento
+            lv_obj_scroll_to_view(fx_items[i], LV_ANIM_ON);
         } else {
             lv_obj_set_style_bg_color(fx_items[i], color_bg_idle, 0);
             lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0); 
@@ -80,6 +123,9 @@ static void ui_refresh_selection(void) {
                 // Colores de la barrita seleccionada: Fondo Gris Claro, Relleno Negro
                 lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xDDDDDD), LV_PART_MAIN);
                 lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x000000), LV_PART_INDICATOR);
+                
+                // Obligar a la columna derecha a scrollear
+                lv_obj_scroll_to_view(param_items[i], LV_ANIM_ON);
             } else {
                 lv_obj_set_style_bg_color(param_items[i], color_bg_idle, 0);
                 lv_obj_set_style_text_color(param_items[i], lv_color_hex(0xFFFFFF), 0); 
@@ -278,38 +324,63 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
             if (val > max_val) val = max_val;
             effects_list[selected_fx_idx].params[selected_param_idx].current_val = val;
             
-            // --- Actualización de Hardware AXI (Synth & Delay Desacoplados) ---
+            // --- Actualización de Hardware AXI V3 ---
+            uint32_t fx_en = 0;
             
-            // 1. Leemos el estado global de todos los parametros ON/OFF
-            int synth_on = effects_list[0].params[0].current_val;
-            int dry_on   = effects_list[0].params[1].current_val;
-            int delay_on = effects_list[1].params[0].current_val;
+            // Configurar Bitmask de Estados
+            if (effects_list[0].params[0].current_val) fx_en |= FXB_SYNTH;
+            if (effects_list[0].params[1].current_val == 0) fx_en |= FXB_SYNTH_ONLY;
             
-            // 2. Mapeamos a las banderas del hardware
-            int s_on = (synth_on == 1) ? 1 : 0;
-            int s_only = (dry_on == 0) ? 1 : 0;
-            int d_on = (delay_on == 1) ? 1 : 0;
+            if (effects_list[1].params[0].current_val) fx_en |= FXB_DELAY;
+            if (effects_list[2].params[0].current_val) fx_en |= FXB_CHORUS;
+            if (effects_list[3].params[0].current_val) fx_en |= FXB_FLANG;
+            if (effects_list[4].params[0].current_val) fx_en |= FXB_TREM;
+            if (effects_list[5].params[0].current_val) fx_en |= FXB_DIST;
             
-            // Si el synth esta apagado, forzamos s_only a 0 para que pase el audio limpio (Bypass)
-            if (s_on == 0) s_only = 0; 
+            // Mantener siempre prendido filtros escenciales (Tone blend, Cab sim, Bloqueadores DC)
+            fx_en |= FXB_DCB_IN | FXB_DCB_POST | FXB_CHO_LPF | FXB_BLEND | FXB_CAB;
             
-            // Enviamos el modo global
-            sd_set_mode(FX_BASE, s_on, s_only, d_on);
+            Xil_Out32(FX_BASE + FX_OFF_FX_EN, fx_en);
             
-            // 3. Procesamos cambios especificos de cada bloque
-            if (selected_fx_idx == 0 && selected_param_idx == 2) {
-                // Cambió el parche del sintetizador
-                if (val == 0) sd_load_single_saw(FX_BASE);
-                else if (val == 1) sd_load_minimoog_patch(FX_BASE);
-                else if (val == 2) sd_load_three_saw_patch(FX_BASE);
-                else if (val == 3) sd_load_sub_patch(FX_BASE);
-            } else if (selected_fx_idx == 1) {
-                // Cambiaron los parametros del Eco (Time, Feedback o Wet)
-                float t = (float)effects_list[1].params[1].current_val;
-                float f = (float)effects_list[1].params[2].current_val / 100.0f;
-                float w = (float)effects_list[1].params[3].current_val / 100.0f;
-                sd_set_delay(FX_BASE, t, f, w);
-            }
+            // Cargar parametros base por defecto y sobreescribir con la pantalla
+            params_t p;
+            params_init(&p);
+            
+            // Synth
+            int patch = effects_list[0].params[2].current_val;
+            if (patch == 0)      { p.syn_w1=WAVE_SAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SAW; p.syn_r1=0; p.syn_r2=0; p.syn_r3=0; p.syn_o2_cents=0; p.syn_o3_cents=0; }
+            else if (patch == 1) { p.syn_w1=WAVE_TRISAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SQUARE; p.syn_r1=-1; p.syn_r2=-1; p.syn_r3=0; p.syn_o2_cents=-5; p.syn_o3_cents=5; }
+            else if (patch == 2) { p.syn_w1=WAVE_SAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SAW; p.syn_r1=0; p.syn_r2=0; p.syn_r3=0; p.syn_o2_cents=-12; p.syn_o3_cents=12; }
+            else                 { p.syn_w1=WAVE_SQUARE; p.syn_w2=WAVE_SQUARE; p.syn_w3=WAVE_SQUARE; p.syn_r1=-2; p.syn_r2=-1; p.syn_r3=0; p.syn_o2_cents=-2; p.syn_o3_cents=2; }
+            
+            // Delay
+            p.dly_time = (float)effects_list[1].params[1].current_val;
+            p.dly_fb = (float)effects_list[1].params[2].current_val / 100.0f;
+            p.dly_wet = (float)effects_list[1].params[3].current_val / 100.0f;
+            
+            // Chorus
+            p.cho_depth = (float)effects_list[2].params[1].current_val;
+            p.cho_rate = (float)effects_list[2].params[2].current_val / 10.0f;
+            p.cho_wet = (float)effects_list[2].params[3].current_val / 100.0f;
+            
+            // Flanger
+            p.fl_depth = (float)effects_list[3].params[1].current_val;
+            p.fl_rate = (float)effects_list[3].params[2].current_val / 10.0f;
+            p.fl_fb = (float)effects_list[3].params[3].current_val / 100.0f;
+            p.fl_wet = 0.5f; // Fijo para Flanger tipico
+            
+            // Tremolo
+            p.trem_depth = (float)effects_list[4].params[1].current_val / 100.0f;
+            p.trem_rate = (float)effects_list[4].params[2].current_val / 10.0f;
+            
+            // Distorsion
+            p.dist_drive = (float)effects_list[5].params[1].current_val;
+            p.dist_tone = (float)effects_list[5].params[2].current_val / 100.0f;
+            p.dist_level = (float)effects_list[5].params[3].current_val / 100.0f;
+            
+            // Enviar a la FPGA
+            params_push_to_pl(&p);
+            params_push_synth(&p);
             
             // Refresco ultra-rápido solo del label y la barra seleccionada
             char buf[64];
