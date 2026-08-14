@@ -149,7 +149,16 @@ typedef struct {
 typedef enum { ROLE_PARAM, ROLE_NAV_NEXT, ROLE_NAV_PREV } enc_role_t;
 typedef struct { enc_role_t role; int param_idx; } enc_map_t;
 
-// ================= API =================
+// ============================================================
+// Funciones maestras (Setup)
+// ============================================================
+void params_master_enable(int on);
+void params_set_mode(int synth_on, int synth_only, int delay_on);
+void params_load_wavetables(void);
+
+// ============================================================
+// Funciones publicas
+// ============================================================
 void params_init(params_t *p);
 void params_push_to_pl(const params_t *p);
 void params_push_tone(const params_t *p);     // recalcula y baja los 10 coefs

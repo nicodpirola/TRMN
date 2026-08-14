@@ -4,7 +4,7 @@
 #include <math.h>
 
 // ============================================================
-//  Pantallas
+//  Definicion de Pantallas & Encoders
 // ============================================================
 static param_binding_t dist_params[3];
 static param_binding_t tone_params[2];
@@ -36,19 +36,22 @@ static enc_map_t enc_map[NUM_ENCODERS] = {
 // ============================================================
 //  Conversiones a punto fijo
 // ============================================================
+// COnversión Q16.16 (16 bits para la parte entera, 16 para la parete decimal).
 static uint32_t f_to_q16_16(float v){ if(v<0)v=0; return (uint32_t)(v*65536.0f); }
+// Conversión Q1.31
 static uint32_t f_to_q1_31(float v){
     if(v>= 1.0f) return 0x7FFFFFFF;
     if(v<=-1.0f) return 0x80000000;
     return (uint32_t)(v*2147483648.0f);
 }
-// Q2.30 (los coeficientes de biquad: a1 puede llegar a +-2)
+// Q2.30 (biquads)
 static uint32_t d_to_q2_30(double v){
     double s = v * 1073741824.0;          // 2^30
     if (s >  2147483647.0) s =  2147483647.0;
     if (s < -2147483648.0) s = -2147483648.0;
     return (uint32_t)(int32_t)(s < 0 ? s - 0.5 : s + 0.5);
 }
+// Convierte frecuencia en Hz a incremento de fase para un oscilador de 32 bits a la frecuencia de muestreo FS_HZ
 static uint32_t hz_to_phase_inc(float hz){
     if(hz<0)hz=0;
     double inc = (double)hz * 4294967296.0 / (double)FS_HZ;
@@ -61,31 +64,27 @@ static uint32_t fc_to_tpt_G(float fc){
     double G = g / (1.0 + g);
     return f_to_q1_31((float)G);
 }
+// Limita lo<float<hi
 static float clampf(float v,float lo,float hi){ return v<lo?lo:(v>hi?hi:v); }
 
 // ============================================================
-//  Filtros de PRIMER ORDEN (6 dB/oct) por transformada bilineal.
-//
-//  Los tone stacks de los pedales reales son redes RC de primer orden.
-//  Un biquad con b2=0 y a2=0 ES un filtro de primer orden -> no hace falta
-//  tocar el RTL, solo mandar estos coeficientes.
-//
-//  Propiedad linda: LPF1 + HPF1 con la MISMA esquina suman EXACTAMENTE 1
-//  (respuesta plana con el blend al medio). Con esquinas distintas (como el
-//  Big Muff: 482Hz y 1206Hz) aparece el mid-scoop caracteristico.
+//  Filtros de PRIMER ORDEN (6 dB/oct) por transformada bilineal
 // ============================================================
+// coeficientes biquad lpf 1 orden
 static void lpf1(double fc, double *b, double *a){
     double g = tan(M_PI * fc / (double)FS_HZ);
     b[0] = g/(1.0+g);  b[1] = g/(1.0+g);  b[2] = 0.0;
     a[0] = (g-1.0)/(1.0+g);              a[1] = 0.0;
 }
+// coeficientes biquad hpf 1 orden
 static void hpf1(double fc, double *b, double *a){
     double g = tan(M_PI * fc / (double)FS_HZ);
     b[0] = 1.0/(1.0+g);  b[1] = -1.0/(1.0+g);  b[2] = 0.0;
     a[0] = (g-1.0)/(1.0+g);                    a[1] = 0.0;
 }
 
-// --- Segundo orden (RBJ, 12 dB/oct): pendiente doble, corta mas fuerte ---
+//Segundo orden (RBJ, 12 dB/oct)
+//coeficientes biquad lpf 2 orden
 static void lpf2(double fc, double *b, double *a){
     double w0 = 2.0*M_PI*fc/(double)FS_HZ;
     double c = cos(w0), s = sin(w0), al = s/(2.0*0.707);
@@ -93,6 +92,7 @@ static void lpf2(double fc, double *b, double *a){
     b[0] = ((1.0-c)/2.0)/a0;  b[1] = (1.0-c)/a0;  b[2] = b[0];
     a[0] = (-2.0*c)/a0;       a[1] = (1.0-al)/a0;
 }
+//coeficientes biquad hpf 2 orden
 static void hpf2(double fc, double *b, double *a){
     double w0 = 2.0*M_PI*fc/(double)FS_HZ;
     double c = cos(w0), s = sin(w0), al = s/(2.0*0.707);
@@ -100,12 +100,9 @@ static void hpf2(double fc, double *b, double *a){
     b[0] = ((1.0+c)/2.0)/a0;  b[1] = (-(1.0+c))/a0;  b[2] = b[0];
     a[0] = (-2.0*c)/a0;       a[1] = (1.0-al)/a0;
 }
-
-// Orden de los filtros del tone: 1 = 6dB/oct (pedal real) | 2 = 12dB/oct (corta mas)
 int g_tone_order = 1;
 
-// Frecuencia de esquina de una red RC:  fc = 1/(2*pi*R*C)
-// (asi se sacan las esquinas reales de un pedal a partir de su esquematico)
+// R & C -> Fc
 float rc_to_fc(float R_ohm, float C_farad){
     return (float)(1.0 / (2.0*M_PI*(double)R_ohm*(double)C_farad));
 }
@@ -132,15 +129,17 @@ void params_push_tone(const params_t *p){
 }
 
 // ============================================================
-//  Presets de tone stack (esquinas de pedales reales)
+//  Presets de tone stack
 // ============================================================
 static const char *preset_names[NUM_PRESETS_TONE] = {
     "BigMuff(scoop)", "TubeScreamer", "Fuzz", "Plano"
 };
+// Devuelve str preset 
 const char *params_preset_name(int idx){
     if (idx < 0 || idx >= NUM_PRESETS_TONE) idx = 0;
     return preset_names[idx];
 }
+// envía al PL presets según idx.
 void params_preset_tone(params_t *p, int idx){
     switch (idx){
         case 0:  // BIG MUFF: R=33k C=0.01uF (oscura) | R=33k C=0.004uF (brillante)
@@ -165,7 +164,7 @@ void params_preset_tone(params_t *p, int idx){
 
 // ============================================================
 //  Init
-// ============================================================
+// ===========================================================
 void params_init(params_t *p){
     p->dist_drive = 20.0f;   // arranca con mordida (senal de entrada ~0.05-0.2)
     p->dist_level = 0.25f;    // gain staging: la dist. comprime a full-scale
@@ -202,7 +201,7 @@ void params_init(params_t *p){
     dly_params[1] = (param_binding_t){ "FB",   &p->dly_fb,   0.0f,  0.95f,  0.05f };
     dly_params[2] = (param_binding_t){ "Wet",  &p->dly_wet,  0.0f,  1.0f,   0.05f };
 
-    // --- Synth: patch Minimoog inicial (2 saws + square) ---
+    // Synth: patch Minimoog inicial (2 saws + square)
     p->syn_w1 = WAVE_SAW;  p->syn_w2 = WAVE_SAW;  p->syn_w3 = WAVE_SQUARE;
     p->syn_r1 = 0;  p->syn_r2 = 0;  p->syn_r3 = -1;
     p->syn_o2_cents = 7.0f;  p->syn_o3_cents = 0.0f;
@@ -228,17 +227,20 @@ void params_init(params_t *p){
 static const char *wave_names[NUM_WAVES] = {
     "tri", "tri-saw", "saw", "square", "pulse-W", "pulse-N"
 };
+// Devuelve str synth
 const char *synth_wave_name(int w){
     if (w < 0 || w >= NUM_WAVES) w = 0;
     return wave_names[w];
 }
 
 // ratio de detune desde cents -> Q2.30 (1.0 = 0x40000000)
+// Convierte un valor de desafinación en cents (1/100 de semitono) a una relación de frecuencias en  Q2.30
 static uint32_t cents_to_q2_30(float cents){
     double ratio = pow(2.0, (double)cents / 1200.0);
     return d_to_q2_30(ratio);
 }
 
+// TX config osciladores, mezclas y filtros del synth a memoria FPGA.
 void params_push_synth(const params_t *p){
     Xil_Out32(FX_BASE + FX_OFF_SYN_WAVES,  SYN_PACK_WAVES(p->syn_w1, p->syn_w2, p->syn_w3));
     Xil_Out32(FX_BASE + FX_OFF_SYN_RANGES, SYN_PACK_RANGES(p->syn_r1, p->syn_r2, p->syn_r3));
@@ -259,6 +261,7 @@ void params_push_synth(const params_t *p){
     Xil_Out32(FX_BASE + FX_OFF_SYN_F_A2, 0);
 }
 
+// Cambio entre forma de onda para un oscilador dado
 void synth_cycle_wave(params_t *p, int osc){
     int *w = (osc==1)?&p->syn_w1 : (osc==2)?&p->syn_w2 : &p->syn_w3;
     *w = (*w + 1) % NUM_WAVES;
@@ -266,6 +269,7 @@ void synth_cycle_wave(params_t *p, int osc){
     xil_printf("OSC%d wave: %s\r\n", osc, synth_wave_name(*w));
 }
 
+// Cambio transposición de octavas del oscilador (ej. de 32' a 2' como en un Minimoog)
 void synth_cycle_range(params_t *p, int osc){
     int *r = (osc==1)?&p->syn_r1 : (osc==2)?&p->syn_r2 : &p->syn_r3;
     *r = (*r >= 2) ? -2 : (*r + 1);
@@ -278,6 +282,7 @@ void synth_cycle_range(params_t *p, int osc){
 // ============================================================
 //  Push completo
 // ============================================================
+// Envía los valores actuales de todos los parámetros de efectos y sintetizador a los registros del hardware (FPGA).
 void params_push_to_pl(const params_t *p){
     // DIST
     Xil_Out32(FX_BASE + FX_OFF_DIST_DRIVE, f_to_q16_16(p->dist_drive));
@@ -307,11 +312,15 @@ void params_push_to_pl(const params_t *p){
 
 // ============================================================
 //  Navegacion / encoders / print
-// ============================================================
+// ===========================================================
+// Avanza a la siguiente página o pantalla de parámetros en el menú
 void params_screen_next(void){ g_screen=(g_screen+1)%NUM_SCREENS; }
+// Retrocede a la página o pantalla de parámetros anterior en el menú
 void params_screen_prev(void){ g_screen=(g_screen-1+NUM_SCREENS)%NUM_SCREENS; }
+// Obtiene el título de la pantalla actual para mostrarlo en el display
 const char *params_screen_title(void){ return screens[g_screen].title; }
 
+// Modifica el valor de un parámetro, limitándolo entre min y max
 static void edit_param(int idx,int delta){
     screen_def_t *s=&screens[g_screen];
     if(idx<0||idx>=s->n) return;
@@ -319,6 +328,7 @@ static void edit_param(int idx,int delta){
     *(b->value)=clampf(*(b->value)+delta*b->step, b->min, b->max);
 }
 
+// Procesa los encodersy actualiza el hardware
 void params_handle_encoder(params_t *p,int enc,int delta){
     if(delta==0||enc<0||enc>=NUM_ENCODERS) return;
     enc_map_t m=enc_map[enc];
@@ -330,6 +340,7 @@ void params_handle_encoder(params_t *p,int enc,int delta){
     params_push_to_pl(p);
 }
 
+// Imprime los parámetros de la pantalla actual vía puerto serie (UART) para depuración.
 void params_print(const params_t *p){
     (void)p;
     screen_def_t *s=&screens[g_screen];
@@ -342,4 +353,46 @@ void params_print(const params_t *p){
         xil_printf(" %s=%d.%02d", b->name, ent, dec);
     }
     xil_printf("\r\n");
+}
+
+// ============================================================
+//  Funciones Maestras (Setup)
+// ============================================================
+// Enable global efectos
+void params_master_enable(int on) {
+    uint32_t ctrl = Xil_In32(FX_BASE + FX_OFF_CTRL);
+    if (on) ctrl |= 1u;
+    else    ctrl &= ~1u;
+    Xil_Out32(FX_BASE + FX_OFF_CTRL, ctrl);
+}
+
+// Configuración conjunta delay-synth
+void params_set_mode(int synth_on, int synth_only, int delay_on) {
+    uint32_t fxen = Xil_In32(FX_BASE + FX_OFF_FX_EN);
+    fxen &= ~(FXB_SYNTH | FXB_SYNTH_ONLY | FXB_DELAY);
+    
+    if (synth_on) fxen |= FXB_SYNTH;
+    if (synth_on && synth_only) fxen |= FXB_SYNTH_ONLY;
+    if (delay_on) fxen |= FXB_DELAY;
+    
+    Xil_Out32(FX_BASE + FX_OFF_FX_EN, fxen);
+}
+
+// Carga default del synth
+void params_load_wavetables(void) {
+    // OSC1
+    Xil_Out32(FX_BASE + FX_OFF_SYN_WAVES, (WAVE_SAW & 0x7u) | ((WAVE_SAW & 0x7u) << 3) | ((WAVE_SAW & 0x7u) << 6));
+    Xil_Out32(FX_BASE + FX_OFF_SYN_RANGES, (0 & 0xFu) | ((0 & 0xFu) << 4) | ((0 & 0xFu) << 8));
+    Xil_Out32(FX_BASE + FX_OFF_SYN_O1_LVL, f_to_q1_31(0.70f));
+    
+    // OSC2
+    Xil_Out32(FX_BASE + FX_OFF_SYN_O2_TUNE, d_to_q2_30(1.0)); // +0 cents
+    Xil_Out32(FX_BASE + FX_OFF_SYN_O2_LVL, f_to_q1_31(0.00f));
+    
+    // OSC3
+    Xil_Out32(FX_BASE + FX_OFF_SYN_O3_TUNE, d_to_q2_30(1.0)); // +0 cents
+    Xil_Out32(FX_BASE + FX_OFF_SYN_O3_LVL, f_to_q1_31(0.00f));
+    
+    // Noise
+    Xil_Out32(FX_BASE + FX_OFF_SYN_NOISE, f_to_q1_31(0.0f));
 }

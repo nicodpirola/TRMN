@@ -1,7 +1,5 @@
 #include "ui.h"
 #include <stdio.h>
-#include "fx_hardware.h"
-#include "synth_delay_control.h"
 #include "params.h"
 #include "xil_io.h"
 
@@ -21,12 +19,12 @@ static lv_obj_t * param_items[MAX_FX_PARAMS];
 static lv_obj_t * param_labels[MAX_FX_PARAMS];
 static lv_obj_t * param_bars[MAX_FX_PARAMS];
 
-// State
+//state
 static ui_focus_state_t ui_focus = FOCUS_MAIN_MENU;
 static int selected_fx_idx = 0;
 static int selected_param_idx = 0;
 
-// Definición de Efectos y Parámetros Iniciales
+//efectos y parámetros iniciales
 const int num_effects = 6;
 effect_module_t effects_list[MAX_EFFECTS] = {
     {
@@ -95,7 +93,7 @@ static void ui_refresh_selection(void) {
     lv_color_t color_bg_active = lv_color_hex(0xFFFFFF);
     lv_color_t color_bg_active_param = lv_color_hex(0xFFFFFF);
 
-    // Refrescar Lista Principal
+    // refresh lista principal
     for(int i=0; i<num_effects; i++) {
         if (i == selected_fx_idx) {
             if (ui_focus == FOCUS_MAIN_MENU) {
@@ -113,14 +111,14 @@ static void ui_refresh_selection(void) {
         }
     }
 
-    // Refrescar Parámetros
+    //refresh parámetros
     int param_count = effects_list[selected_fx_idx].param_count;
     for(int i=0; i<MAX_FX_PARAMS; i++) {
         if (i < param_count) {
             if (i == selected_param_idx && ui_focus == FOCUS_PARAM_MENU) {
                 lv_obj_set_style_bg_color(param_items[i], color_bg_active_param, 0);
                 lv_obj_set_style_text_color(param_items[i], lv_color_hex(0x000000), 0); 
-                // Colores de la barrita seleccionada: Fondo Gris Claro, Relleno Negro
+                // Colores de la barrita seleccionada: fondo gris claro/ relleno negro
                 lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xDDDDDD), LV_PART_MAIN);
                 lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x000000), LV_PART_INDICATOR);
                 
@@ -129,12 +127,12 @@ static void ui_refresh_selection(void) {
             } else {
                 lv_obj_set_style_bg_color(param_items[i], color_bg_idle, 0);
                 lv_obj_set_style_text_color(param_items[i], lv_color_hex(0xFFFFFF), 0); 
-                // Colores de la barrita inactiva: Fondo Gris Oscuro, Relleno Plata
+                // Colores de la barrita inactiva: fondo gris oscuro/ relleno claro
                 lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x444444), LV_PART_MAIN);
                 lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xAAAAAA), LV_PART_INDICATOR);
             }
             
-            // Actualizar la barra visual
+            // actualizar la barra
             lv_bar_set_value(param_bars[i], effects_list[selected_fx_idx].params[i].current_val, LV_ANIM_OFF);
         }
     }
@@ -165,7 +163,7 @@ void ui_init(void) {
     lv_obj_t * screen = lv_screen_active();
     lv_obj_set_style_bg_color(screen, lv_color_hex(0x000000), 0); // Fondo negro total
 
-    // --- HEADER ---
+    //header
     header_cont = lv_obj_create(screen);
     lv_obj_set_size(header_cont, 320, 36);
     lv_obj_set_pos(header_cont, 0, 0);
@@ -192,7 +190,7 @@ void ui_init(void) {
     lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0x333333), LV_PART_MAIN); // Fondo oscuro
     lv_obj_set_style_bg_color(bar_progress, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR); // Progreso blanco
     
-    // --- COLUMNA IZQUIERDA (MAIN MENU) ---
+    // colu,mna izquierda (MENU)
     col_left = lv_obj_create(screen);
     lv_obj_set_size(col_left, 110, 204);
     lv_obj_set_pos(col_left, 0, 36);
@@ -220,7 +218,7 @@ void ui_init(void) {
         }
     }
     
-    // --- COLUMNA DERECHA (PARAM MENU) ---
+    // Columna derecha (parámetros)
     col_right = lv_obj_create(screen);
     lv_obj_set_size(col_right, 210, 204);
     lv_obj_set_pos(col_right, 110, 36);
@@ -298,7 +296,7 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
         }
         if (enc0_click) {
             ui_focus = FOCUS_PARAM_MENU;
-            selected_param_idx = 0; // Al entrar, siempre focusear el primer parametro
+            selected_param_idx = 0;
             needs_refresh = 1;
         }
     } else if (ui_focus == FOCUS_PARAM_MENU) {
@@ -314,7 +312,7 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
             int min_val = effects_list[selected_fx_idx].params[selected_param_idx].min_val;
             int max_val = effects_list[selected_fx_idx].params[selected_param_idx].max_val;
             
-            // Adaptar salto según el rango (si es un selector de opciones pequeño, salta de a 1)
+            // Adaptar salto según el rango
             int step = ((max_val - min_val) <= 10) ? 1 : 5;
             
             int val = effects_list[selected_fx_idx].params[selected_param_idx].current_val;
@@ -324,10 +322,9 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
             if (val > max_val) val = max_val;
             effects_list[selected_fx_idx].params[selected_param_idx].current_val = val;
             
-            // --- Actualización de Hardware AXI V3 ---
             uint32_t fx_en = 0;
             
-            // Configurar Bitmask de Estados
+            // Configurar bitmask de estados
             if (effects_list[0].params[0].current_val) fx_en |= FXB_SYNTH;
             if (effects_list[0].params[1].current_val == 0) fx_en |= FXB_SYNTH_ONLY;
             
@@ -337,7 +334,7 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
             if (effects_list[4].params[0].current_val) fx_en |= FXB_TREM;
             if (effects_list[5].params[0].current_val) fx_en |= FXB_DIST;
             
-            // Mantener siempre prendido filtros escenciales (Tone blend, Cab sim, Bloqueadores DC)
+            // Mantener siempre prendido filtros escenciales
             fx_en |= FXB_DCB_IN | FXB_DCB_POST | FXB_CHO_LPF | FXB_BLEND | FXB_CAB;
             
             Xil_Out32(FX_BASE + FX_OFF_FX_EN, fx_en);
@@ -382,14 +379,14 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
             params_push_to_pl(&p);
             params_push_synth(&p);
             
-            // Refresco ultra-rápido solo del label y la barra seleccionada
+            // refresh especial solo del label y la barra seleccionada
             char buf[64];
             sprintf(buf, "%s: %d", effects_list[selected_fx_idx].params[selected_param_idx].name, val);
             lv_label_set_text(param_labels[selected_param_idx], buf);
             lv_bar_set_value(param_bars[selected_param_idx], val, LV_ANIM_OFF);
         }
         
-        // Escape / Atrás
+        // Esc / Atrás
         if (enc1_click) {
             ui_focus = FOCUS_MAIN_MENU;
             needs_refresh = 1;

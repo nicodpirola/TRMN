@@ -1,3 +1,5 @@
+// Main perteneciente al nucleo 0
+
 #include "xparameters.h"
 #include "xgpio.h"
 #include "xil_printf.h"
@@ -6,8 +8,7 @@
 #include "xiltimer.h"
 #include "xil_mmu.h"
 #include "ipc.h"
-#include "fx_hardware.h"
-#include "synth_delay_control.h"
+#include "params.h"
 
 #define FX_BASE 0x60000000
 
@@ -59,23 +60,19 @@ uint32_t lvgl_time_get(void){
     XTime_GetTime(&t);
     return (uint32_t)((t * 1000)/ COUNTS_PER_SECOND); 
 }
-//Corrección color y renderizado
+//Corrección color y flush renderizado
 void my_flush_cb(lv_display_t * display, const lv_area_t * area, uint8_t * px_map) { 
-    xil_printf("DEBUG: my_flush_cb llamado.\r\n");
     uint32_t px_count = (area->x2 - area->x1 + 1) * (area->y2 - area->y1 + 1);
     uint16_t * buf16 = (uint16_t *)px_map;
     for(uint32_t i = 0; i < px_count; i++) {
         buf16[i] = (buf16[i] << 8) | (buf16[i] >> 8);
     }
-    
-    xil_printf("DEBUG: Enviando pixeles a SPI...\r\n");
     ili9341_flush_region(area->x1, area->y1, area->x2, area->y2, px_map);
-    xil_printf("DEBUG: Pixeles enviados.\r\n");
     lv_display_flush_ready(display);
 }
 
 // ---------------------------------------------------------
-// DESPERTADOR DEL NÚCLEO 1 (Ensamblador Baremetal)
+// DESPERTADOR DEL NÚCLEO 1 
 // ---------------------------------------------------------
 #define A9_CPU1_START_ADDR 0xFFFFFFF0
 
@@ -125,9 +122,6 @@ int main() {
     xil_printf("Init Pantalla...\r\n");
     if (ili9341_init() != 0) return XST_FAILURE;
 
-    // --- 3.5 Inicializar Hardware DSP (PL) ---
-    hw_dsp_init();
-
     // --- 4. ENCENDER NÚCLEO 1 ---
     WakeUpCore1();
 
@@ -147,10 +141,9 @@ int main() {
 
     // --- 6. INICIALIZAR SINTETIZADOR ---
     xil_printf("Encendiendo Sintetizador...\r\n");
-    sd_master_enable(FX_BASE, 1);
-    sd_load_single_saw(FX_BASE);
-    sd_set_delay(FX_BASE, 250.0f, 0.35f, 0.25f);
-    sd_set_mode(FX_BASE, 1, 0, 0); // Arranca en modo Synth + Dry (Coincide con UI)
+    params_master_enable(1);
+    params_load_wavetables();
+    params_set_mode(1, 0, 0); // Arranca en modo Synth + Dry (Coincide con UI)
 
     // ==========================================================
     // BUCLE PRINCIPAL CORE 0 (EXCLUSIVO PARA LA INTERFAZ)
@@ -248,7 +241,7 @@ int main() {
         if (now - last_diag_time >= 3000) { // Cada 3 segundos
             last_diag_time = now;
             xil_printf("\r\n--- REPORTE DE DIAGNOSTICO (Cada 3s) ---\r\n");
-            sd_print_status(FX_BASE);
+            // sd_print_status(FX_BASE); // Eliminado en V3
             xil_printf("----------------------------------------\r\n\r\n");
         }
         
