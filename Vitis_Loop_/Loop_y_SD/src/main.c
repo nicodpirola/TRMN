@@ -3,6 +3,7 @@
 #include "xil_printf.h"
 #include "xil_cache.h"
 #include "ff.h"
+#include <stdio.h>
 #include "sleep.h"
 #include "xscugic.h"
 #include "xil_exception.h"
@@ -51,13 +52,27 @@ typedef struct {
     u32  data_length;      
 } WavHeader; // header archivo WAV
 #pragma pack(pop)
-// Guarda el buffer en formato WAV en la SD
+// Guarda el buffer en formato WAV en la SD sin sobrescribir el anterior
 void SaveWavToSD(u32* buffer, u32 num_frames) {
     FIL wav_file;
     FRESULT res;
     UINT bytes_written;
+    char filename[32];
+    static int track_num = 1;
+    FILINFO fno;
 
-    res = f_open(&wav_file, "0:/LOOP.WAV", FA_CREATE_ALWAYS | FA_WRITE);
+    // Revisa que nombres están tomados y escribe el siguiente
+    while (1) {
+        sprintf(filename, "0:/LOOP_%03d.WAV", track_num);
+        if (f_stat(filename, &fno) != FR_OK) {
+            break;
+        }
+        track_num++;
+        if (track_num > 999) break; 
+    }
+
+    xil_printf("CORE 1: Creando archivo %s...\r\n", filename);
+    res = f_open(&wav_file, filename, FA_CREATE_ALWAYS | FA_WRITE);
     if (res != FR_OK) return;
 
     u32 data_size = num_frames * 6;
@@ -99,15 +114,11 @@ void SaveWavToSD(u32* buffer, u32 num_frames) {
 // ---------------------------------------------------------
 static void dma_handler(void *CallbackRef) {
     static int ping_pong_state = 0; // 0 = Ping, 1 = Pong
-    static int rx_count = 1;
     static int prev_hw_mode = 0;
     
-    if (rx_count <= 10) {
-        xil_printf("CORE 1: [LATIDO] Procesando paquete de audio #%d...\r\n", rx_count);
-        rx_count++;
-    }
-    
-    XAxiDma *AxiDmaInst = (XAxiDma *)CallbackRef;
+    // polling de los registros de interrupciún del DMA (arriba cuando termina de transmitir)
+    // NO ES TÉCNICAMENTE "POR INTERRUPCIÓN" PERO ESTA FUNCIÓN FUNCIONA COMO ISR
+    XAxiDma *AxiDmaInst = (XAxiDma *)CallbackRef; 
 
     u32 TxIrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DMA_TO_DEVICE);
     if (TxIrqStatus) {
@@ -115,13 +126,12 @@ static void dma_handler(void *CallbackRef) {
     }
     u32 IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
     XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
-    if (!(IrqStatus & XAXIDMA_IRQ_IOC_MASK)) return;
-
+    if (!(IrqStatus & XAXIDMA_IRQ_IOC_MASK)) return; //chequea devuelta que haya terminado el RX (solo depende de RX, no TX)
     int hw_mode = IPC->hw_mode;
 
     // MÁQUINA DE ESTADOS
     //Revisa hw_mode. Si se pasó de IDLE a REC (Grabar), reinicia el índice del Looper
-    //Si pasó de REC a PLAY (Reproducir), fija el tamaño de bucle actual y detona la salida TX DMA.
+    //Si pasó de REC a PLAY (Reproducir), fija el tamaño de bucle actual y empieza la salida TX DMA.
     if (hw_mode == 1 && prev_hw_mode == 0) {
         IPC->loop_index = 0; // IDLE -> REC
     } else if (hw_mode == 2 && prev_hw_mode == 1) {
@@ -146,7 +156,7 @@ static void dma_handler(void *CallbackRef) {
         //se enciende el dma apuntando a rx pong (DEVICE_TO_DMA)
         XAxiDma_SimpleTransfer(AxiDmaInst, (UINTPTR)rx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
         
-        //si es play o loop, se enciende el dma apuntando a tx pong (DMA_TO_DEVICE)
+        //si es play o overdub, se enciende el dma apuntando a tx pong (DMA_TO_DEVICE)
         if (hw_mode == 2 || hw_mode == 3) {
             while (XAxiDma_Busy(AxiDmaInst, XAXIDMA_DMA_TO_DEVICE)) { usleep(1); }
             XAxiDma_SimpleTransfer(AxiDmaInst, (UINTPTR)tx_pong, PACKET_SIZE * sizeof(u32), XAXIDMA_DMA_TO_DEVICE);
@@ -172,7 +182,7 @@ static void dma_handler(void *CallbackRef) {
         IPC->loop_index += PACKET_SIZE;
         if (hw_mode != 1 && IPC->loop_length > 0) IPC->loop_index %= IPC->loop_length;
 
-        //prepara el siguiente paquete TX (record y play)
+        //prepara el siguiente paquete TX (play y overdub)
         if (hw_mode == 2 || hw_mode == 3) {
             u32 tx_idx = (IPC->loop_index + PACKET_SIZE) % IPC->loop_length;
             for(int i=0; i<PACKET_SIZE; i++) {
@@ -250,7 +260,7 @@ int main() {
     Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
     Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
 
-    // Iniciar el motor de DMA de Entrada
+    // Iniciar el motor de DMA de Entrada (RX)
     int rx_status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
     
     if (rx_status != 0) {
@@ -269,7 +279,7 @@ int main() {
         //polling del dma
         u32 rx_sr = XAxiDma_IntrGetIrq(&AxiDma, XAXIDMA_DEVICE_TO_DMA);
         u32 tx_sr = XAxiDma_IntrGetIrq(&AxiDma, XAXIDMA_DMA_TO_DEVICE);
-        
+        // solo revisa errores, no terminación
         if (rx_sr & XAXIDMA_IRQ_ERROR_MASK) xil_printf("CORE 1: [ERROR] Fallo de hardware en DMA RX!\r\n");
         if (tx_sr & XAXIDMA_IRQ_ERROR_MASK) xil_printf("CORE 1: [ERROR] Fallo de hardware en DMA TX!\r\n");
 

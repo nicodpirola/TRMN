@@ -261,7 +261,7 @@ void params_push_synth(const params_t *p){
     Xil_Out32(FX_BASE + FX_OFF_SYN_F_A2, 0);
 }
 
-// Cambio entre forma de onda para un oscilador dado
+// Cambio entre forma de onda para un oscilador  (SYNTH++)
 void synth_cycle_wave(params_t *p, int osc){
     int *w = (osc==1)?&p->syn_w1 : (osc==2)?&p->syn_w2 : &p->syn_w3;
     *w = (*w + 1) % NUM_WAVES;
@@ -269,7 +269,7 @@ void synth_cycle_wave(params_t *p, int osc){
     xil_printf("OSC%d wave: %s\r\n", osc, synth_wave_name(*w));
 }
 
-// Cambio transposición de octavas del oscilador (ej. de 32' a 2' como en un Minimoog)
+// Cambio transposición de octavas del oscilador (SYNTH++)
 void synth_cycle_range(params_t *p, int osc){
     int *r = (osc==1)?&p->syn_r1 : (osc==2)?&p->syn_r2 : &p->syn_r3;
     *r = (*r >= 2) ? -2 : (*r + 1);

@@ -386,7 +386,7 @@ void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_cl
             lv_bar_set_value(param_bars[selected_param_idx], val, LV_ANIM_OFF);
         }
         
-        // Esc / Atrás
+        // Esc
         if (enc1_click) {
             ui_focus = FOCUS_MAIN_MENU;
             needs_refresh = 1;
