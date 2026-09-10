@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "params.h"
 #include "xil_io.h"
+#include "ipc.h"
 
 #define FX_BASE 0x60000000
 
@@ -20,9 +21,11 @@ static lv_obj_t * param_labels[MAX_FX_PARAMS];
 static lv_obj_t * param_bars[MAX_FX_PARAMS];
 
 //state
-static ui_focus_state_t ui_focus = FOCUS_MAIN_MENU;
 static int selected_fx_idx = 0;
-static int selected_param_idx = 0;
+
+// Presets en memoria local (Slots 0, 1, 2)
+static int preset_slots[3][MAX_EFFECTS][MAX_FX_PARAMS];
+static int presets_initialized = 0;
 
 //efectos y parámetros iniciales
 const int num_effects = 6;
@@ -33,7 +36,8 @@ effect_module_t effects_list[MAX_EFFECTS] = {
         .params = {
             {"Status (0=OFF)", 0, 1, 1}, // 0:OFF, 1:ON
             {"Dry (0=Muted)", 0, 1, 1}, // 0:Muted (Synth Only), 1:Active (Synth+Dry)
-            {"Patch", 0, 3, 0} // 0:Saw, 1:Minimoog, 2:3 Saws, 3:Sub
+            {"Patch", 0, 3, 0}, // 0:Saw, 1:Minimoog, 2:3 Saws, 3:Sub
+            {"-", 0, 0, 0}
         }
     },
     {
@@ -72,7 +76,8 @@ effect_module_t effects_list[MAX_EFFECTS] = {
         .params = {
             {"Status", 0, 1, 0},
             {"Depth(%)", 0, 100, 50},
-            {"Rate(Hz*10)", 1, 100, 50}
+            {"Rate(Hz*10)", 1, 100, 50},
+            {"-", 0, 0, 0}
         }
     },
     {
@@ -87,53 +92,79 @@ effect_module_t effects_list[MAX_EFFECTS] = {
     }
 };
 
+static void ui_apply_all_params(void) {
+    uint32_t fx_en = 0;
+    
+    // Configurar bitmask de estados
+    if (effects_list[0].params[0].current_val) fx_en |= FXB_SYNTH;
+    if (effects_list[0].params[1].current_val == 0) fx_en |= FXB_SYNTH_ONLY;
+    
+    if (effects_list[1].params[0].current_val) fx_en |= FXB_DELAY;
+    if (effects_list[2].params[0].current_val) fx_en |= FXB_CHORUS;
+    if (effects_list[3].params[0].current_val) fx_en |= FXB_FLANG;
+    if (effects_list[4].params[0].current_val) fx_en |= FXB_TREM;
+    if (effects_list[5].params[0].current_val) fx_en |= FXB_DIST;
+    
+    // Mantener siempre prendido filtros escenciales
+    fx_en |= FXB_DCB_IN | FXB_DCB_POST | FXB_CHO_LPF | FXB_BLEND | FXB_CAB;
+    
+    Xil_Out32(FX_BASE + FX_OFF_FX_EN, fx_en);
+    
+    // Cargar parametros base por defecto y sobreescribir con la pantalla
+    params_t p;
+    params_init(&p);
+    
+    // Synth
+    int patch = effects_list[0].params[2].current_val;
+    if (patch == 0)      { p.syn_w1=WAVE_SAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SAW; p.syn_r1=0; p.syn_r2=0; p.syn_r3=0; p.syn_o2_cents=0; p.syn_o3_cents=0; }
+    else if (patch == 1) { p.syn_w1=WAVE_TRISAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SQUARE; p.syn_r1=-1; p.syn_r2=-1; p.syn_r3=0; p.syn_o2_cents=-5; p.syn_o3_cents=5; }
+    else if (patch == 2) { p.syn_w1=WAVE_SAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SAW; p.syn_r1=0; p.syn_r2=0; p.syn_r3=0; p.syn_o2_cents=-12; p.syn_o3_cents=12; }
+    else                 { p.syn_w1=WAVE_SQUARE; p.syn_w2=WAVE_SQUARE; p.syn_w3=WAVE_SQUARE; p.syn_r1=-2; p.syn_r2=-1; p.syn_r3=0; p.syn_o2_cents=-2; p.syn_o3_cents=2; }
+    
+    // Delay
+    p.dly_time = (float)effects_list[1].params[1].current_val;
+    p.dly_fb = (float)effects_list[1].params[2].current_val / 100.0f;
+    p.dly_wet = (float)effects_list[1].params[3].current_val / 100.0f;
+    
+    // Chorus
+    p.cho_depth = (float)effects_list[2].params[1].current_val;
+    p.cho_rate = (float)effects_list[2].params[2].current_val / 10.0f;
+    p.cho_wet = (float)effects_list[2].params[3].current_val / 100.0f;
+    
+    // Flanger
+    p.fl_depth = (float)effects_list[3].params[1].current_val;
+    p.fl_rate = (float)effects_list[3].params[2].current_val / 10.0f;
+    p.fl_fb = (float)effects_list[3].params[3].current_val / 100.0f;
+    p.fl_wet = 0.5f; // Fijo para Flanger tipico
+    
+    // Tremolo
+    p.trem_depth = (float)effects_list[4].params[1].current_val / 100.0f;
+    p.trem_rate = (float)effects_list[4].params[2].current_val / 10.0f;
+    
+    // Distorsion
+    p.dist_drive = (float)effects_list[5].params[1].current_val;
+    p.dist_tone = (float)effects_list[5].params[2].current_val / 10.0f;
+    p.dist_level = (float)effects_list[5].params[3].current_val / 100.0f;
+    
+    // Enviar a la FPGA
+    params_push_to_pl(&p);
+    params_push_synth(&p);
+}
+
 static void ui_refresh_selection(void) {
     lv_color_t color_bg_idle = lv_color_hex(0x222222);
-    lv_color_t color_bg_focused = lv_color_hex(0x444444);
     lv_color_t color_bg_active = lv_color_hex(0xFFFFFF);
-    lv_color_t color_bg_active_param = lv_color_hex(0xFFFFFF);
 
     // refresh lista principal
     for(int i=0; i<num_effects; i++) {
         if (i == selected_fx_idx) {
-            if (ui_focus == FOCUS_MAIN_MENU) {
-                lv_obj_set_style_bg_color(fx_items[i], color_bg_active, 0);
-                lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0x000000), 0); 
-            } else {
-                lv_obj_set_style_bg_color(fx_items[i], color_bg_focused, 0); 
-                lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0);
-            }
+            lv_obj_set_style_bg_color(fx_items[i], color_bg_active, 0);
+            lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0x000000), 0);
             // Obligar a la columna a scrollear para mostrar este elemento
             lv_obj_scroll_to_view(fx_items[i], LV_ANIM_ON);
         } else {
             lv_obj_set_style_bg_color(fx_items[i], color_bg_idle, 0);
-            lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0); 
-        }
-    }
-
-    //refresh parámetros
-    int param_count = effects_list[selected_fx_idx].param_count;
-    for(int i=0; i<MAX_FX_PARAMS; i++) {
-        if (i < param_count) {
-            if (i == selected_param_idx && ui_focus == FOCUS_PARAM_MENU) {
-                lv_obj_set_style_bg_color(param_items[i], color_bg_active_param, 0);
-                lv_obj_set_style_text_color(param_items[i], lv_color_hex(0x000000), 0); 
-                // Colores de la barrita seleccionada: fondo gris claro/ relleno negro
-                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xDDDDDD), LV_PART_MAIN);
-                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x000000), LV_PART_INDICATOR);
-                
-                // Obligar a la columna derecha a scrollear
-                lv_obj_scroll_to_view(param_items[i], LV_ANIM_ON);
-            } else {
-                lv_obj_set_style_bg_color(param_items[i], color_bg_idle, 0);
-                lv_obj_set_style_text_color(param_items[i], lv_color_hex(0xFFFFFF), 0); 
-                // Colores de la barrita inactiva: fondo gris oscuro/ relleno claro
-                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x444444), LV_PART_MAIN);
-                lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xAAAAAA), LV_PART_INDICATOR);
-            }
-            
-            // actualizar la barra
-            lv_bar_set_value(param_bars[i], effects_list[selected_fx_idx].params[i].current_val, LV_ANIM_OFF);
+            lv_obj_set_style_text_color(fx_items[i], lv_color_hex(0xFFFFFF), 0);
         }
     }
 }
@@ -153,13 +184,53 @@ static void ui_refresh_param_panel(void) {
             lv_obj_add_flag(param_items[i], LV_OBJ_FLAG_HIDDEN);
         }
     }
+}
+
+void ui_presets_init(void) {
+    for (int s = 0; s < 3; s++) {
+        for (int i = 0; i < MAX_EFFECTS; i++) {
+            for (int j = 0; j < MAX_FX_PARAMS; j++) {
+                preset_slots[s][i][j] = effects_list[i].params[j].current_val;
+            }
+        }
+    }
+    presets_initialized = 1;
+}
+
+void ui_save_preset(int slot) {
+    if (slot < 0 || slot >= 3) return;
+    if (!presets_initialized) ui_presets_init();
     
-    // Limitar índice de parámetros
-    if (selected_param_idx >= param_count) selected_param_idx = param_count - 1;
-    if (selected_param_idx < 0) selected_param_idx = 0;
+    // Guardar en RAM local
+    for (int i = 0; i < MAX_EFFECTS; i++) {
+        for (int j = 0; j < MAX_FX_PARAMS; j++) {
+            preset_slots[slot][i][j] = effects_list[i].params[j].current_val;
+            IPC->preset_data[i][j] = effects_list[i].params[j].current_val;
+        }
+    }
+    
+    // Mandar a Core 1 para guardar en SD
+    IPC->preset_cmd = slot + 1; // 1, 2, 3
+}
+
+void ui_load_preset(int slot) {
+    if (slot < 0 || slot >= 3) return;
+    if (!presets_initialized) ui_presets_init();
+    
+    for (int i = 0; i < MAX_EFFECTS; i++) {
+        for (int j = 0; j < MAX_FX_PARAMS; j++) {
+            effects_list[i].params[j].current_val = preset_slots[slot][i][j];
+        }
+    }
+    
+    ui_refresh_param_panel();
+    ui_refresh_selection();
+    ui_apply_all_params();
 }
 
 void ui_init(void) {
+    ui_presets_init();
+
     lv_obj_t * screen = lv_screen_active();
     lv_obj_set_style_bg_color(screen, lv_color_hex(0x000000), 0); // Fondo negro total
 
@@ -231,16 +302,19 @@ void ui_init(void) {
         param_items[i] = lv_obj_create(col_right);
         lv_obj_set_size(param_items[i], 200, 36);
         lv_obj_set_pos(param_items[i], 0, i * 40);
+        lv_obj_set_style_bg_color(param_items[i], lv_color_hex(0x222222), 0);
         lv_obj_set_style_border_width(param_items[i], 0, 0);
         lv_obj_set_style_radius(param_items[i], 4, 0);
         lv_obj_set_style_pad_all(param_items[i], 0, 0);
         
         param_labels[i] = lv_label_create(param_items[i]);
         lv_obj_align(param_labels[i], LV_ALIGN_TOP_LEFT, 5, 2);
+        lv_obj_set_style_text_color(param_labels[i], lv_color_hex(0xFFFFFF), 0);
         
         param_bars[i] = lv_bar_create(param_items[i]);
         lv_obj_set_size(param_bars[i], 190, 8);
         lv_obj_align(param_bars[i], LV_ALIGN_BOTTOM_MID, 0, -4);
+        lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0x444444), LV_PART_MAIN);
         lv_obj_set_style_bg_color(param_bars[i], lv_color_hex(0xFFFFFF), LV_PART_INDICATOR);
     }
     
@@ -283,117 +357,45 @@ void ui_update_progress(uint32_t loop_index, uint32_t loop_length) {
     }
 }
 
-void ui_handle_input(int enc0_delta, int enc0_click, int enc1_delta, int enc1_click) {
-    int needs_refresh = 0;
+void ui_handle_input(int e1_delta, int e2_delta, int e3_delta, int e4_delta, int e5_delta) {
+    if (e5_delta != 0) {
+        selected_fx_idx += e5_delta;
+        if (selected_fx_idx < 0) selected_fx_idx = 0;
+        if (selected_fx_idx >= num_effects) selected_fx_idx = num_effects - 1;
+        ui_refresh_param_panel();
+        ui_refresh_selection();
+    }
     
-    if (ui_focus == FOCUS_MAIN_MENU) {
-        if (enc0_delta != 0) {
-            selected_fx_idx += enc0_delta;
-            if (selected_fx_idx < 0) selected_fx_idx = 0;
-            if (selected_fx_idx >= num_effects) selected_fx_idx = num_effects - 1;
-            ui_refresh_param_panel();
-            needs_refresh = 1;
-        }
-        if (enc0_click) {
-            ui_focus = FOCUS_PARAM_MENU;
-            selected_param_idx = 0;
-            needs_refresh = 1;
-        }
-    } else if (ui_focus == FOCUS_PARAM_MENU) {
-        if (enc0_delta != 0) {
-            selected_param_idx += enc0_delta;
-            int max_idx = effects_list[selected_fx_idx].param_count - 1;
-            if (selected_param_idx < 0) selected_param_idx = 0;
-            if (selected_param_idx > max_idx) selected_param_idx = max_idx;
-            needs_refresh = 1;
-        }
-        
-        if (enc1_delta != 0) {
-            int min_val = effects_list[selected_fx_idx].params[selected_param_idx].min_val;
-            int max_val = effects_list[selected_fx_idx].params[selected_param_idx].max_val;
+    int deltas[4] = {e1_delta, e2_delta, e3_delta, e4_delta};
+    int param_count = effects_list[selected_fx_idx].param_count;
+    int any_param_changed = 0;
+    
+    for (int i = 0; i < 4; i++) {
+        if (deltas[i] != 0 && i < param_count) {
+            int min_val = effects_list[selected_fx_idx].params[i].min_val;
+            int max_val = effects_list[selected_fx_idx].params[i].max_val;
             
             // Adaptar salto según el rango
             int step = ((max_val - min_val) <= 10) ? 1 : 5;
             
-            int val = effects_list[selected_fx_idx].params[selected_param_idx].current_val;
-            val += enc1_delta * step;
+            int val = effects_list[selected_fx_idx].params[i].current_val;
+            val += deltas[i] * step;
             
             if (val < min_val) val = min_val;
             if (val > max_val) val = max_val;
-            effects_list[selected_fx_idx].params[selected_param_idx].current_val = val;
-            
-            uint32_t fx_en = 0;
-            
-            // Configurar bitmask de estados
-            if (effects_list[0].params[0].current_val) fx_en |= FXB_SYNTH;
-            if (effects_list[0].params[1].current_val == 0) fx_en |= FXB_SYNTH_ONLY;
-            
-            if (effects_list[1].params[0].current_val) fx_en |= FXB_DELAY;
-            if (effects_list[2].params[0].current_val) fx_en |= FXB_CHORUS;
-            if (effects_list[3].params[0].current_val) fx_en |= FXB_FLANG;
-            if (effects_list[4].params[0].current_val) fx_en |= FXB_TREM;
-            if (effects_list[5].params[0].current_val) fx_en |= FXB_DIST;
-            
-            // Mantener siempre prendido filtros escenciales
-            fx_en |= FXB_DCB_IN | FXB_DCB_POST | FXB_CHO_LPF | FXB_BLEND | FXB_CAB;
-            
-            Xil_Out32(FX_BASE + FX_OFF_FX_EN, fx_en);
-            
-            // Cargar parametros base por defecto y sobreescribir con la pantalla
-            params_t p;
-            params_init(&p);
-            
-            // Synth
-            int patch = effects_list[0].params[2].current_val;
-            if (patch == 0)      { p.syn_w1=WAVE_SAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SAW; p.syn_r1=0; p.syn_r2=0; p.syn_r3=0; p.syn_o2_cents=0; p.syn_o3_cents=0; }
-            else if (patch == 1) { p.syn_w1=WAVE_TRISAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SQUARE; p.syn_r1=-1; p.syn_r2=-1; p.syn_r3=0; p.syn_o2_cents=-5; p.syn_o3_cents=5; }
-            else if (patch == 2) { p.syn_w1=WAVE_SAW; p.syn_w2=WAVE_SAW; p.syn_w3=WAVE_SAW; p.syn_r1=0; p.syn_r2=0; p.syn_r3=0; p.syn_o2_cents=-12; p.syn_o3_cents=12; }
-            else                 { p.syn_w1=WAVE_SQUARE; p.syn_w2=WAVE_SQUARE; p.syn_w3=WAVE_SQUARE; p.syn_r1=-2; p.syn_r2=-1; p.syn_r3=0; p.syn_o2_cents=-2; p.syn_o3_cents=2; }
-            
-            // Delay
-            p.dly_time = (float)effects_list[1].params[1].current_val;
-            p.dly_fb = (float)effects_list[1].params[2].current_val / 100.0f;
-            p.dly_wet = (float)effects_list[1].params[3].current_val / 100.0f;
-            
-            // Chorus
-            p.cho_depth = (float)effects_list[2].params[1].current_val;
-            p.cho_rate = (float)effects_list[2].params[2].current_val / 10.0f;
-            p.cho_wet = (float)effects_list[2].params[3].current_val / 100.0f;
-            
-            // Flanger
-            p.fl_depth = (float)effects_list[3].params[1].current_val;
-            p.fl_rate = (float)effects_list[3].params[2].current_val / 10.0f;
-            p.fl_fb = (float)effects_list[3].params[3].current_val / 100.0f;
-            p.fl_wet = 0.5f; // Fijo para Flanger tipico
-            
-            // Tremolo
-            p.trem_depth = (float)effects_list[4].params[1].current_val / 100.0f;
-            p.trem_rate = (float)effects_list[4].params[2].current_val / 10.0f;
-            
-            // Distorsion
-            p.dist_drive = (float)effects_list[5].params[1].current_val;
-            p.dist_tone = (float)effects_list[5].params[2].current_val / 100.0f;
-            p.dist_level = (float)effects_list[5].params[3].current_val / 100.0f;
-            
-            // Enviar a la FPGA
-            params_push_to_pl(&p);
-            params_push_synth(&p);
+            effects_list[selected_fx_idx].params[i].current_val = val;
             
             // refresh especial solo del label y la barra seleccionada
             char buf[64];
-            sprintf(buf, "%s: %d", effects_list[selected_fx_idx].params[selected_param_idx].name, val);
-            lv_label_set_text(param_labels[selected_param_idx], buf);
-            lv_bar_set_value(param_bars[selected_param_idx], val, LV_ANIM_OFF);
-        }
-        
-        // Esc
-        if (enc1_click) {
-            ui_focus = FOCUS_MAIN_MENU;
-            needs_refresh = 1;
+            sprintf(buf, "%s: %d", effects_list[selected_fx_idx].params[i].name, val);
+            lv_label_set_text(param_labels[i], buf);
+            lv_bar_set_value(param_bars[i], val, LV_ANIM_OFF);
+            
+            any_param_changed = 1;
         }
     }
     
-    if (needs_refresh) {
-        ui_refresh_selection();
+    if (any_param_changed) {
+        ui_apply_all_params();
     }
 }

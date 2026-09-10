@@ -16,6 +16,11 @@ typedef struct {
     volatile u32 loop_index;
     volatile u32 loop_length;
     volatile int core1_ready;   // 1 cuando el Núcleo 1 terminó de arrancar
+
+    // Presets (SD Card)
+    volatile int preset_cmd;    // 0=IDLE, 1..3=SAVE Slot 1..3, 4..6=LOAD Slot 1..3
+    volatile int preset_status; // 0=IDLE, 1=BUSY, 2=OK, 3=ERROR
+    volatile int preset_data[6][4];
 } IPC_Data;
 
 // Macro para acceder fácilmente a la memoria compartida

@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-//Date        : Sun Aug  9 10:54:47 2026
+//Date        : Fri Aug 28 23:22:38 2026
 //Host        : DESKTOP-FLN9N0C running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -87,7 +87,7 @@ module design_1
   input sdata_0_in_0;
   output sdata_0_out_0;
   output [0:0]ss_o_0;
-  input [4:0]sys_input;
+  input [12:0]sys_input;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -390,7 +390,7 @@ module design_1
   wire sdata_0_in_0;
   wire sdata_0_out_0;
   wire [0:0]ss_o_0;
-  wire [4:0]sys_input;
+  wire [12:0]sys_input;
   wire [1:0]xlconcat_0_dout;
   wire [0:0]xlconstant_0_dout;
 

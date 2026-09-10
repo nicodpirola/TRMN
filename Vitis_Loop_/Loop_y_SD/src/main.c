@@ -308,6 +308,61 @@ int main() {
             xil_printf("CORE 1: SD Guardado exitosamente.\r\n");
             was_sd_recording = 0;
         }
+
+        // Manejo de Presets en SD
+        if (IPC->preset_cmd != 0) {
+            int cmd = IPC->preset_cmd;
+            IPC->preset_status = 1; // BUSY
+            
+            if (cmd >= 1 && cmd <= 3) {
+                int slot = cmd;
+                char filename[32];
+                sprintf(filename, "0:/PRESET_%d.BIN", slot);
+                
+                FIL fil;
+                FRESULT res = f_open(&fil, filename, FA_CREATE_ALWAYS | FA_WRITE);
+                if (res == FR_OK) {
+                    UINT bw;
+                    int buf[6][4];
+                    for(int fx=0; fx<6; fx++) {
+                        for(int p=0; p<4; p++) {
+                            buf[fx][p] = IPC->preset_data[fx][p];
+                        }
+                    }
+                    f_write(&fil, buf, sizeof(buf), &bw);
+                    f_close(&fil);
+                    xil_printf("CORE 1: Preset %d guardado en SD (%s)\r\n", slot, filename);
+                    IPC->preset_status = 2; // OK
+                } else {
+                    xil_printf("CORE 1: Error al escribir %s (res=%d)\r\n", filename, res);
+                    IPC->preset_status = 3; // ERROR
+                }
+            } else if (cmd >= 4 && cmd <= 6) {
+                int slot = cmd - 3;
+                char filename[32];
+                sprintf(filename, "0:/PRESET_%d.BIN", slot);
+                
+                FIL fil;
+                FRESULT res = f_open(&fil, filename, FA_READ);
+                if (res == FR_OK) {
+                    UINT br;
+                    int buf[6][4];
+                    f_read(&fil, buf, sizeof(buf), &br);
+                    f_close(&fil);
+                    for(int fx=0; fx<6; fx++) {
+                        for(int p=0; p<4; p++) {
+                            IPC->preset_data[fx][p] = buf[fx][p];
+                        }
+                    }
+                    xil_printf("CORE 1: Preset %d cargado desde SD (%s)\r\n", slot, filename);
+                    IPC->preset_status = 2; // OK
+                } else {
+                    xil_printf("CORE 1: Preset %d no existe en SD (res=%d)\r\n", slot, res);
+                    IPC->preset_status = 3; // ERROR
+                }
+            }
+            IPC->preset_cmd = 0;
+        }
         
     }
     return 0;

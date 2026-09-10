@@ -29,8 +29,9 @@
 XGpio GpioPedal;    
 
 // Funciones para LVGL y Encoders
-static int16_t enc_prev[3] = {0, 0, 0};
+static int16_t enc_prev[6] = {0, 0, 0, 0, 0, 0};
 static int16_t enc_delta(int n) {
+    if (n < 0 || n >= 6) return 0;
     int16_t now = (int16_t)(Xil_In32(0x60000000 + 0x100 + (n)*4) & 0xFFFF);
     int16_t d   = (int16_t)(now - enc_prev[n]);
     enc_prev[n] = now;
@@ -38,14 +39,15 @@ static int16_t enc_delta(int n) {
 }
 
 static int enc_button_clicked(int n) {
-    static int btn_prev[3] = {0,0,0};
-    static int btn_debounce[3] = {0,0,0};
+    static int btn_prev[6] = {0,0,0,0,0,0};
+    static int btn_debounce[6] = {0,0,0,0,0,0};
+    if (n < 0 || n >= 6) return 0;
     if (btn_debounce[n] > 0) {
         btn_debounce[n]--;
         return 0; 
     }
     int switches = XGpio_DiscreteRead(&GpioPedal, 1);
-    int current = ((switches & (1 << (n + 2))) == 0) ? 1 : 0;
+    int current = ((switches & (1 << (n + 1))) == 0) ? 1 : 0;
     int clicked = 0;
     if (current == 1 && btn_prev[n] == 0) {
         clicked = 1;
@@ -142,14 +144,13 @@ int main() {
     params_set_mode(1, 0, 0); // Arranca en modo Synth + Dry (Coincide con UI)
 
     int switches_init = XGpio_DiscreteRead(&GpioPedal, 1);
-    int last_pedal = (switches_init & 0x02) ? PRESIONADO : SOLTADO;
+    int last_pedal = ((switches_init & 0x01) == 0) ? PRESIONADO : SOLTADO;
     
     static uint32_t pedal_debounce_time = 0;
     
-    // Control grabado SD long press (encoder 3)
-    static uint32_t enc2_press_start = 0;
-    static int enc2_is_pressed = 0;
-    static int enc2_action_done = 0;
+    // Control grabado SD (SW1 en IO37 / Bit 7)
+    static int sw1_prev = 0;
+    static uint32_t sw1_debounce_time = 0;
 
     while (1) {
         uint32_t now = lvgl_time_get();
@@ -157,8 +158,8 @@ int main() {
         // Lectura botones
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
         
-        int pedal = (switches & 0x02) ? PRESIONADO : SOLTADO; // Bit 1
-        int enc2_raw = ((switches & (1 << 4)) == 0) ? 1 : 0; // Bit 4 es el Encoder 2 (Active Low)
+        int pedal = ((switches & 0x01) == 0) ? PRESIONADO : SOLTADO; // Bit 0 (IO5)
+        int sw1_raw = ((switches & (1 << 7)) == 0) ? 1 : 0; // Bit 7 es SW1 (IO37)
 
         // Maquina de estados del pedal (IPC)
         if (pedal != last_pedal && (now - pedal_debounce_time > 200)) { 
@@ -184,35 +185,75 @@ int main() {
             last_pedal = pedal;
         }
 
-        // Grabar a SD longpress
-        if (enc2_raw == 1) {
-            if (!enc2_is_pressed) {
-                enc2_is_pressed = 1;
-                enc2_press_start = now;
-                enc2_action_done = 0;
+        // Grabar a SD con SW1 (IO37)
+        if (sw1_raw == 1 && sw1_prev == 0 && (now - sw1_debounce_time > 200)) {
+            sw1_debounce_time = now;
+            if (IPC->sd_recording == 0) {
+                xil_printf("CORE 0: Iniciar grabado SD (SW1)\r\n");
+                IPC->sd_recording = 1;
             } else {
-                if (!enc2_action_done && (now - enc2_press_start >= 1000)) { // 1000 ms
-                    enc2_action_done = 1; 
-                    if (IPC->sd_recording == 0) {
-                        xil_printf("CORE 0: Iniciar grabado SD (Pulsacion Larga)\r\n");
-                        IPC->sd_recording = 1;
-                    } else {
-                        xil_printf("CORE 0: Detener grabado SD (Pulsacion Larga)\r\n");
-                        IPC->sd_recording = 0;
+                xil_printf("CORE 0: Detener grabado SD (SW1)\r\n");
+                IPC->sd_recording = 0;
+            }
+        }
+        sw1_prev = sw1_raw;
+
+        // Reset / Vaciar loop y volver a standby con SW2 (IO36)
+        int sw2_raw = ((switches & (1 << 8)) == 0) ? 1 : 0; // Bit 8 es SW2 (IO36)
+        static int sw2_prev = 0;
+        static uint32_t sw2_debounce_time = 0;
+        if (sw2_raw == 1 && sw2_prev == 0 && (now - sw2_debounce_time > 200)) {
+            sw2_debounce_time = now;
+            IPC->hw_mode = 0; // Standby / IDLE
+            IPC->loop_length = 0;
+            IPC->loop_index = 0;
+            xil_printf("CORE 0: [RESET] Loop vaciado y vuelto a Standby (SW2)\r\n");
+        }
+        sw2_prev = sw2_raw;
+
+        // Presets con SW4 (IO34), SW5 (IO33), SW6 (IO38)
+        static int sw_slot_pressed[3] = {0, 0, 0};
+        static uint32_t sw_slot_press_time[3] = {0, 0, 0};
+        static int sw_slot_action_saved[3] = {0, 0, 0};
+
+        for (int k = 0; k < 3; k++) {
+            int bit = 10 + k;
+            int raw = ((switches & (1 << bit)) == 0) ? 1 : 0;
+            
+            if (raw == 1) {
+                if (!sw_slot_pressed[k]) {
+                    sw_slot_pressed[k] = 1;
+                    sw_slot_press_time[k] = now;
+                    sw_slot_action_saved[k] = 0;
+                } else {
+                    // Mantener presionado >= 1.2s para GUARDAR
+                    if (!sw_slot_action_saved[k] && (now - sw_slot_press_time[k] >= 1200)) {
+                        sw_slot_action_saved[k] = 1;
+                        ui_save_preset(k);
+                        xil_printf("CORE 0: [PRESET %d] Guardado (Pulsacion Larga)\r\n", k + 1);
                     }
                 }
+            } else {
+                if (sw_slot_pressed[k]) {
+                    // Pulsación simple para CARGAR
+                    if (!sw_slot_action_saved[k] && (now - sw_slot_press_time[k] >= 50)) {
+                        ui_load_preset(k);
+                        xil_printf("CORE 0: [PRESET %d] Cargado (Pulsacion Simple)\r\n", k + 1);
+                    }
+                    sw_slot_pressed[k] = 0;
+                }
             }
-        } else {
-            // Soltado
-            enc2_is_pressed = 0;
         }
 
         //MANEJO DE LA INTERFAZ GRÁFICA
         ui_update_status(IPC->hw_mode, (IPC->sd_recording == 1)); 
         ui_update_progress(IPC->loop_index, IPC->loop_length);
 
-        int e0_d = enc_delta(0); int e0_c = enc_button_clicked(0);
-        int e1_d = enc_delta(1); int e1_c = enc_button_clicked(1);
+        int e0_d = enc_delta(0);
+        int e1_d = enc_delta(1);
+        int e2_d = enc_delta(2);
+        int e3_d = enc_delta(3);
+        int e4_d = enc_delta(4);
         
         static int debug_tick = 0;
         if (debug_tick++ % 150000 == 0) {
@@ -221,7 +262,7 @@ int main() {
             xil_printf("AXI RAW ENC0: %08X, ENC1: %08X\r\n", raw_enc0, raw_enc1);
         }
 
-        ui_handle_input(e0_d, e0_c, e1_d, e1_c);
+        ui_handle_input(e0_d, e1_d, e2_d, e3_d, e4_d);
         
         lv_timer_handler();
         
