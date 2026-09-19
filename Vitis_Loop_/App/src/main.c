@@ -155,29 +155,26 @@ int main() {
     while (1) {
         uint32_t now = lvgl_time_get();
 
-        // Lectura botones
+        // Lectura botones (PULLUP activo: 0 = PRESIONADO, 1 = SUELTO)
         int switches = XGpio_DiscreteRead(&GpioPedal, 1);
         
-        int pedal = ((switches & 0x01) == 0) ? PRESIONADO : SOLTADO; // Bit 0 (IO5)
-        int sw1_raw = ((switches & (1 << 7)) == 0) ? 1 : 0; // Bit 7 es SW1 (IO37)
+        int pedal = ((switches & 0x01) == 0) ? PRESIONADO : SOLTADO; // Bit 0 (IO7) - Activo en Bajo
+        int sw1_raw = ((switches & (1 << 7)) == 0) ? 1 : 0; // Bit 7 es SW1 (IO37) - Activo en Bajo
 
-        // Maquina de estados del pedal (IPC)
+        // Maquina de estados del pedal con retencion (IPC)
         if (pedal != last_pedal && (now - pedal_debounce_time > 200)) { 
             pedal_debounce_time = now;
             
-            if (pedal == PRESIONADO) {
-                if (IPC->hw_mode == 0) { //IDLE -> REC
+            if (pedal == PRESIONADO) { // GND - Pedal presionado/trabado
+                if (IPC->hw_mode == 0) { // IDLE -> REC
                     IPC->hw_mode = 1;
                     xil_printf("CORE 0: [REC] Enviado al Nucleo 1\r\n");
-                } else if (IPC->hw_mode == 2) { //PLAY -> OVERDUB
+                } else if (IPC->hw_mode == 2) { // PLAY -> OVERDUB
                     IPC->hw_mode = 3;
                     xil_printf("CORE 0: [OVERDUB] Enviado al Nucleo 1\r\n");
-                } else if (IPC->hw_mode == 3) { //OVERDUB -> PLAY
-                    IPC->hw_mode = 2;
-                    xil_printf("CORE 0: [PLAY] Enviado al Nucleo 1\r\n");
                 }
-            } else { // SOLTADO
-                if (IPC->hw_mode == 1) { //REC -> PLAY
+            } else { // 3.3V - Pedal suelto/destrabado
+                if (IPC->hw_mode == 1 || IPC->hw_mode == 3) { // REC u OVERDUB -> PLAY
                     IPC->hw_mode = 2;
                     xil_printf("CORE 0: [PLAY] Enviado al Nucleo 1\r\n");
                 }
@@ -198,27 +195,31 @@ int main() {
         }
         sw1_prev = sw1_raw;
 
-        // Reset / Vaciar loop y volver a standby con SW2 (IO36)
-        int sw2_raw = ((switches & (1 << 8)) == 0) ? 1 : 0; // Bit 8 es SW2 (IO36)
-        static int sw2_prev = 0;
-        static uint32_t sw2_debounce_time = 0;
-        if (sw2_raw == 1 && sw2_prev == 0 && (now - sw2_debounce_time > 200)) {
-            sw2_debounce_time = now;
+        // Reset / Parado de loop y volver a standby (Intercambiado con P2: ahora en Bit 11 / IO33)
+        int loop_stop_raw = ((switches & (1 << 11)) == 0) ? 1 : 0; // Bit 11 es Stop - Activo en Bajo
+        static int loop_stop_prev = 0;
+        static uint32_t loop_stop_debounce_time = 0;
+        if (loop_stop_raw == 1 && loop_stop_prev == 0 && (now - loop_stop_debounce_time > 200)) {
+            loop_stop_debounce_time = now;
             IPC->hw_mode = 0; // Standby / IDLE
             IPC->loop_length = 0;
             IPC->loop_index = 0;
-            xil_printf("CORE 0: [RESET] Loop vaciado y vuelto a Standby (SW2)\r\n");
+            xil_printf("CORE 0: [RESET] Loop detenido/vaciado y vuelto a Standby\r\n");
         }
-        sw2_prev = sw2_raw;
+        loop_stop_prev = loop_stop_raw;
 
-        // Presets con SW4 (IO34), SW5 (IO33), SW6 (IO38)
+        // Presets: Intercambiados P1 <-> P3 y P2 <-> Parado de loop
+        // P1 -> Bit 12 (IO38)
+        // P2 -> Bit 8  (IO36)
+        // P3 -> Bit 10 (IO34)
+        static const int preset_bits[3] = {12, 8, 10};
         static int sw_slot_pressed[3] = {0, 0, 0};
         static uint32_t sw_slot_press_time[3] = {0, 0, 0};
         static int sw_slot_action_saved[3] = {0, 0, 0};
 
         for (int k = 0; k < 3; k++) {
-            int bit = 10 + k;
-            int raw = ((switches & (1 << bit)) == 0) ? 1 : 0;
+            int bit = preset_bits[k];
+            int raw = ((switches & (1 << bit)) == 0) ? 1 : 0; // Activo en Bajo (0 = presionado)
             
             if (raw == 1) {
                 if (!sw_slot_pressed[k]) {
@@ -266,12 +267,20 @@ int main() {
         
         lv_timer_handler();
         
-        //Debug AXI HW
+        //Debug AXI HW y GPIO
         static uint32_t last_diag_time = 0;
         if (now - last_diag_time >= 3000) {
             last_diag_time = now;
             xil_printf("\r\n--- REPORTE DE DIAGNOSTICO (Cada 3s) ---\r\n");
-            // sd_print_status(FX_BASE);
+            xil_printf("GPIO RAW: 0x%04X | Pedal(b0):%d | SD(b7):%d P2(b8):%d SW3(b9):%d | P3(b10):%d Stop(b11):%d P1(b12):%d\r\n",
+                       switches,
+                       (switches & 0x01) ? 1 : 0,
+                       (switches & (1 << 7)) ? 1 : 0,
+                       (switches & (1 << 8)) ? 1 : 0,
+                       (switches & (1 << 9)) ? 1 : 0,
+                       (switches & (1 << 10)) ? 1 : 0,
+                       (switches & (1 << 11)) ? 1 : 0,
+                       (switches & (1 << 12)) ? 1 : 0);
             xil_printf("----------------------------------------\r\n\r\n");
         }
         

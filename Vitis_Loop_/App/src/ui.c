@@ -9,6 +9,8 @@
 // LVGL objects
 static lv_obj_t * header_cont;
 static lv_obj_t * label_status;
+static lv_obj_t * label_preset_msg;
+static uint32_t preset_msg_timeout = 0;
 static lv_obj_t * label_sd;
 static lv_obj_t * bar_progress;
 
@@ -209,6 +211,15 @@ void ui_save_preset(int slot) {
         }
     }
     
+    // Mostrar feedback en pantalla (centro superior)
+    if (label_preset_msg) {
+        char buf[32];
+        sprintf(buf, "GUARDANDO P%d", slot + 1);
+        lv_label_set_text(label_preset_msg, buf);
+        lv_obj_set_style_text_color(label_preset_msg, lv_color_hex(0xFFCC00), 0);
+        preset_msg_timeout = lv_tick_get() + 2500;
+    }
+    
     // Mandar a Core 1 para guardar en SD
     IPC->preset_cmd = slot + 1; // 1, 2, 3
 }
@@ -226,6 +237,15 @@ void ui_load_preset(int slot) {
     ui_refresh_param_panel();
     ui_refresh_selection();
     ui_apply_all_params();
+
+    // Mostrar feedback en pantalla (centro superior)
+    if (label_preset_msg) {
+        char buf[32];
+        sprintf(buf, "CARGADO P%d", slot + 1);
+        lv_label_set_text(label_preset_msg, buf);
+        lv_obj_set_style_text_color(label_preset_msg, lv_color_hex(0x00E5FF), 0);
+        preset_msg_timeout = lv_tick_get() + 2500;
+    }
 }
 
 void ui_init(void) {
@@ -247,6 +267,11 @@ void ui_init(void) {
     lv_obj_align(label_status, LV_ALIGN_TOP_LEFT, 5, 2);
     lv_label_set_text(label_status, "IDLE");
     lv_obj_set_style_text_color(label_status, lv_color_hex(0xAAAAAA), 0);
+
+    label_preset_msg = lv_label_create(header_cont);
+    lv_obj_align(label_preset_msg, LV_ALIGN_TOP_MID, 0, 2);
+    lv_label_set_text(label_preset_msg, "");
+    lv_obj_set_style_text_color(label_preset_msg, lv_color_hex(0x00E5FF), 0);
     
     label_sd = lv_label_create(header_cont);
     lv_obj_align(label_sd, LV_ALIGN_TOP_RIGHT, -5, 2);
@@ -320,6 +345,7 @@ void ui_init(void) {
     
     ui_refresh_param_panel();
     ui_refresh_selection();
+    ui_apply_all_params();
 }
 
 void ui_update_status(int hw_mode, int sd_recording) { 
@@ -343,6 +369,11 @@ void ui_update_status(int hw_mode, int sd_recording) {
     } else {
         lv_label_set_text(label_sd, "SD: LISTA");
         lv_obj_set_style_text_color(label_sd, lv_color_hex(0xFFFFFF), 0);
+    }
+
+    if (preset_msg_timeout > 0 && lv_tick_get() >= preset_msg_timeout) {
+        if (label_preset_msg) lv_label_set_text(label_preset_msg, "");
+        preset_msg_timeout = 0;
     }
 }
 

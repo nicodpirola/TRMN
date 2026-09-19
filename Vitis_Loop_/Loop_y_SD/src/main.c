@@ -260,6 +260,10 @@ int main() {
     Xil_Out32(I2S_TX_BASE + 0x08, 0x00000001);
     Xil_Out32(I2S_RX_BASE + 0x08, 0x00000001);
 
+    xil_printf("CORE 1: I2S RX Config (0x04): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x04));
+    xil_printf("CORE 1: I2S RX Status (0x14): 0x%08X\r\n", Xil_In32(I2S_RX_BASE + 0x14));
+    xil_printf("CORE 1: I2S TX Status (0x14): 0x%08X\r\n", Xil_In32(I2S_TX_BASE + 0x14));
+
     // Iniciar el motor de DMA de Entrada (RX)
     int rx_status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)rx_ping, PACKET_SIZE * sizeof(u32), XAXIDMA_DEVICE_TO_DMA);
     
@@ -274,6 +278,8 @@ int main() {
     xil_printf("CORE 1: Esperando comandos por OCM...\r\n");
 
     static int was_sd_recording = 0;
+    static uint32_t rx_pkt_count = 0;
+    static uint32_t diag_c = 0;
 
     while (1) {
         //polling del dma
@@ -284,7 +290,29 @@ int main() {
         if (tx_sr & XAXIDMA_IRQ_ERROR_MASK) xil_printf("CORE 1: [ERROR] Fallo de hardware en DMA TX!\r\n");
 
         if (rx_sr & XAXIDMA_IRQ_IOC_MASK) {
+            rx_pkt_count++;
             dma_handler(&AxiDma);
+        }
+
+        diag_c++;
+        if (diag_c >= 30000) { // Cada ~3 segundos (usleep 100)
+            diag_c = 0;
+            u32 rx_stat = Xil_In32(I2S_RX_BASE + 0x14);
+            u32 tx_stat = Xil_In32(I2S_TX_BASE + 0x14);
+
+            int32_t peak_L = 0;
+            int32_t peak_R = 0;
+            for (int i = 0; i < PACKET_SIZE; i += 2) {
+                int32_t sL = (int32_t)(rx_ping[i] << 4) >> 8;
+                int32_t sR = (int32_t)(rx_ping[i+1] << 4) >> 8;
+                if (sL < 0) sL = -sL;
+                if (sR < 0) sR = -sR;
+                if (sL > peak_L) peak_L = sL;
+                if (sR > peak_R) peak_R = sR;
+            }
+
+            xil_printf("CORE 1 AUDIO: Pkts RX=%u | Peak L=%d, Peak R=%d | L_raw=0x%08X R_raw=0x%08X\r\n",
+                       rx_pkt_count, peak_L, peak_R, rx_ping[0], rx_ping[1]);
         }
 
         usleep(100);

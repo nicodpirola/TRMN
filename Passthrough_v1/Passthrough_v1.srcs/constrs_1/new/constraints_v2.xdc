@@ -87,7 +87,7 @@ set_false_path -from [get_ports {enc_a_0[*] enc_b_0[*]}]
 ## =============================================================================
 
 # Pedal de Loop
-set_property -dict { PACKAGE_PIN T15   IOSTANDARD LVCMOS33 PULLUP true } [get_ports { sys_input[0] }];  # IO5      / Pedal
+set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 PULLUP true } [get_ports { sys_input[0] }];  # IO7      / Pedal
 
 # Pulsadores Integrados de Encoders (ES1 .. ES6)
 set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 PULLUP true } [get_ports { sys_input[1] }];  # IO12     / ES1
@@ -107,30 +107,28 @@ set_property -dict { PACKAGE_PIN W8    IOSTANDARD LVCMOS33 PULLUP true } [get_po
 
 
 ## =============================================================================
-## 4. PMOD A (JA) - DAC (PCM5102)
+## 4. PMOD A (JA) - DAC (PCM5102A)
 ## =============================================================================
-## Pin 1 (JA1_P / Y18) : SCK (MCLK / Master Clock 12.288 MHz)
-## Pin 3 (JA2_P / Y16) : LRC (LRCLK / Word Clock 48 kHz)
-## Pin 7 (JA3_P / U18) : BCK (SCLK / Bit Clock 3.072 MHz)
-## Pin 9 (JA4_P / W18) : IN  (SDATA / Serial Data DAC In)
-## (Pines 2, 4, 8, 10 libres / Pines 5,11 GND, 6,12 VCC)
+## Pin 1 (JA1_P / Y18) : BCLK (SCLK / Bit Clock 3.072 MHz)
+## Pin 3 (JA2_P / Y16) : SDATA (Serial Data DAC In)
+## Pin 7 (JA3_P / U18) : MCLK (Master Clock 12.288 MHz)
+## Pin 9 (JA4_P / W18) : LRCLK (Word Clock 48 kHz)
 ## =============================================================================
-set_property -dict { PACKAGE_PIN Y18   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_dac }];  # Pin 1 / SCK
-set_property -dict { PACKAGE_PIN Y16   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_1 }];   # Pin 3 / LRC
-set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_1 }];    # Pin 7 / BCK
-set_property -dict { PACKAGE_PIN W18   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_out_0 }]; # Pin 9 / IN (DAC Data)
+set_property -dict { PACKAGE_PIN Y18   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_1 }];    # JA1 - DAC BCLK 3.072 MHz
+set_property -dict { PACKAGE_PIN Y16   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_out_0 }]; # JA3 - DAC SDATA
+set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_dac }];  # JA7 - DAC MCLK 12.288 MHz
+set_property -dict { PACKAGE_PIN W18   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_1 }];   # JA9 - DAC LRCLK 48 kHz
 
 
 ## =============================================================================
 ## 5. PMOD B (JB) - ADC (PCM1808)
 ## =============================================================================
-## Pin 1 (JB1_P / W14) : OUT (SDATA / Serial Data ADC Out)
-## Pin 3 (JB2_P / T11) : SCK (MCLK / Master Clock 12.288 MHz)
-## Pin 7 (JB3_P / V16) : BCK (SCLK / Bit Clock 3.072 MHz)
-## Pin 9 (JB4_P / V12) : LPC/LRC (LRCLK / Word Clock 48 kHz)
-## (Pines 2, 4, 8, 10 libres / Pines 5,11 GND, 6,12 VCC)
+## Pin 1 (JB1_P / W14) : MCLK (Master Clock 12.288 MHz)
+## Pin 3 (JB2_P / T11) : SDATA (Serial Data ADC Out)
+## Pin 7 (JB3_P / V16) : LRCLK (Word Clock 48 kHz)
+## Pin 9 (JB4_P / V12) : BCLK (SCLK / Bit Clock 3.072 MHz)
 ## =============================================================================
-set_property -dict { PACKAGE_PIN W14   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_in_0 }];  # Pin 1 / OUT (ADC Data)
-set_property -dict { PACKAGE_PIN T11   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_adc }];  # Pin 3 / SCK
-set_property -dict { PACKAGE_PIN V16   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_0 }];    # Pin 7 / BCK
-set_property -dict { PACKAGE_PIN V12   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_0 }];   # Pin 9 / LPC (LRC)
+set_property -dict { PACKAGE_PIN W14   IOSTANDARD LVCMOS33 } [get_ports { mclk_out_adc }];  # JB1 - ADC MCLK 12.288 MHz
+set_property -dict { PACKAGE_PIN T11   IOSTANDARD LVCMOS33 } [get_ports { sdata_0_in_0 }];  # JB3 - ADC SDATA
+set_property -dict { PACKAGE_PIN V16   IOSTANDARD LVCMOS33 } [get_ports { lrclk_out_0 }];   # JB7 - ADC LRCLK 48 kHz
+set_property -dict { PACKAGE_PIN V12   IOSTANDARD LVCMOS33 } [get_ports { sclk_out_0 }];    # JB9 - ADC BCLK 3.072 MHz
