@@ -3,7 +3,6 @@
 #include "xspi_l.h"
 #include "xgpiops.h"
 #include "sleep.h"
-#include "xil_printf.h"
 
 static XSpi    SpiInstance;
 static XGpioPs GpioInstance;
@@ -128,7 +127,6 @@ int ili9341_init(void) {
     ControlReg &= ~XSP_CR_TRANS_INHIBIT_MASK;
     XSpi_WriteReg(SpiInstance.BaseAddr, XSP_CR_OFFSET, ControlReg);
     cs_high();
-    xil_printf("[ILI9341] AXI Quad SPI Low-Level Driver Ready\r\n");
     // Reset HW
     rst_hi(); usleep(10000);
     rst_lo(); usleep(20000);

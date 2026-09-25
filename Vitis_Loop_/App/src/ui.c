@@ -248,6 +248,34 @@ void ui_load_preset(int slot) {
     }
 }
 
+void ui_handle_presets(int switches, uint32_t now) {
+    static const int preset_bits[3] = {12, 8, 10};
+    static int sw_slot_pressed[3] = {0, 0, 0};
+    static uint32_t sw_slot_press_time[3] = {0, 0, 0};
+    static int sw_slot_action_saved[3] = {0, 0, 0};
+
+    for (int k = 0; k < 3; k++) {
+        int bit = preset_bits[k];
+        int raw = ((switches & (1 << bit)) == 0) ? 1 : 0;
+        
+        if (raw == 1) {
+            if (!sw_slot_pressed[k]) {
+                sw_slot_pressed[k] = 1;
+                sw_slot_press_time[k] = now;
+                sw_slot_action_saved[k] = 0;
+            } else if (!sw_slot_action_saved[k] && (now - sw_slot_press_time[k] >= 1200)) {
+                sw_slot_action_saved[k] = 1;
+                ui_save_preset(k);
+            }
+        } else if (sw_slot_pressed[k]) {
+            if (!sw_slot_action_saved[k] && (now - sw_slot_press_time[k] >= 50)) {
+                ui_load_preset(k);
+            }
+            sw_slot_pressed[k] = 0;
+        }
+    }
+}
+
 void ui_init(void) {
     ui_presets_init();
 
@@ -388,7 +416,7 @@ void ui_update_progress(uint32_t loop_index, uint32_t loop_length) {
     }
 }
 
-void ui_handle_input(int e1_delta, int e2_delta, int e3_delta, int e4_delta, int e5_delta) {
+void ui_handle_encoders(int e1_delta, int e2_delta, int e3_delta, int e4_delta, int e5_delta) {
     if (e5_delta != 0) {
         selected_fx_idx += e5_delta;
         if (selected_fx_idx < 0) selected_fx_idx = 0;

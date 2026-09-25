@@ -13,11 +13,12 @@ void ui_update_status(int hw_mode, int sd_recording);
 void ui_update_progress(uint32_t loop_index, uint32_t loop_length);
 
 // API de Manejo de Hardware (Encoders)
-void ui_handle_input(int e1_delta, int e2_delta, int e3_delta, int e4_delta, int e5_delta);
+void ui_handle_encoders(int e1_delta, int e2_delta, int e3_delta, int e4_delta, int e5_delta);
 
-// API de Presets (SW4, SW5, SW6 -> Slots 0, 1, 2)
+// API de Presets
 void ui_save_preset(int slot);
 void ui_load_preset(int slot);
+void ui_handle_presets(int switches, uint32_t now);
 
 // --- ESTRUCTURAS DE DATOS DE EFECTOS ---
 #define MAX_FX_PARAMS 4
